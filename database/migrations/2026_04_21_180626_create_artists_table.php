@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('genre_id')->constrained('genres');
+            $table->string('name')->unique();
+            $table->text('bio')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
