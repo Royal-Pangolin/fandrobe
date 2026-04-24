@@ -3,19 +3,19 @@
 
 @section('header')
     <div class="flex items-center text-sm text-beige-500 mb-4 font-medium tracking-wide">
-        <a href="{{ url('/categories') }}" class="hover:text-beige-800 transition">Disciplinas</a>
+        <a href="{{ route('categories.index') }}" class="hover:text-beige-800 transition">Disciplinas</a>
         <span class="mx-3 border-r border-beige-300 h-4"></span>
-        <span class="text-beige-900 font-bold">Pintura Clásica</span>
+        <span class="text-beige-900 font-bold">{{ $category->name }}</span>
     </div>
     
     <div class="md:flex md:items-center md:justify-between">
         <div class="md:w-2/3">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-beige-900 mb-6 tracking-tight">Pintura Clásica</h1>
-            <p class="text-lg text-beige-600 max-w-3xl leading-relaxed">Bienvenido a la colección definitiva de pintura clásica. Aquí encontrarás desde lienzos originales hasta reproducciones oficiales y láminas numeradas, todas apoyadas y certificadas por los artistas de Everlasting Art.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-beige-900 mb-6 tracking-tight">{{ $category->name }}</h1>
+            <p class="text-lg text-beige-600 max-w-3xl leading-relaxed">{{ $category->description ?? 'Bienvenido a esta colección. Aquí encontrarás piezas únicas y certificadas.' }}</p>
         </div>
         <div class="mt-8 md:mt-0 md:w-1/3 flex md:justify-end">
             <div class="bg-beige-50 border border-beige-200 rounded-xl p-6 text-center shadow-sm">
-                <span class="block text-3xl font-black text-beige-900 mb-1">124</span>
+                <span class="block text-3xl font-black text-beige-900 mb-1">{{ $products->count() }}</span>
                 <span class="block text-sm font-semibold text-beige-600 uppercase tracking-widest">Obras Disponibles</span>
             </div>
         </div>
@@ -44,27 +44,35 @@
 
         <!-- Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            @for ($i = 0; $i < 12; $i++)
+            @forelse ($products as $product)
                 <div class="bg-white rounded-xl shadow-sm border border-beige-200 group hover:shadow-lg hover:-translate-y-1 transition duration-300 overflow-hidden flex flex-col h-full">
-                    <a href="{{ url('/products/1') }}" class="block flex-grow relative">
+                    <a href="{{ route('products.show', $product->id) }}" class="block flex-grow relative">
                         <div class="absolute top-3 left-3 z-10 space-y-2">
                              <!-- Badge opcional -->
-                             @if($i == 0 || $i == 3)
-                                <span class="bg-beige-900 text-beige-50 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow">Nuevo</span>
+                             @if($loop->first)
+                                <span class="bg-beige-900 text-beige-50 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow">Destaque</span>
                              @endif
                         </div>
-                        <div class="h-64 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-300">[Product Image]</div>
+                        <div class="h-64 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-300">
+                            @if($product->images && $product->images->count() > 0)
+                                <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @else
+                                [Imagen de {{ $product->name }}]
+                            @endif
+                        </div>
                         <div class="p-5">
-                            <span class="text-xs font-semibold text-beige-500 uppercase tracking-widest block mb-2">Autor Demo</span>
-                            <h3 class="text-lg font-bold text-beige-900 mb-2 line-clamp-2">Cuadro de Óleo Limitado con Marco</h3>
+                            <span class="text-xs font-semibold text-beige-500 uppercase tracking-widest block mb-2">{{ $product->artist->name ?? 'Autor Demo' }}</span>
+                            <h3 class="text-lg font-bold text-beige-900 mb-2 line-clamp-2">{{ $product->name }}</h3>
                         </div>
                     </a>
                     <div class="p-5 pt-0 mt-auto border-t border-beige-100 bg-beige-50/30 flex justify-between items-center">
-                        <span class="font-black text-xl text-beige-900">€250.00</span>
-                        <a href="{{ url('/products/1') }}" class="text-sm font-bold bg-white border border-beige-300 text-beige-800 px-4 py-2 rounded-md hover:bg-beige-100 transition shadow-sm">Ver info</a>
+                        <span class="font-black text-xl text-beige-900">€{{ number_format($product->base_price, 2) }}</span>
+                        <a href="{{ route('products.show', $product->id) }}" class="text-sm font-bold bg-white border border-beige-300 text-beige-800 px-4 py-2 rounded-md hover:bg-beige-100 transition shadow-sm">Ver info</a>
                     </div>
                 </div>
-            @endfor
+            @empty
+                <p class="text-beige-600 col-span-full text-center">No hay productos en esta categoría por ahora.</p>
+            @endforelse
         </div>
         
         <!-- Pagination -->

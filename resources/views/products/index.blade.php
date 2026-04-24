@@ -21,10 +21,9 @@
                     <div>
                         <span class="block text-sm font-semibold text-beige-700 mb-2">Categorías</span>
                         <div class="space-y-2">
-                            <label class="flex items-center text-sm text-beige-600"><input type="checkbox" class="mr-2 text-beige-600 focus:ring-beige-500 rounded border-beige-300"> Tazas</label>
-                            <label class="flex items-center text-sm text-beige-600"><input type="checkbox" class="mr-2 text-beige-600 focus:ring-beige-500 rounded border-beige-300"> Fundas de móvil</label>
-                            <label class="flex items-center text-sm text-beige-600"><input type="checkbox" class="mr-2 text-beige-600 focus:ring-beige-500 rounded border-beige-300"> Láminas</label>
-                            <label class="flex items-center text-sm text-beige-600"><input type="checkbox" class="mr-2 text-beige-600 focus:ring-beige-500 rounded border-beige-300"> Originals</label>
+                            @foreach($categories as $category)
+                            <label class="flex items-center text-sm text-beige-600"><input type="checkbox" class="mr-2 text-beige-600 focus:ring-beige-500 rounded border-beige-300" value="{{ $category->id }}"> {{ $category->name }}</label>
+                            @endforeach
                         </div>
                     </div>
                     <div>
@@ -38,24 +37,31 @@
         <!-- Product Grid -->
         <div class="w-full md:w-3/4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {{-- Bucle temporal para mostrar placeholders --}}
-                @for ($i = 0; $i < 6; $i++)
+                @forelse ($products as $product)
                     <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-beige-200 group hover:shadow-md transition">
-                        <a href="{{ url('/products/1') }}" class="block">
+                        <a href="{{ route('products.show', $product->id) }}" class="block">
                             <div class="h-56 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition">
-                                [Imagen del Producto]
+                                @if($product->images && $product->images->count() > 0)
+                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <span>[Imagen de {{ $product->name }}]</span>
+                                @endif
                             </div>
                             <div class="p-5">
-                                <h3 class="text-lg font-bold text-beige-900 group-hover:text-beige-600 transition truncate">Artículo de Arte Limitado</h3>
-                                <p class="text-xs text-beige-500 mb-3">Vendido por: Autor Demo</p>
+                                <h3 class="text-lg font-bold text-beige-900 group-hover:text-beige-600 transition truncate">{{ $product->name }}</h3>
+                                <p class="text-xs text-beige-500 mb-3">Vendido por: {{ $product->artist->name ?? 'Autor' }}</p>
                                 <div class="flex justify-between items-center mt-4">
-                                    <span class="text-lg font-bold text-beige-800">€45.00</span>
+                                    <span class="text-lg font-bold text-beige-800">€{{ number_format($product->base_price, 2) }}</span>
                                     <span class="text-beige-100 bg-beige-800 px-3 py-1 rounded text-xs font-semibold hover:bg-beige-900 transition">Ver Detalle</span>
                                 </div>
                             </div>
                         </a>
                     </div>
-                @endfor
+                @empty
+                    <div class="col-span-full">
+                        <p class="text-beige-600 text-center">No hay productos disponibles.</p>
+                    </div>
+                @endforelse
             </div>
             
             <div class="mt-10 flex justify-center">

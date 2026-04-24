@@ -18,11 +18,11 @@
 <div class="bg-beige-50 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            @for ($i = 0; $i < 8; $i++)
+            @forelse ($artists as $artist)
                 <div class="bg-white rounded-2xl shadow-sm border border-beige-200 overflow-hidden group hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
                     <div class="h-56 bg-beige-200 relative">
                         <div class="absolute inset-0 flex items-center justify-center text-beige-500 text-sm font-medium">
-                            [Foto Artista]
+                            [Foto de {{ $artist->name }}]
                         </div>
                     </div>
                     <div class="p-6 text-center relative">
@@ -33,12 +33,14 @@
                             </span>
                         </div>
                         
-                        <h3 class="text-xl font-extrabold text-beige-900 mb-1 line-clamp-1">Nombre Artista</h3>
-                        <p class="text-sm text-beige-500 font-medium mb-5">Pintura Clásica</p>
-                        <a href="{{ url('/artists/1') }}" class="inline-block border-2 text-sm border-beige-300 text-beige-800 px-6 py-2 rounded-full hover:bg-beige-800 hover:text-white transition font-bold">Ver Perfil Completo</a>
+                        <h3 class="text-xl font-extrabold text-beige-900 mb-1 line-clamp-1">{{ $artist->name }}</h3>
+                        <p class="text-sm text-beige-500 font-medium mb-5">{{ $artist->genre->name ?? 'Artista' }}</p>
+                        <a href="{{ route('artists.show', $artist->id) }}" class="inline-block border-2 text-sm border-beige-300 text-beige-800 px-6 py-2 rounded-full hover:bg-beige-800 hover:text-white transition font-bold">Ver Perfil Completo</a>
                     </div>
                 </div>
-            @endfor
+            @empty
+                <div class="col-span-full text-center text-beige-600">No hay artistas disponibles en este momento.</div>
+            @endforelse
         </div>
         
         <div class="mt-12 flex justify-center">
