@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('order_id')->constrained('orders');
+            $table->foreignId('address_id')->constrained('addresses');
+            $table->foreignId('status_id')->constrained('shipment_statuses');
+            $table->string('carrier')->nullable();
+            $table->string('tracking_number')->nullable();
+            $table->decimal('shipping_cost', 10, 2)->default(0);
+            $table->timestamp('shipped_at')->nullable();
+            $table->timestamp('estimated_delivery_at')->nullable();
+            $table->timestamp('delivered_at')->nullable();
         });
     }
 
