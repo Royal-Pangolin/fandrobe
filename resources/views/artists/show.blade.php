@@ -80,7 +80,8 @@
                         <a href="{{ route('products.show', $product->id) }}" class="block">
                             <div class="h-56 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-500 relative">
                                 @if($product->images && $product->images->count() > 0)
-                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                    @php $imgUrl = $product->images->first()->url; @endphp
+                                    <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                                 @else
                                     <span>[Imagen]</span>
                                 @endif

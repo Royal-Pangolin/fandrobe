@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ShipmentStatusSeeder::class,
             ArtistSeeder::class,
             ProductSeeder::class,
+            ProductImageSeeder::class,
             UserSeeder::class,
         ]);
     }

@@ -34,7 +34,8 @@
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-beige-100 hover:shadow-md transition">
                     <div class="h-64 bg-beige-300 flex items-center justify-center text-beige-600">
                         @if($product->images && $product->images->count() > 0)
-                            <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @php $imgUrl = $product->images->first()->url; @endphp
+                            <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                         @else
                             <span>[Imagen de {{ $product->name }}]</span>
                         @endif
