@@ -15,7 +15,7 @@
                 </div>
                 <div class="pb-2">
                     <span class="inline-block bg-beige-50/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3 border border-white/20">Pintor</span>
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight">Autor Demo</h1>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight">{{ $artist->name }}</h1>
                     <div class="flex items-center text-beige-100 text-sm font-medium">
                         <svg class="w-5 h-5 mr-1.5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                         Identidad Verificada por Everlasting Art
@@ -48,15 +48,15 @@
                     <ul class="space-y-5">
                         <li class="flex flex-col">
                             <span class="text-xs font-semibold text-beige-500 uppercase tracking-wide mb-1">Género Principal</span>
-                            <span class="font-bold text-beige-900">Pintura y Óleo</span>
+                            <span class="font-bold text-beige-900">{{ $artist->genre->name ?? 'Varios' }}</span>
                         </li>
                         <li class="flex flex-col">
                             <span class="text-xs font-semibold text-beige-500 uppercase tracking-wide mb-1">Obras Disponibles</span>
-                            <span class="font-bold text-beige-900">24 Artículos</span>
+                            <span class="font-bold text-beige-900">{{ $artist->products ? $artist->products->count() : 0 }} Artículos</span>
                         </li>
                         <li class="flex flex-col">
                             <span class="text-xs font-semibold text-beige-500 uppercase tracking-wide mb-1">Miembro desde</span>
-                            <span class="font-bold text-beige-900">Marzo 2026</span>
+                            <span class="font-bold text-beige-900">{{ $artist->created_at ? $artist->created_at->format('M Y') : '2026' }}</span>
                         </li>
                     </ul>
                 </div>
@@ -74,22 +74,30 @@
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            @for ($i = 0; $i < 4; $i++)
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-beige-200 group hover:shadow-md transition duration-300">
-                    <a href="{{ url('/products/1') }}" class="block">
-                        <div class="h-56 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-500 relative">
-                            [Imagen]
-                        </div>
-                        <div class="p-5">
-                            <h3 class="text-md font-bold text-beige-900 mb-2 truncate group-hover:text-beige-600 transition">Cuadro Edición Limitada</h3>
-                            <div class="flex items-center justify-between mt-4">
-                                <span class="text-lg font-black text-beige-900">€245.00</span>
-                                <span class="text-xs font-bold bg-beige-100 text-beige-800 px-2 py-1 rounded">Stock Bajísimo</span>
+            @if($artist->products)
+                @forelse ($artist->products->take(4) as $product)
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-beige-200 group hover:shadow-md transition duration-300">
+                        <a href="{{ route('products.show', $product->id) }}" class="block">
+                            <div class="h-56 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-500 relative">
+                                @if($product->images && $product->images->count() > 0)
+                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <span>[Imagen]</span>
+                                @endif
                             </div>
-                        </div>
-                    </a>
-                </div>
-            @endfor
+                            <div class="p-5">
+                                <h3 class="text-md font-bold text-beige-900 mb-2 truncate group-hover:text-beige-600 transition">{{ $product->name }}</h3>
+                                <div class="flex items-center justify-between mt-4">
+                                    <span class="text-lg font-black text-beige-900">€{{ number_format($product->base_price, 2) }}</span>
+                                    <span class="text-xs font-bold bg-beige-100 text-beige-800 px-2 py-1 rounded">Ver Info</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @empty
+                    <p class="text-beige-600 col-span-full">Aún no hay obras disponibles para este artista.</p>
+                @endforelse
+            @endif
         </div>
     </div>
 </div>

@@ -30,16 +30,16 @@
 
                             <!-- Navigation Links -->
                             <div class="hidden sm:-my-px sm:ml-10 sm:flex sm:space-x-8">
-                                <a href="{{ url('/') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
+                                <a href="{{ route('home') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
                                     Inicio
                                 </a>
-                                <a href="{{ url('/products') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
+                                <a href="{{ route('products.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
                                     Catálogo
                                 </a>
-                                <a href="{{ url('/artists') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
+                                <a href="{{ route('artists.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
                                     Artistas
                                 </a>
-                                <a href="{{ url('/categories') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
+                                <a href="{{ route('categories.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-semibold text-beige-700 hover:text-beige-900 hover:border-beige-400 focus:outline-none transition">
                                     Disciplinas
                                 </a>
                             </div>
@@ -81,8 +81,8 @@
                     <div>
                         <h4 class="text-sm font-bold text-beige-50 uppercase tracking-wider mb-4">Enlaces Rápidos</h4>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="#" class="hover:text-beige-50 transition">Catálogo</a></li>
-                            <li><a href="#" class="hover:text-beige-50 transition">Artistas</a></li>
+                            <li><a href="{{ route('products.index') }}" class="hover:text-beige-50 transition">Catálogo</a></li>
+                            <li><a href="{{ route('artists.index') }}" class="hover:text-beige-50 transition">Artistas</a></li>
                             <li><a href="#" class="hover:text-beige-50 transition">Autenticidad</a></li>
                         </ul>
                     </div>

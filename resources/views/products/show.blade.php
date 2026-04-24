@@ -16,7 +16,9 @@
             <div class="md:w-1/2 p-8 lg:p-12">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-sm font-semibold tracking-widest text-beige-500 uppercase">
-                        <a href="{{ url('/categories/1') }}" class="hover:text-beige-800">Categoría</a> / Tazas
+                        @if($product->category)
+                        <a href="{{ route('categories.show', $product->category->id) }}" class="hover:text-beige-800">Categoría</a> / {{ $product->category->name }}
+                        @endif
                     </span>
                     <span class="text-xs text-green-700 bg-green-50 px-2 py-1 rounded-sm border border-green-200 flex items-center font-medium shadow-sm">
                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
@@ -24,13 +26,17 @@
                     </span>
                 </div>
                 
-                <h1 class="text-3xl lg:text-4xl font-extrabold text-beige-900 mb-2">Mug de Cerámica Exclusivo</h1>
-                <p class="text-lg text-beige-600 mb-6 border-b border-beige-200 pb-4">Obra original de <a href="{{ url('/artists/1') }}" class="font-semibold text-beige-800 hover:text-beige-600 transition">Autor Demo</a></p>
+                <h1 class="text-3xl lg:text-4xl font-extrabold text-beige-900 mb-2">{{ $product->name }}</h1>
+                <p class="text-lg text-beige-600 mb-6 border-b border-beige-200 pb-4">Obra original de 
+                    @if($product->artist)
+                    <a href="{{ route('artists.show', $product->artist->id) }}" class="font-semibold text-beige-800 hover:text-beige-600 transition">{{ $product->artist->name }}</a>
+                    @endif
+                </p>
                 
-                <div class="text-4xl font-bold text-beige-900 mb-8">€15.00</div>
+                <div class="text-4xl font-bold text-beige-900 mb-8">€{{ number_format($product->base_price, 2) }}</div>
                 
                 <div class="prose prose-beige text-beige-700 mb-8">
-                    <p>Esta taza cuenta con una reproducción de alta calidad y verificada de una de las pinturas más célebres de nuestro autor. Supervisado durante todo su proceso creativo para asegurar que los colores coinciden con la obra original.</p>
+                    <p>{{ $product->description ?? 'Sin descripción disponible.' }}</p>
                 </div>
                 
                 <div class="bg-beige-50 p-6 rounded-lg border border-beige-200 mb-8">
@@ -47,11 +53,11 @@
                 <div class="space-y-3">
                     <div class="flex text-sm border-b border-beige-100 pb-2">
                         <span class="font-semibold text-beige-800 w-32">SKU:</span>
-                        <span class="text-beige-600">EXT-ART-99901</span>
+                        <span class="text-beige-600">{{ $product->sku }}</span>
                     </div>
                     <div class="flex text-sm pb-2">
                         <span class="font-semibold text-beige-800 w-32">Disponibilidad:</span>
-                        <span class="text-beige-600">En stock (15)</span>
+                        <span class="text-beige-600">En stock</span>
                     </div>
                 </div>
             </div>
