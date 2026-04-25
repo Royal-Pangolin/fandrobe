@@ -2,104 +2,233 @@
 @section('title', 'Perfil de Artista')
 
 @section('content')
-<div class="bg-white">
-    <!-- Artist Banner -->
-    <div class="h-[400px] bg-beige-300 relative overflow-hidden">
-        <div class="absolute inset-0 flex items-center justify-center text-beige-600 text-lg font-medium">
-            [Banner del Artista Cover]
+    <!-- Artist Banner (Spotify Style) -->
+    <div class="position-relative" style="height: 50vh; min-height: 400px; background-color: var(--color-secondary); margin-top: -76px;">
+        <!-- Placeholder for background image -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-light opacity-25">
+            <span class="display-1 fw-bold">{{ substr($artist->name, 0, 1) }}</span>
         </div>
-        <div class="absolute bottom-0 w-full bg-gradient-to-t from-beige-900/90 via-beige-900/50 to-transparent pt-32 pb-8 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end">
-                <div class="w-32 h-32 md:w-40 md:h-40 bg-white rounded-xl border-4 border-white shadow-2xl overflow-hidden mb-4 md:mb-0 md:mr-8 flex items-center justify-center text-beige-500 bg-beige-100 shrink-0">
-                    [Avatar]
-                </div>
-                <div class="pb-2">
-                    <span class="inline-block bg-beige-50/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3 border border-white/20">Pintor</span>
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight">{{ $artist->name }}</h1>
-                    <div class="flex items-center text-beige-100 text-sm font-medium">
-                        <svg class="w-5 h-5 mr-1.5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        Identidad Verificada por Everlasting Art
-                    </div>
-                </div>
-                <!-- Action button -->
-                <div class="mt-6 md:mt-0 md:ml-auto pb-2">
-                    <button class="bg-white text-beige-900 font-bold px-6 py-3 rounded-md hover:bg-beige-100 transition shadow-lg flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                        Seguir Artista
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Artist Bio / Info -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-            <div class="md:col-span-2">
-                <h2 class="text-3xl font-extrabold text-beige-900 mb-6">Sobre el Autor</h2>
-                <div class="prose prose-lg prose-beige text-beige-700">
-                    <p>Esta es la biografía del artista. Aquí se detallan sus inspiraciones académicas, la proveniencia de su arte y los valores que comparte con el público.</p>
-                    <p>Todas las obras adquiridas a través de Everlasting Art vienen firmadas o certificadas, asegurando al comprador que recibe un artículo legítimo y con altos estándares de calidad, supervisando mano a mano con el artista cada impresión o producto derivado de su obra magna.</p>
-                </div>
-            </div>
+        <!-- Gradient overlay -->
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(transparent 0%, rgba(30, 28, 25, 0.9) 100%);"></div>
+
+        <div class="container-fluid px-4 px-lg-5 position-relative h-100 d-flex align-items-end justify-content-between pb-4">
             <div>
-                <div class="bg-beige-50/50 p-8 rounded-2xl border border-beige-200 shadow-sm">
-                    <h3 class="text-sm font-bold uppercase tracking-widest text-beige-500 mb-6 pb-4 border-b border-beige-200">Información Rápida</h3>
-                    <ul class="space-y-5">
-                        <li class="flex flex-col">
-                            <span class="text-xs font-semibold text-beige-500 uppercase tracking-wide mb-1">Género Principal</span>
-                            <span class="font-bold text-beige-900">{{ $artist->genre->name ?? 'Varios' }}</span>
-                        </li>
-                        <li class="flex flex-col">
-                            <span class="text-xs font-semibold text-beige-500 uppercase tracking-wide mb-1">Obras Disponibles</span>
-                            <span class="font-bold text-beige-900">{{ $artist->products ? $artist->products->count() : 0 }} Artículos</span>
-                        </li>
-                        <li class="flex flex-col">
-                            <span class="text-xs font-semibold text-beige-500 uppercase tracking-wide mb-1">Miembro desde</span>
-                            <span class="font-bold text-beige-900">{{ $artist->created_at ? $artist->created_at->format('M Y') : '2026' }}</span>
-                        </li>
-                    </ul>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <svg width="24" height="24" fill="#6E7556" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"></path></svg>
+                    <span class="text-white fw-bold">Artista Verificado</span>
                 </div>
+
+                <h1 class="fw-bolder text-white mb-0" style="letter-spacing: -0.04em; font-size: clamp(4rem, 8vw, 8rem); line-height: 1;">
+                    {{ $artist->name }}
+                </h1>
+            </div>
+
+            <div class="mb-2">
+                <button class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</button>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Merch / Products -->
-<div class="bg-beige-100 py-20 border-t border-beige-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-end mb-10">
-            <h2 class="text-3xl font-bold text-beige-900">Catálogo del Artista</h2>
-            <a href="#" class="text-beige-600 hover:text-beige-900 font-semibold text-sm">Ver todo &rarr;</a>
+    <!-- Main Content -->
+    <div class="container-fluid px-4 px-lg-5 py-4 pb-5">
+
+        {{-- Toolbar: buscador + filtro de categoría --}}
+        @php
+            $allProducts = $artist->products ?? collect();
+            $categories = $allProducts->pluck('category')->filter()->unique('id')->values();
+        @endphp
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-5">
+            <div>
+                <span class="text-muted fw-bold" style="font-size: 0.9rem;">
+                    {{ $allProducts->count() }} obras disponibles
+                </span>
+            </div>
+            <div class="d-flex gap-3 flex-wrap">
+                {{-- Buscador --}}
+                <div style="width: 250px;">
+                    <input type="text" id="artistProductSearch" class="form-control rounded-pill py-2 px-4"
+                           placeholder="Buscar obra..."
+                           style="font-size: 0.875rem; background: rgba(30,28,25,0.04); border: 1px solid rgba(30,28,25,0.12);">
+                </div>
+                {{-- Filtro de categoría --}}
+                <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold"
+                        style="max-width: 200px; font-size: 0.85rem;">
+                    <option value="all">Todas las categorías</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ Str::slug($cat->name) }}">{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            @if($artist->products)
-                @forelse ($artist->products->take(4) as $product)
-                    <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-beige-200 group hover:shadow-md transition duration-300">
-                        <a href="{{ route('products.show', $product->id) }}" class="block">
-                            <div class="h-56 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-500 relative">
-                                @if($product->images && $product->images->count() > 0)
-                                    @php $imgUrl = $product->images->first()->url; @endphp
-                                    <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                                @else
-                                    <span>[Imagen]</span>
-                                @endif
-                            </div>
-                            <div class="p-5">
-                                <h3 class="text-md font-bold text-beige-900 mb-2 truncate group-hover:text-beige-600 transition">{{ $product->name }}</h3>
-                                <div class="flex items-center justify-between mt-4">
-                                    <span class="text-lg font-black text-beige-900">€{{ number_format($product->base_price, 2) }}</span>
-                                    <span class="text-xs font-bold bg-beige-100 text-beige-800 px-2 py-1 rounded">Ver Info</span>
+
+        {{-- ============================================================
+             OBRAS POPULARES — Fila horizontal (todas las categorías)
+        ============================================================ --}}
+        @if($allProducts->count())
+            <div class="artist-category-section mb-5" data-category="all">
+                <div class="d-flex justify-content-between align-items-end mb-3">
+                    <h3 class="fw-bold mb-0" style="letter-spacing: -0.02em;">Obras Populares</h3>
+                    <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">{{ $allProducts->count() }} obras</span>
+                </div>
+
+                <div class="horizontal-scroll-row d-flex gap-3 pb-3"
+                     style="overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+                    @foreach($allProducts as $product)
+                        <a href="{{ route('products.show', $product->id) }}"
+                           class="text-decoration-none flex-shrink-0 artist-product-card"
+                           style="width: 200px; scroll-snap-align: start;"
+                           data-name="{{ strtolower($product->name) }}"
+                           data-category="{{ $product->category ? Str::slug($product->category->name) : '' }}">
+                            <div class="card h-100">
+                                <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
+                                    @if($product->images && $product->images->count() > 0)
+                                        @php $imgUrl = $product->images->first()->url; @endphp
+                                        <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
+                                             alt="{{ $product->name }}" class="card-img-top">
+                                    @else
+                                        <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
+                                            <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        </div>
+                                    @endif
+                                    <button class="card-action-btn" style="width: 40px; height: 40px; bottom: 12px; right: 12px;">
+                                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <h5 class="card-title mt-2" style="font-size: 0.9rem;">{{ $product->name }}</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
+                                    <span class="badge badge-verified" style="font-size: 0.6rem;">Oficial</span>
                                 </div>
                             </div>
                         </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        {{-- ============================================================
+             LISTAS POR CATEGORÍA — Una fila horizontal por cada categoría
+        ============================================================ --}}
+        @foreach($categories as $cat)
+            @php
+                $catProducts = $allProducts->filter(fn($p) => $p->category && $p->category->id === $cat->id);
+            @endphp
+            @if($catProducts->count())
+                <div class="artist-category-section mb-5" data-category="{{ Str::slug($cat->name) }}">
+                    <div class="d-flex justify-content-between align-items-end mb-3">
+                        <h3 class="fw-bold mb-0" style="letter-spacing: -0.02em;">{{ $cat->name }}</h3>
+                        <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">{{ $catProducts->count() }} obras</span>
                     </div>
-                @empty
-                    <p class="text-beige-600 col-span-full">Aún no hay obras disponibles para este artista.</p>
-                @endforelse
+
+                    <div class="horizontal-scroll-row d-flex gap-3 pb-3"
+                         style="overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+                        @foreach($catProducts as $product)
+                            <a href="{{ route('products.show', $product->id) }}"
+                               class="text-decoration-none flex-shrink-0 artist-product-card"
+                               style="width: 200px; scroll-snap-align: start;"
+                               data-name="{{ strtolower($product->name) }}"
+                               data-category="{{ Str::slug($cat->name) }}">
+                                <div class="card h-100">
+                                    <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
+                                        @if($product->images && $product->images->count() > 0)
+                                            @php $imgUrl = $product->images->first()->url; @endphp
+                                            <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
+                                                 alt="{{ $product->name }}" class="card-img-top">
+                                        @else
+                                            <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
+                                                <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            </div>
+                                        @endif
+                                        <button class="card-action-btn" style="width: 40px; height: 40px; bottom: 12px; right: 12px;">
+                                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <h5 class="card-title mt-2" style="font-size: 0.9rem;">{{ $product->name }}</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
+                                        <span class="badge badge-verified" style="font-size: 0.6rem;">Oficial</span>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
             @endif
+        @endforeach
+
+        <!-- About Section -->
+        <div class="mt-5">
+            <h4 class="fw-bold mb-3 text-dark">Acerca de</h4>
+            <div class="p-4 rounded" style="background-color: rgba(30, 28, 25, 0.04); max-width: 800px;">
+                <p class="text-muted lh-lg fs-5 mb-4">
+                    {{ $artist->bio ?? 'No hay biografía disponible de momento. Este autor colabora en la plataforma ofreciendo contenido exclusivo garantizando el 100% de autenticidad en cada firma.' }}
+                </p>
+
+                <div class="d-flex gap-5 flex-wrap">
+                    <div>
+                        <span class="d-block small text-muted text-uppercase mb-1">Género Principal</span>
+                        <span class="fw-bold fs-5">{{ $artist->genre->name ?? 'Varios' }}</span>
+                    </div>
+                    <div>
+                        <span class="d-block small text-muted text-uppercase mb-1">Obras Disponibles</span>
+                        <span class="fw-bold fs-5">{{ $allProducts->count() }} Artículos</span>
+                    </div>
+                    <div>
+                        <span class="d-block small text-muted text-uppercase mb-1">Miembro desde</span>
+                        <span class="fw-bold fs-5">{{ $artist->created_at ? $artist->created_at->format('M Y') : '2026' }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
 @endsection
+
+@push('scripts')
+<script>
+    (function () {
+        const searchInput = document.getElementById('artistProductSearch');
+        const categoryFilter = document.getElementById('artistCategoryFilter');
+        const sections = document.querySelectorAll('.artist-category-section');
+        const cards = document.querySelectorAll('.artist-product-card');
+
+        function applyFilters() {
+            const searchTerm = (searchInput?.value || '').toLowerCase().trim();
+            const selectedCategory = categoryFilter?.value || 'all';
+
+            // Filtrar secciones de categoría
+            sections.forEach(section => {
+                const sectionCat = section.getAttribute('data-category');
+
+                // Si se seleccionó una categoría específica, ocultar todas las secciones excepto "Obras Populares"
+                if (selectedCategory !== 'all') {
+                    // Ocultar "Obras Populares" y mostrar solo la sección de la categoría seleccionada
+                    if (sectionCat === 'all') {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = sectionCat === selectedCategory ? '' : 'none';
+                    }
+                } else {
+                    section.style.display = '';
+                }
+            });
+
+            // Filtrar tarjetas individuales por búsqueda de texto
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                const matchesSearch = !searchTerm || name.includes(searchTerm);
+                card.style.display = matchesSearch ? '' : 'none';
+            });
+        }
+
+        if (searchInput) searchInput.addEventListener('input', applyFilters);
+        if (categoryFilter) categoryFilter.addEventListener('change', applyFilters);
+    })();
+</script>
+@endpush
