@@ -15,7 +15,7 @@ class ArtistController extends Controller
 
     public function show($id)
     {
-        $artist = Artist::with(['products', 'genre'])->findOrFail($id);
+        $artist = Artist::with(['products.category', 'products.images', 'genre'])->findOrFail($id);
 
         return view('artists.show', compact('artist'));
     }

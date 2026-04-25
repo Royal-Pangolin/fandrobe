@@ -1,67 +1,126 @@
 @extends('layouts.app')
-@section('title', 'Detalle de Producto')
+@section('title', $product->name)
 
 @section('content')
-<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-    <div class="bg-white rounded-xl shadow-sm border border-beige-200 overflow-hidden">
-        <div class="md:flex">
-            <!-- Product Images -->
-            <div class="md:w-1/2 p-8 bg-beige-50 border-r border-beige-200 flex items-center justify-center min-h-[400px]">
-                <div class="text-beige-400 font-medium text-lg">
-                    [Galería de Imágenes]
-                </div>
+<div class="container-fluid px-4 px-lg-5 py-5">
+
+    {{-- Breadcrumb --}}
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb" style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a></li>
+            @if($product->category)
+                <li class="breadcrumb-item"><a href="{{ route('categories.show', $product->category->id) }}" class="text-decoration-none text-dark">{{ $product->category->name }}</a></li>
+            @endif
+            <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">{{ $product->name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5" style="max-width: 1200px;">
+
+        {{-- ---- Imagen del producto ---- --}}
+        <div class="col-lg-6">
+            <div style="border-radius: 16px; overflow: hidden; background: rgba(30,28,25,0.04); aspect-ratio: 1/1; width: 100%;">
+                @if($product->images && $product->images->count() > 0)
+                    @php $imgUrl = $product->images->first()->url; @endphp
+                    <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
+                         alt="{{ $product->name }}"
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted">
+                        <svg width="80" height="80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span class="mt-3 small text-uppercase fw-bold" style="letter-spacing: 0.1em;">Sin imagen</span>
+                    </div>
+                @endif
             </div>
-            
-            <!-- Product Info -->
-            <div class="md:w-1/2 p-8 lg:p-12">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-sm font-semibold tracking-widest text-beige-500 uppercase">
-                        @if($product->category)
-                        <a href="{{ route('categories.show', $product->category->id) }}" class="hover:text-beige-800">Categoría</a> / {{ $product->category->name }}
-                        @endif
-                    </span>
-                    <span class="text-xs text-green-700 bg-green-50 px-2 py-1 rounded-sm border border-green-200 flex items-center font-medium shadow-sm">
-                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        Autenticado
-                    </span>
-                </div>
-                
-                <h1 class="text-3xl lg:text-4xl font-extrabold text-beige-900 mb-2">{{ $product->name }}</h1>
-                <p class="text-lg text-beige-600 mb-6 border-b border-beige-200 pb-4">Obra original de 
-                    @if($product->artist)
-                    <a href="{{ route('artists.show', $product->artist->id) }}" class="font-semibold text-beige-800 hover:text-beige-600 transition">{{ $product->artist->name }}</a>
-                    @endif
+        </div>
+
+        {{-- ---- Info del producto ---- --}}
+        <div class="col-lg-6">
+
+            {{-- Badges superiores --}}
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="badge badge-verified d-flex align-items-center gap-1">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    Autenticado
+                </span>
+                @if($product->category)
+                    <span class="badge badge-limited">{{ $product->category->name }}</span>
+                @endif
+            </div>
+
+            {{-- Artista --}}
+            @if($product->artist)
+                <a href="{{ route('artists.show', $product->artist->id) }}"
+                   class="text-decoration-none text-muted fw-bold text-uppercase mb-2 d-block"
+                   style="font-size: 0.85rem; letter-spacing: 0.1em;">
+                    {{ $product->artist->name }}
+                </a>
+            @endif
+
+            {{-- Nombre --}}
+            <h1 class="fw-bolder mb-4" style="font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.05;">
+                {{ $product->name }}
+            </h1>
+
+            {{-- Precio --}}
+            <div class="mb-4 d-flex align-items-baseline gap-3">
+                <span class="fw-bolder" style="font-size: 2.5rem; letter-spacing: -0.02em;">
+                    €{{ number_format($product->base_price, 2) }}
+                </span>
+                <span class="text-muted small text-uppercase fw-bold" style="letter-spacing: 0.08em;">IVA incluido</span>
+            </div>
+
+            {{-- Descripción --}}
+            @if($product->description)
+                <p class="text-muted lh-lg mb-4" style="font-size: 1.05rem; max-width: 480px;">
+                    {{ $product->description }}
                 </p>
-                
-                <div class="text-4xl font-bold text-beige-900 mb-8">€{{ number_format($product->base_price, 2) }}</div>
-                
-                <div class="prose prose-beige text-beige-700 mb-8">
-                    <p>{{ $product->description ?? 'Sin descripción disponible.' }}</p>
-                </div>
-                
-                <div class="bg-beige-50 p-6 rounded-lg border border-beige-200 mb-8">
-                    <label class="block text-sm font-bold text-beige-800 mb-3">Cantidad</label>
-                    <div class="flex items-center space-x-4">
-                        <input type="number" value="1" min="1" class="w-24 pl-4 pr-2 py-3 border border-beige-300 rounded-md shadow-sm focus:ring-beige-500 focus:border-beige-500 text-beige-900 font-medium">
-                        <button class="flex-1 bg-beige-900 text-beige-50 font-bold py-3 px-8 rounded-md hover:bg-beige-800 transition flex justify-center items-center shadow-md">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            Añadir al carrito
-                        </button>
+            @endif
+
+            {{-- CTA Botones --}}
+            <div class="d-flex flex-column gap-3 mb-5" style="max-width: 400px;">
+                <form action="{{ route('cart.add') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()?->id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold w-100">
+                        Añadir al Carrito
+                    </button>
+                </form>
+                <button class="btn btn-outline-secondary fw-bold w-100 d-flex align-items-center justify-content-center gap-2">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    Guardar en Favoritos
+                </button>
+            </div>
+
+            {{-- Detalles del producto --}}
+            <div class="pt-4" style="border-top: 1px solid rgba(30,28,25,0.1);">
+                <h4 class="fw-bold mb-3" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">Detalles</h4>
+                <div class="d-flex flex-column gap-2">
+                    @if($product->sku)
+                        <div class="d-flex justify-content-between py-2" style="border-bottom: 1px solid rgba(30,28,25,0.06);">
+                            <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">SKU</span>
+                            <span class="fw-bold small">{{ $product->sku }}</span>
+                        </div>
+                    @endif
+                    <div class="d-flex justify-content-between py-2" style="border-bottom: 1px solid rgba(30,28,25,0.06);">
+                        <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">Disponibilidad</span>
+                        <span class="fw-bold small" style="color: var(--color-verified);">En stock</span>
                     </div>
-                </div>
-                
-                <div class="space-y-3">
-                    <div class="flex text-sm border-b border-beige-100 pb-2">
-                        <span class="font-semibold text-beige-800 w-32">SKU:</span>
-                        <span class="text-beige-600">{{ $product->sku }}</span>
-                    </div>
-                    <div class="flex text-sm pb-2">
-                        <span class="font-semibold text-beige-800 w-32">Disponibilidad:</span>
-                        <span class="text-beige-600">En stock</span>
-                    </div>
+                    @if($product->artist)
+                        <div class="d-flex justify-content-between py-2">
+                            <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">Artista</span>
+                            <a href="{{ route('artists.show', $product->artist->id) }}" class="fw-bold small text-decoration-none text-dark">
+                                {{ $product->artist->name }}
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 @endsection
+
