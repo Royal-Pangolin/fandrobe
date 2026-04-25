@@ -1,51 +1,48 @@
 @extends('layouts.app')
 @section('title', 'Nuestros Artistas')
-@section('header')
-    <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-        <div>
-            <h2 class="font-bold text-3xl text-beige-900 leading-tight">
-                Directorio de Artistas
-            </h2>
-            <p class="text-beige-600 mt-2 text-lg">Descubre a los creadores detrás de las obras auténticas.</p>
-        </div>
-        <div class="mt-4 md:mt-0">
-            <input type="text" placeholder="Buscar artista..." class="px-4 py-2 border border-beige-300 rounded-md focus:ring-beige-500 focus:border-beige-500 text-beige-900 shadow-sm w-full md:w-64">
-        </div>
-    </div>
-@endsection
 
 @section('content')
-<div class="bg-beige-50 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            @forelse ($artists as $artist)
-                <div class="bg-white rounded-2xl shadow-sm border border-beige-200 overflow-hidden group hover:shadow-lg transition duration-300 transform hover:-translate-y-1">
-                    <div class="h-56 bg-beige-200 relative">
-                        <div class="absolute inset-0 flex items-center justify-center text-beige-500 text-sm font-medium">
-                            [Foto de {{ $artist->name }}]
+<div class="hero-gradient px-3 mb-5">
+    <div class="container-fluid px-4 px-lg-5 text-center pb-5">
+        <h1 class="display-3 text-shadow mb-3 fw-bolder" style="letter-spacing: -0.03em;">
+            Nuestros Artistas
+        </h1>
+        <p class="lead text-shadow mx-auto mb-5" style="max-width: 600px; opacity: 0.9;">
+            Descubre el talento que da vida a nuestras piezas exclusivas. Cada artista es verificado oficialmente.
+        </p>
+        <div class="d-flex justify-content-center">
+            <div class="position-relative" style="width: 100%; max-width: 400px;">
+                <input type="text" class="form-control rounded-pill py-3 px-4 shadow-sm" placeholder="Buscar artista..." style="background-color: var(--color-primary); border: none;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid px-4 px-lg-5 mb-5 pb-5">
+    <div class="row g-4 row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+        @forelse ($artists as $artist)
+            <div class="col">
+                <a href="{{ route('artists.show', $artist->id) }}" class="artist-portrait-card">
+                    <div class="artist-img-wrapper">
+                        <!-- Reemplazar con la imagen real cuando el backend la soporte -->
+                        <div class="placeholder-img">
+                            {{ substr($artist->name, 0, 1) }}
                         </div>
                     </div>
-                    <div class="p-6 text-center relative">
-                        <!-- Pequeño badge superpuesto -->
-                        <div class="absolute -top-4 right-4 bg-white p-1 rounded-full shadow-sm border border-beige-100">
-                            <span class="bg-green-50 text-green-600 rounded-full w-6 h-6 flex items-center justify-center">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            </span>
-                        </div>
-                        
-                        <h3 class="text-xl font-extrabold text-beige-900 mb-1 line-clamp-1">{{ $artist->name }}</h3>
-                        <p class="text-sm text-beige-500 font-medium mb-5">{{ $artist->genre->name ?? 'Artista' }}</p>
-                        <a href="{{ route('artists.show', $artist->id) }}" class="inline-block border-2 text-sm border-beige-300 text-beige-800 px-6 py-2 rounded-full hover:bg-beige-800 hover:text-white transition font-bold">Ver Perfil Completo</a>
+                    <div class="artist-name-reveal">
+                        {{ $artist->name }}
                     </div>
-                </div>
-            @empty
-                <div class="col-span-full text-center text-beige-600">No hay artistas disponibles en este momento.</div>
-            @endforelse
-        </div>
-        
-        <div class="mt-12 flex justify-center">
-             <button class="bg-beige-200 text-beige-800 font-semibold px-8 py-3 rounded-md hover:bg-beige-300 transition">Cargar más artistas</button>
-        </div>
+                </a>
+            </div>
+        @empty
+            <div class="col-12 text-center text-muted py-5">
+                <h4>No hay artistas disponibles en este momento.</h4>
+            </div>
+        @endforelse
+    </div>
+    
+    <div class="mt-5 pt-4 d-flex justify-content-center">
+        <button class="btn btn-outline-secondary rounded-pill fw-bold px-5 py-3">Cargar Más</button>
     </div>
 </div>
 @endsection

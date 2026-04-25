@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -16,3 +17,10 @@ Route::get('/artistas/{id}', [ArtistController::class, 'show'])->name('artists.s
 
 Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categorias/{id}', [CategoryController::class, 'show'])->name('categories.show');
+
+// Carrito
+Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
+Route::post('/carrito/añadir', [CartController::class, 'add'])->name('cart.add');
+Route::put('/carrito/actualizar/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/carrito/eliminar/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/carrito/descuento', [CartController::class, 'applyDiscount'])->name('cart.discount');

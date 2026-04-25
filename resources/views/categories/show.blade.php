@@ -1,85 +1,112 @@
 @extends('layouts.app')
-@section('title', 'Categoría')
-
-@section('header')
-    <div class="flex items-center text-sm text-beige-500 mb-4 font-medium tracking-wide">
-        <a href="{{ route('categories.index') }}" class="hover:text-beige-800 transition">Disciplinas</a>
-        <span class="mx-3 border-r border-beige-300 h-4"></span>
-        <span class="text-beige-900 font-bold">{{ $category->name }}</span>
-    </div>
-    
-    <div class="md:flex md:items-center md:justify-between">
-        <div class="md:w-2/3">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-beige-900 mb-6 tracking-tight">{{ $category->name }}</h1>
-            <p class="text-lg text-beige-600 max-w-3xl leading-relaxed">{{ $category->description ?? 'Bienvenido a esta colección. Aquí encontrarás piezas únicas y certificadas.' }}</p>
-        </div>
-        <div class="mt-8 md:mt-0 md:w-1/3 flex md:justify-end">
-            <div class="bg-beige-50 border border-beige-200 rounded-xl p-6 text-center shadow-sm">
-                <span class="block text-3xl font-black text-beige-900 mb-1">{{ $products->count() }}</span>
-                <span class="block text-sm font-semibold text-beige-600 uppercase tracking-widest">Obras Disponibles</span>
-            </div>
-        </div>
-    </div>
-@endsection
+@section('title', $category->name)
 
 @section('content')
-<div class="bg-beige-50 min-h-screen">
-    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        
-        <!-- Controls -->
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-10 pb-6 border-b border-beige-200">
-            <div class="text-beige-600 font-medium text-sm mb-4 sm:mb-0">
-                Mostrando <span class="font-bold text-beige-900">24</span> de 124 productos
-            </div>
-            <div class="flex items-center space-x-4 w-full sm:w-auto">
-                <label class="text-sm font-bold text-beige-700 whitespace-nowrap">Ordenar por:</label>
-                <select class="form-select block w-full sm:w-48 pl-3 pr-10 py-2 text-base border-beige-300 focus:outline-none focus:ring-beige-500 focus:border-beige-500 sm:text-sm rounded-md bg-white text-beige-900 font-medium">
-                    <option>Más recientes</option>
-                    <option>Precio: Mayor a Menor</option>
-                    <option>Precio: Menor a Mayor</option>
-                    <option>Más populares</option>
-                </select>
-            </div>
+
+    {{-- Category Hero --}}
+    <div class="position-relative overflow-hidden" style="height: 40vh; min-height: 300px; margin-top: -76px;
+         background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B'][$category->id % 5] }};">
+
+        {{-- Letra gigante fondo --}}
+        <div class="position-absolute top-50 start-50 translate-middle text-white"
+             style="font-size: 40vw; font-weight: 900; line-height: 1; opacity: 0.06; user-select: none; pointer-events: none;">
+            {{ substr($category->name, 0, 1) }}
         </div>
 
-        <!-- Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            @forelse ($products as $product)
-                <div class="bg-white rounded-xl shadow-sm border border-beige-200 group hover:shadow-lg hover:-translate-y-1 transition duration-300 overflow-hidden flex flex-col h-full">
-                    <a href="{{ route('products.show', $product->id) }}" class="block flex-grow relative">
-                        <div class="absolute top-3 left-3 z-10 space-y-2">
-                             <!-- Badge opcional -->
-                             @if($loop->first)
-                                <span class="bg-beige-900 text-beige-50 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow">Destaque</span>
-                             @endif
-                        </div>
-                        <div class="h-64 bg-beige-200 flex items-center justify-center text-beige-500 group-hover:bg-beige-300 transition duration-300">
-                            @if($product->images && $product->images->count() > 0)
-                                @php $imgUrl = $product->images->first()->url; @endphp
-                                <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                            @else
-                                [Imagen de {{ $product->name }}]
-                            @endif
-                        </div>
-                        <div class="p-5">
-                            <span class="text-xs font-semibold text-beige-500 uppercase tracking-widest block mb-2">{{ $product->artist->name ?? 'Autor Demo' }}</span>
-                            <h3 class="text-lg font-bold text-beige-900 mb-2 line-clamp-2">{{ $product->name }}</h3>
-                        </div>
-                    </a>
-                    <div class="p-5 pt-0 mt-auto border-t border-beige-100 bg-beige-50/30 flex justify-between items-center">
-                        <span class="font-black text-xl text-beige-900">€{{ number_format($product->base_price, 2) }}</span>
-                        <a href="{{ route('products.show', $product->id) }}" class="text-sm font-bold bg-white border border-beige-300 text-beige-800 px-4 py-2 rounded-md hover:bg-beige-100 transition shadow-sm">Ver info</a>
-                    </div>
-                </div>
-            @empty
-                <p class="text-beige-600 col-span-full text-center">No hay productos en esta categoría por ahora.</p>
-            @endforelse
-        </div>
-        
-        <!-- Pagination -->
-        <div class="mt-16 flex justify-center">
-            <button class="bg-beige-900 text-white font-bold px-10 py-4 rounded-md hover:bg-beige-800 shadow-md transition">Ver más de esta disciplina</button>
+        {{-- Degradado hacia beige --}}
+        <div class="position-absolute top-0 start-0 w-100 h-100"
+             style="background: linear-gradient(to bottom, rgba(30,28,25,0.2) 0%, rgba(30,28,25,0.0) 40%, var(--color-primary) 100%);
+                    pointer-events: none;"></div>
+
+        {{-- Info categoría --}}
+        <div class="container-fluid px-4 px-lg-5 position-relative h-100 d-flex flex-column justify-content-end pb-4">
+            <nav aria-label="breadcrumb" class="mb-2">
+                <ol class="breadcrumb mb-0" style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7;">
+                    <li class="breadcrumb-item"><a href="{{ route('categories.index') }}" class="text-white text-decoration-none">Disciplinas</a></li>
+                    <li class="breadcrumb-item active text-white fw-bold" aria-current="page">{{ $category->name }}</li>
+                </ol>
+            </nav>
+
+            <div class="d-flex align-items-end justify-content-between">
+                <h1 class="fw-bolder text-white mb-0"
+                    style="font-size: clamp(3rem, 7vw, 7rem); letter-spacing: -0.04em; line-height: 1;">
+                    {{ $category->name }}
+                </h1>
+                <span class="text-white fw-bold mb-2 opacity-75">
+                    {{ $products->count() }} obras
+                </span>
+            </div>
         </div>
     </div>
-</div>
+
+    {{-- Main Content --}}
+    <div class="container-fluid px-4 px-lg-5 py-4 pb-5">
+
+        {{-- Descripción + Toolbar --}}
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5 gap-3">
+            <p class="text-muted mb-0 lh-lg" style="max-width: 500px;">
+                {{ $category->description ?? 'Bienvenido a esta colección. Aquí encontrarás piezas únicas y certificadas.' }}
+            </p>
+            <select class="form-select rounded-pill fw-bold" style="max-width: 220px; font-size: 0.85rem;">
+                <option>Ordenar: Destacados</option>
+                <option>Precio: menor a mayor</option>
+                <option>Precio: mayor a menor</option>
+            </select>
+        </div>
+
+        {{-- Grid de productos --}}
+        <div class="row g-4 row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+            @forelse ($products as $product)
+                <div class="col">
+                    <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                        <div class="card h-100 position-relative">
+
+                            @if($loop->first)
+                                <span class="badge badge-limited position-absolute m-2"
+                                      style="top: 0; left: 0; z-index: 2; font-size: 0.65rem;">Destaque</span>
+                            @endif
+
+                            <div class="card-img-wrapper">
+                                @if($product->images && $product->images->count() > 0)
+                                    @php $imgUrl = $product->images->first()->url; @endphp
+                                    <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
+                                         alt="{{ $product->name }}" class="card-img-top">
+                                @else
+                                    <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
+                                        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                @endif
+
+                                <button class="card-action-btn">
+                                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <span class="text-muted mt-2 d-block" style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">
+                                {{ $product->artist->name ?? 'Artista Oficial' }}
+                            </span>
+                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
+                        </div>
+                    </a>
+                </div>
+            @empty
+                <div class="col-12 text-center text-muted py-5">
+                    <h4>No hay obras en esta categoría.</h4>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Cargar más --}}
+        @if($products->count() >= 12)
+            <div class="mt-5 d-flex justify-content-center">
+                <button class="btn btn-outline-secondary rounded-pill fw-bold px-5 py-3">
+                    Cargar más resultados
+                </button>
+            </div>
+        @endif
+    </div>
+
 @endsection
