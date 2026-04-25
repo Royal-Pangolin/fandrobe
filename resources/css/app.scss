@@ -1,0 +1,493 @@
+// Paleta de colores principal
+$color-primario: #F7F1E7; // Beige principal: fondo base, identidad visual
+$color-secundario: #4B352A; // Marrón archivo: navegación, secciones fuertes
+$color-acentuacion: #B08A47; // Dorado viejo: CTAs
+$color-sombra: #1E1C19; // Negro tinta cálido: texto fuerte
+$color-neutro: #e6d198; // Marfil papel: cards, fondos alternativos
+
+// Colores adicionales
+$color-verified: #6E7556;
+$color-error: #A84632;
+$color-muted: #746A5F;
+
+:root {
+    --color-primary: #{$color-primario};
+    --color-secondary: #{$color-secundario};
+    --color-accent: #{$color-acentuacion};
+    --color-shadow: #{$color-sombra};
+    --color-neutral: #{$color-neutro};
+    --color-verified: #{$color-verified};
+    --color-error: #{$color-error};
+    --color-muted: #{$color-muted};
+}
+
+// Asignación de colores Bootstrap
+$primary: $color-primario;
+$secondary: $color-secundario;
+$info: $color-acentuacion;
+$success: $color-verified;
+$danger: $color-error;
+$dark: $color-sombra;
+$light: $color-neutro;
+
+// ---- SPOTIFY-LIKE BEIGE EDITION: Variables ----
+$body-bg: $color-primario;
+$body-color: $color-sombra;
+
+// Tipografías
+$font-family-base: 'Circular Std', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$headings-font-family: $font-family-base;
+$headings-font-weight: 800; // Bold y contundente
+
+// Bordes y Sombras (Estilo Spotify: sin bordes rígidos, mucho redondeo)
+$border-width: 0;
+$border-color: transparent;
+$border-radius: 8px; // Cards ligeramente redondeadas
+$border-radius-sm: 4px;
+$border-radius-lg: 16px;
+$border-radius-pill: 500px; // Botones tipo píldora
+
+$box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+$box-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+$box-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.15);
+
+$enable-shadows: true;
+
+// Opciones de componentes
+$card-bg: rgba($color-secundario, 0.05); // Fondo sutil para las tarjetas
+$card-border-width: 0;
+$card-border-color: transparent;
+
+// Botones
+$btn-border-width: 0;
+$btn-border-radius: $border-radius-pill;
+
+// Navbar
+$navbar-dark-bg: transparent;
+
+@import "bootstrap/scss/bootstrap";
+
+// ---- ESTILOS PERSONALIZADOS: Spotify-Like ----
+
+body {
+    letter-spacing: -0.01em;
+}
+
+// Títulos
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-shadow);
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
+
+// Botones Premium Spotify Style (Píldoras)
+.btn {
+    border-radius: 500px !important;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    padding: 0.75rem 2rem;
+    transition: transform 0.1s ease, filter 0.1s ease;
+    
+    &:hover {
+        transform: scale(1.04);
+        filter: brightness(1.05);
+    }
+    
+    &:active {
+        transform: scale(0.98);
+        filter: brightness(0.9);
+    }
+}
+
+.btn-primary {
+    background-color: var(--color-shadow) !important; // En Spotify el botón principal resalta (verde ahí, aquí usamos el color sombra muy oscuro para contrastar con beige)
+    color: var(--color-primary) !important;
+    box-shadow: none !important;
+}
+
+.btn-secondary, .btn-outline-secondary {
+    background-color: transparent !important;
+    border: 1px solid rgba(30, 28, 25, 0.5) !important;
+    color: var(--color-shadow) !important;
+    
+    &:hover {
+        border-color: var(--color-shadow) !important;
+    }
+}
+
+// Tarjetas tipo Spotify
+.card {
+    background-color: rgba(30, 28, 25, 0.04);
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    box-shadow: none;
+    
+    &:hover {
+        background-color: rgba(30, 28, 25, 0.08);
+        
+        // Mostrar el botón circular de acción flotante (como el play de spotify)
+        .card-action-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .card-img-top {
+        border-radius: 8px;
+        margin-bottom: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+    
+    .card-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: var(--color-shadow);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .card-text {
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+// Botón de acción flotante (estilo Play de Spotify)
+.card-action-btn {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-accent); // Dorado viejo
+    color: var(--color-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+    z-index: 2;
+    border: none;
+    
+    &:hover {
+        transform: translateY(0) scale(1.05) !important;
+        background-color: lighten(#B08A47, 5%);
+    }
+    
+    svg, i {
+        font-size: 24px;
+    }
+}
+
+// Contenedor de la imagen de la card para poder posicionar el botón flotante
+.card-img-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+// Hero Header (Fondo con degradado)
+.hero-gradient {
+    background: linear-gradient(to bottom, rgba(176, 138, 71, 0.4) 0%, var(--color-primary) 100%);
+    padding: 80px 0 40px;
+    margin-top: -76px; // Para subir detrás del navbar
+    padding-top: calc(76px + 40px);
+}
+
+// Formularios
+.form-control, .form-select {
+    background-color: rgba(30, 28, 25, 0.05);
+    border: 1px solid transparent;
+    color: var(--color-shadow);
+    border-radius: 4px;
+
+    &:hover {
+        background-color: rgba(30, 28, 25, 0.08);
+    }
+
+    &:focus {
+        background-color: rgba(30, 28, 25, 0.1);
+        border-color: transparent;
+        box-shadow: 0 0 0 2px var(--color-shadow);
+    }
+}
+
+// Navbar custom
+.navbar {
+    background-color: rgba(247, 241, 231, 0.9) !important; // Beige semi-transparente
+    backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: none;
+    transition: background-color 0.3s ease;
+    
+    .nav-link, .navbar-brand {
+        color: var(--color-shadow) !important;
+        font-weight: 700;
+        letter-spacing: normal;
+        text-transform: none;
+        
+        &:hover {
+            color: var(--color-accent) !important;
+        }
+    }
+}
+
+// Footer
+footer {
+    background-color: var(--color-primary);
+    color: var(--color-shadow);
+    border-top: 1px solid rgba(30, 28, 25, 0.1);
+}
+
+// Badges
+.badge {
+    padding: 0.4em 0.8em;
+    font-weight: 700;
+    text-transform: none;
+    border-radius: 500px;
+}
+
+.badge-verified {
+    background-color: var(--color-verified);
+    color: var(--color-neutral);
+    border: none;
+}
+
+.badge-limited {
+    background-color: var(--color-accent);
+    color: var(--color-shadow);
+    border: none;
+}
+
+.badge-urgent {
+    background-color: var(--color-error);
+    color: var(--color-primary);
+}
+
+.text-muted {
+    color: var(--color-muted) !important;
+}
+
+// Imágenes redondeadas (estilo artistas Spotify)
+.img-artist {
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+// Tarjetas de Artistas (Portrait Reveal)
+.artist-portrait-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    text-decoration: none !important;
+
+    .artist-img-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        aspect-ratio: 3 / 4;
+        width: 100%;
+        position: relative;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        transition: box-shadow 0.4s ease;
+
+        img, .placeholder-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .placeholder-img {
+            background-color: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-size: 5rem;
+            font-weight: 800;
+        }
+    }
+
+    .artist-name-reveal {
+        margin-top: 16px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: all 0.3s ease;
+        color: var(--color-shadow);
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+    }
+
+    &:hover {
+        .artist-img-wrapper {
+            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+
+            img, .placeholder-img {
+                transform: scale(1.1);
+            }
+        }
+
+        .artist-name-reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+// ---- HERO SLIDESHOW ----
+.hero-slide {
+    opacity: 0;
+    transition: opacity 0.9s ease;
+
+    &.active {
+        opacity: 1;
+    }
+}
+
+// Latest release card hover
+.latest-release-card {
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+        background-color: rgba(30, 28, 25, 0.07) !important;
+    }
+}
+
+// Hero artist label transitions
+.hero-artist-label {
+    transition: opacity 0.4s ease;
+}
+
+// Redondear imágenes de artistas en la sección home
+.home-artist-circle {
+    .artist-img-wrapper {
+        border-radius: 50% !important;
+
+        img, .placeholder-img {
+            border-radius: 50% !important;
+        }
+    }
+}
+
+// ---- SCROLL HORIZONTAL (Últimos Lanzamientos) ----
+.horizontal-scroll-row {
+    // Scrollbar delgada y discreta
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(30, 28, 25, 0.15);
+        border-radius: 4px;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(30, 28, 25, 0.3);
+    }
+}
+
+// ---- FOOTER LINKS ----
+.footer-link {
+    opacity: 0.75;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 1;
+        color: var(--color-neutral) !important;
+    }
+}
+
+// ---- PAGINACIÓN ----
+.pagination {
+    .page-link {
+        background-color: transparent;
+        border: 1px solid rgba(30, 28, 25, 0.15);
+        color: var(--color-shadow);
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgba(30, 28, 25, 0.06);
+            border-color: rgba(30, 28, 25, 0.3);
+            color: var(--color-shadow);
+        }
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--color-shadow);
+        border-color: var(--color-shadow);
+        color: var(--color-primary);
+    }
+
+    .page-item.disabled .page-link {
+        opacity: 0.35;
+    }
+}
+
+// ---- FORM RANGE (slider de precio) ----
+.form-range {
+    &::-webkit-slider-thumb {
+        background-color: var(--color-shadow);
+    }
+    &::-webkit-slider-runnable-track {
+        background-color: rgba(30, 28, 25, 0.15);
+    }
+    &:focus::-webkit-slider-thumb {
+        box-shadow: 0 0 0 3px rgba(30, 28, 25, 0.12);
+    }
+}
+
+// ---- FORM CHECKBOX ----
+.form-check-input:checked {
+    background-color: var(--color-shadow);
+    border-color: var(--color-shadow);
+}
+
+// ---- SMOOTH SCROLL GLOBAL ----
+html {
+    scroll-behavior: smooth;
+}
+
+// ---- SELECT PERSONALIZADO ----
+.form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%231E1C19' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+}
+
+// ---- BREADCRUMB ----
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: var(--color-muted);
+}
+
+// ---- NAVBAR: transición a sólido al hacer scroll ----
+.navbar.scrolled {
+    background-color: rgba(247, 241, 231, 0.98) !important;
+    box-shadow: 0 2px 16px rgba(30, 28, 25, 0.08) !important;
+}
+
+// ---- SELECCIÓN DE TEXTO ----
+::selection {
+    background-color: var(--color-accent);
+    color: var(--color-shadow);
+}
