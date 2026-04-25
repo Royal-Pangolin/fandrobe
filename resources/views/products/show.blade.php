@@ -78,19 +78,13 @@
             @endif
 
             {{-- CTA Botones --}}
-            {{-- Toast de confirmación --}}
-            <div id="cart-toast" class="d-none align-items-center gap-2 px-4 py-3 rounded-3 mb-3"
-                 style="background: rgba(110,117,86,0.12); border: 1px solid rgba(110,117,86,0.3); color: #4a5240; font-weight: 600; font-size: 0.9rem; max-width: 400px;">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span id="cart-toast-msg">Añadido al carrito</span>
-            </div>
-
             <div class="d-flex flex-column gap-3 mb-5" style="max-width: 400px;">
-                <form id="add-to-cart-form" action="{{ route('cart.add') }}" method="POST">
+                <form action="{{ route('cart.add') }}" method="POST">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="variant_id" value="{{ $product->variants->first()?->id }}">
                     <input type="hidden" name="quantity" value="1">
-                    <button type="submit" id="add-to-cart-btn" class="btn btn-primary btn-lg fw-bold w-100">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold w-100">
                         Añadir al Carrito
                     </button>
                 </form>
@@ -130,60 +124,3 @@
 </div>
 @endsection
 
-@push('scripts')
-<script>
-    (function () {
-        const form     = document.getElementById('add-to-cart-form');
-        const btn      = document.getElementById('add-to-cart-btn');
-        const toast    = document.getElementById('cart-toast');
-        const toastMsg = document.getElementById('cart-toast-msg');
-        const badge    = document.getElementById('cart-badge');
-
-        if (!form) return;
-
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
-            btn.disabled = true;
-            btn.textContent = 'Añadiendo...';
-
-            try {
-                const res = await fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(new FormData(form)),
-                });
-
-                const data = await res.json();
-
-                if (data.success) {
-                    toastMsg.textContent = data.message;
-                    toast.classList.remove('d-none');
-                    toast.classList.add('d-flex');
-                    setTimeout(() => {
-                        toast.classList.add('d-none');
-                        toast.classList.remove('d-flex');
-                    }, 3500);
-
-                    if (badge) {
-                        badge.textContent = data.count;
-                        badge.style.display = '';
-                    }
-
-                    btn.textContent = '✓ Añadido';
-                    setTimeout(() => {
-                        btn.textContent = 'Añadir al Carrito';
-                        btn.disabled = false;
-                    }, 2000);
-                }
-            } catch (err) {
-                btn.textContent = 'Añadir al Carrito';
-                btn.disabled = false;
-            }
-        });
-    })();
-</script>
-@endpush
