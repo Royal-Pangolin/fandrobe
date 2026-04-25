@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\ShoppingCart;
+use App\Models\CartItem;
+
+class CartController extends Controller
+{
+    // Ver el carrito
+    public function index()
+    {
+        $cart = ShoppingCart::where('user_id', 1)
+                            ->where('status', 'active')
+                            ->first();
+
+        $items = $cart ? $cart->items()->with('product', 'variant')->get() : collect();
+
+        return view('cart.index', compact('cart', 'items'));
+    }
+
+    // Añadir producto al carrito
+    public function add(Request $request)
+    {
+        $cart = ShoppingCart::firstOrCreate(
+            ['user_id' => 1, 'status' => 'active']
+        );
+
+        $item = CartItem::where('cart_id', $cart->id)
+                        ->where('product_id', $request->product_id)
+                        ->where('variant_id', $request->variant_id)
+                        ->first();
+
+        if ($item) {
+            $item->quantity += $request->quantity ?? 1;
+            $item->save();
+        } else {
+            CartItem::create([
+                'cart_id'    => $cart->id,
+                'product_id' => $request->product_id,
+                'variant_id' => $request->variant_id,
+                'quantity'   => $request->quantity ?? 1,
+            ]);
+        }
+
+        return redirect()->route('cart.index')->with('mensaje', 'Producto añadido al carrito');
+    }
+
+    // Actualizar cantidad
+    public function update(Request $request, $id)
+    {
+        $item = CartItem::findOrFail($id);
+        $item->quantity = $request->quantity;
+        $item->save();
+
+        return redirect()->route('cart.index')->with('mensaje', 'Cantidad actualizada');
+    }
+
+    // Eliminar item
+    public function remove($id)
+    {
+        $item = CartItem::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('cart.index')->with('mensaje', 'Producto eliminado');
+    }
+}
