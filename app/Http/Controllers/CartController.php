@@ -12,10 +12,10 @@ class CartController extends Controller
     public function index()
     {
         $cart = ShoppingCart::where('user_id', 1)
-                            ->where('status', 'active')
-                            ->first();
+            ->where('status', 'active')
+            ->first();
 
-        $items = $cart ? $cart->items()->with('product', 'variant')->get() : collect();
+        $items = $cart ? $cart->items()->with(['product.images', 'variant.size', 'variant.color'])->get() : collect();
 
         return view('cart.index', compact('cart', 'items'));
     }
@@ -28,19 +28,19 @@ class CartController extends Controller
         );
 
         $item = CartItem::where('cart_id', $cart->id)
-                        ->where('product_id', $request->product_id)
-                        ->where('variant_id', $request->variant_id)
-                        ->first();
+            ->where('product_id', $request->product_id)
+            ->where('variant_id', $request->variant_id)
+            ->first();
 
         if ($item) {
             $item->quantity += $request->quantity ?? 1;
             $item->save();
         } else {
             CartItem::create([
-                'cart_id'    => $cart->id,
+                'cart_id' => $cart->id,
                 'product_id' => $request->product_id,
                 'variant_id' => $request->variant_id,
-                'quantity'   => $request->quantity ?? 1,
+                'quantity' => $request->quantity ?? 1,
             ]);
         }
 

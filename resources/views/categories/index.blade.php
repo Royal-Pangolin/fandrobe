@@ -1,38 +1,82 @@
 @extends('layouts.app')
-@section('title', 'Disciplinas Artísticas')
-@section('header')
-    <div class="text-center py-8">
-        <h2 class="font-extrabold text-4xl text-beige-900 mb-4 tracking-tight">
-            Explora por Disciplina
-        </h2>
-        <p class="text-xl text-beige-600 max-w-2xl mx-auto">Selecciona el tipo de arte y mercancía que estás buscando. Todo nuestro catálogo está ordenado por las disciplinas de nuestros artistas registrados.</p>
-    </div>
-@endsection
+@section('title', 'Disciplinas')
 
 @section('content')
-<div class="bg-white">
-    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    {{-- Header --}}
+    <div class="hero-gradient px-3 mb-5">
+        <div class="container-fluid px-4 px-lg-5 text-center pb-5">
+            <h1 class="display-3 text-shadow mb-3 fw-bolder" style="letter-spacing: -0.03em;">
+                Disciplinas Artísticas
+            </h1>
+            <p class="lead text-shadow mx-auto" style="max-width: 560px; opacity: 0.9;">
+                Sumérgete en las corrientes creativas que conforman la red de Everlasting Art.
+            </p>
+        </div>
+    </div>
+
+    {{-- Grid de categorías --}}
+    <div class="container-fluid px-4 px-lg-5 pb-5">
+        <div class="row g-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
             @forelse ($categories as $category)
-                <a href="{{ route('categories.show', $category->id) }}" class="block group">
-                    <div class="relative rounded-2xl overflow-hidden shadow-sm h-80 bg-beige-200 transform group-hover:-translate-y-2 group-hover:shadow-xl transition duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-beige-500 font-medium text-lg bg-beige-300 group-hover:scale-105 transition duration-700 ease-in-out">
-                            [Fondo {{ $category->name }}]
+                <div class="col">
+                    <a href="{{ route('categories.show', $category->id) }}" class="text-decoration-none">
+                        <div class="category-card position-relative overflow-hidden rounded-4"
+                             style="height: 280px; background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B','#3B2A4B'][$loop->index % 6] }};">
+
+                            {{-- Letra gigante de fondo --}}
+                            <div class="position-absolute top-50 start-50 translate-middle text-white"
+                                 style="font-size: 14rem; font-weight: 900; line-height: 1; opacity: 0.08; user-select: none; pointer-events: none;">
+                                {{ substr($category->name, 0, 1) }}
+                            </div>
+
+                            {{-- Degradado overlay --}}
+                            <div class="position-absolute top-0 start-0 w-100 h-100"
+                                 style="background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);"></div>
+
+                            {{-- Contenido --}}
+                            <div class="position-absolute bottom-0 start-0 p-4 w-100">
+                                <span class="badge badge-limited mb-2" style="font-size: 0.7rem;">Disciplina</span>
+                                <h3 class="fw-bolder text-white mb-1" style="font-size: 1.75rem; letter-spacing: -0.02em;">
+                                    {{ $category->name }}
+                                </h3>
+                                <p class="text-white mb-0" style="font-size: 0.9rem; opacity: 0.75;">
+                                    {{ Str::limit($category->description ?? 'Explora esta disciplina artística.', 60) }}
+                                </p>
+                            </div>
+
+                            {{-- Flecha hover --}}
+                            <div class="category-arrow position-absolute d-flex align-items-center justify-content-center bg-white rounded-circle"
+                                 style="width: 44px; height: 44px; bottom: 24px; right: 24px; opacity: 0; transform: translateY(8px); transition: all 0.3s ease;">
+                                <svg width="20" height="20" fill="none" stroke="var(--color-shadow)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                            </div>
                         </div>
-                        <!-- Degradado inferior -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-beige-900 via-beige-900/40 to-transparent opacity-80 group-hover:opacity-90 transition duration-300"></div>
-                        
-                        <div class="absolute bottom-0 w-full p-8 text-white">
-                            <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold mb-3 uppercase tracking-wider border border-white/30">Categoría</span>
-                            <h3 class="text-3xl font-bold mb-2">{{ $category->name }}</h3>
-                            <p class="text-beige-100 text-sm opacity-0 group-hover:opacity-100 transition duration-300 translate-y-4 group-hover:translate-y-0">{{ $category->description ?? 'Explora esta disciplina.' }}</p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             @empty
-                <p class="text-beige-600 col-span-3 text-center">No hay categorías disponibles.</p>
+                <div class="col-12 text-center text-muted py-5">
+                    <h4>No hay categorías disponibles.</h4>
+                </div>
             @endforelse
         </div>
     </div>
-</div>
+
 @endsection
+
+@push('scripts')
+<style>
+    /* Hover effects for category cards */
+    .category-card {
+        cursor: pointer;
+        transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s ease;
+    }
+    .category-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+    .category-card:hover .category-arrow {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+</style>
+@endpush
