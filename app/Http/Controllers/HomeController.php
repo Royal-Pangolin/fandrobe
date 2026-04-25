@@ -9,9 +9,36 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::where('is_active', true)->take(8)->get();
-        $artists = Artist::where('is_active', true)->take(6)->get();
+        // Artistas para el hero slideshow
+        $heroArtists = Artist::where('is_active', true)->take(6)->get();
 
-        return view('home.index', compact('products', 'artists'));
+        // Últimos lanzamientos (fila horizontal, hasta 12)
+        $latestProducts = Product::where('is_active', true)
+            ->latest()
+            ->take(12)
+            ->get();
+
+        // Obras más vendidas (excluyendo los últimos lanzamientos para no repetir)
+        $latestIds = $latestProducts->pluck('id');
+        $topProducts = Product::where('is_active', true)
+            ->whereNotIn('id', $latestIds)
+            ->take(10)
+            ->get();
+
+        // Artistas más nuevos
+        $newestArtists = Artist::where('is_active', true)
+            ->latest()
+            ->take(6)
+            ->get();
+
+        // Compatibilidad
+        $products = $latestProducts;
+        $artists = $heroArtists;
+
+        return view('home.index', compact(
+            'products', 'artists',
+            'heroArtists', 'latestProducts',
+            'topProducts', 'newestArtists'
+        ));
     }
 }
