@@ -23,4 +23,3 @@ Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
 Route::post('/carrito/añadir', [CartController::class, 'add'])->name('cart.add');
 Route::put('/carrito/actualizar/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/carrito/eliminar/{id}', [CartController::class, 'remove'])->name('cart.remove');
-Route::post('/carrito/descuento', [CartController::class, 'applyDiscount'])->name('cart.discount');

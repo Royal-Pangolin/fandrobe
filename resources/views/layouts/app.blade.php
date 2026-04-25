@@ -73,7 +73,10 @@
 
                 <!-- Right Side (Cart / Login placeholder) -->
                 <div class="d-flex align-items-center gap-3">
-                    @php $cartCount = collect(session('cart', []))->sum('quantity'); @endphp
+                    @php
+                        $navCart = \App\Models\ShoppingCart::where('user_id', 1)->where('status', 'active')->first();
+                        $cartCount = $navCart ? $navCart->items()->sum('quantity') : 0;
+                    @endphp
                     <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color: var(--color-shadow);" title="Mi carrito">
                         <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

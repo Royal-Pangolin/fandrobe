@@ -7,6 +7,11 @@
     {{-- Spacer para la navbar fija --}}
     <div style="height: 76px;"></div>
 
+    @php
+        $subtotal = $items->sum(fn($item) => $item->product->base_price * $item->quantity);
+        $total = $subtotal;
+    @endphp
+
     <div class="row g-5" style="max-width: 1200px; margin: 0 auto;">
 
         {{-- ====================================================
@@ -16,35 +21,43 @@
 
             <div class="d-flex align-items-end justify-content-between mb-4">
                 <h1 class="fw-bolder mb-0" style="letter-spacing: -0.03em;">Mi Carrito</h1>
-                @if(count($cart))
+                @if($items->count())
                     <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.06em;">
-                        {{ collect($cart)->sum('quantity') }} artículo(s)
+                        {{ $items->sum('quantity') }} artículo(s)
                     </span>
                 @endif
             </div>
 
             {{-- Flash messages --}}
-            @if(session('cart_success'))
+            @if(session('mensaje'))
                 <div class="alert d-flex align-items-center gap-2 rounded-3 mb-4"
                      style="background: rgba(110,117,86,0.12); border: 1px solid rgba(110,117,86,0.3); color: #4a5240;">
                     <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                    {{ session('cart_success') }}
+                    {{ session('mensaje') }}
                 </div>
             @endif
 
             {{-- Productos --}}
-            @if(count($cart))
+            @if($items->count())
                 <div class="d-flex flex-column gap-3" id="cart-items">
-                    @foreach($cart as $key => $item)
-                        @php $productId = $item['product_id']; @endphp
+                    @foreach($items as $item)
+                        @php
+                            $product = $item->product;
+                            $imgUrl = null;
+                            if ($product->images && $product->images->count() > 0) {
+                                $raw = $product->images->first()->url;
+                                $imgUrl = filter_var($raw, FILTER_VALIDATE_URL) ? $raw : asset('storage/' . $raw);
+                            }
+                            $unitPrice = $product->base_price + ($item->variant ? $item->variant->price_delta : 0);
+                        @endphp
                         <div class="cart-item d-flex gap-4 p-4 rounded-3"
                              style="background: rgba(30,28,25,0.03); border: 1px solid rgba(30,28,25,0.08);"
-                             id="item-{{ $productId }}">
+                             id="item-{{ $item->id }}">
 
                             {{-- Imagen --}}
                             <div style="width: 96px; height: 96px; flex-shrink: 0; border-radius: 10px; overflow: hidden;">
-                                @if($item['image'])
-                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}"
+                                @if($imgUrl)
+                                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}"
                                          style="width: 100%; height: 100%; object-fit: cover;">
                                 @else
                                     <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-secondary">
@@ -57,17 +70,24 @@
                             <div class="flex-grow-1 d-flex flex-column justify-content-between">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
-                                        <a href="{{ route('products.show', $productId) }}"
+                                        <a href="{{ route('products.show', $product->id) }}"
                                            class="fw-bold text-decoration-none text-dark"
                                            style="font-size: 1.05rem;">
-                                            {{ $item['name'] }}
+                                            {{ $product->name }}
                                         </a>
+                                        @if($item->variant && ($item->variant->size || $item->variant->color))
+                                            <p class="text-muted small mb-0 mt-1">
+                                                @if($item->variant->size){{ $item->variant->size->name }}@endif
+                                                @if($item->variant->size && $item->variant->color) · @endif
+                                                @if($item->variant->color){{ $item->variant->color->name }}@endif
+                                            </p>
+                                        @endif
                                         <p class="text-muted small mb-0 mt-1">
-                                            €{{ number_format($item['price'], 2) }} / unidad
+                                            €{{ number_format($unitPrice, 2) }} / unidad
                                         </p>
                                     </div>
                                     {{-- Eliminar --}}
-                                    <form action="{{ route('cart.remove', $productId) }}" method="POST" class="ms-3">
+                                    <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="ms-3">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn p-0 border-0 text-muted"
                                                 style="opacity: 0.5; transition: opacity 0.2s;"
@@ -80,29 +100,29 @@
 
                                 {{-- Cantidad + subtotal --}}
                                 <div class="d-flex align-items-center justify-content-between mt-3">
-                                    <form action="{{ route('cart.update', $productId) }}" method="POST"
+                                    <form action="{{ route('cart.update', $item->id) }}" method="POST"
                                           class="d-flex align-items-center gap-2">
                                         @csrf @method('PUT')
                                         <div class="d-flex align-items-center rounded-pill overflow-hidden"
                                              style="border: 1px solid rgba(30,28,25,0.15);">
                                             <button type="button" class="btn px-3 py-1 border-0 qty-btn"
-                                                    data-action="minus" data-target="qty-{{ $productId }}"
+                                                    data-action="minus" data-target="qty-{{ $item->id }}"
                                                     style="font-size: 1.1rem;">−</button>
                                             <input type="number" name="quantity"
-                                                   id="qty-{{ $productId }}"
-                                                   value="{{ $item['quantity'] }}"
+                                                   id="qty-{{ $item->id }}"
+                                                   value="{{ $item->quantity }}"
                                                    min="1" max="99"
                                                    class="form-control border-0 text-center fw-bold p-0"
                                                    style="width: 40px; font-size: 0.9rem; background: transparent;"
                                                    onchange="this.form.submit()">
                                             <button type="button" class="btn px-3 py-1 border-0 qty-btn"
-                                                    data-action="plus" data-target="qty-{{ $productId }}"
+                                                    data-action="plus" data-target="qty-{{ $item->id }}"
                                                     style="font-size: 1.1rem;">+</button>
                                         </div>
                                     </form>
 
                                     <span class="fw-bolder" style="font-size: 1.15rem;">
-                                        €{{ number_format($item['price'] * $item['quantity'], 2) }}
+                                        €{{ number_format($unitPrice * $item->quantity, 2) }}
                                     </span>
                                 </div>
                             </div>
@@ -142,7 +162,7 @@
         {{-- ====================================================
              Columna derecha: resumen del pedido
         ==================================================== --}}
-        @if(count($cart))
+        @if($items->count())
             <div class="col-lg-5">
                 <div class="p-4 rounded-4" style="background: rgba(30,28,25,0.04); position: sticky; top: 100px;">
 
@@ -155,15 +175,6 @@
                             <span class="text-muted">Subtotal</span>
                             <span class="fw-bold">€{{ number_format($subtotal, 2) }}</span>
                         </div>
-                        @if($discount)
-                            <div class="d-flex justify-content-between" style="color: var(--color-verified);">
-                                <span class="fw-bold">
-                                    Descuento ({{ $discount['code'] }})
-                                    <span class="badge badge-verified ms-1" style="font-size: 0.6rem;">{{ $discount['label'] }}</span>
-                                </span>
-                                <span class="fw-bold">−€{{ number_format($discountAmount, 2) }}</span>
-                            </div>
-                        @endif
                         <div class="d-flex justify-content-between text-muted small">
                             <span>Envío</span>
                             <span class="fw-bold" style="color: var(--color-verified);">Gratis</span>
@@ -194,23 +205,8 @@
                     <div class="pt-4" style="border-top: 1px solid rgba(30,28,25,0.1);">
                         <p class="fw-bold mb-2" style="font-size: 0.875rem;">¿Tienes un código de descuento?</p>
 
-                        {{-- Messages de descuento --}}
-                        @if(session('discount_success'))
-                            <div class="mb-2 small fw-bold" style="color: var(--color-verified);">
-                                ✓ {{ session('discount_success') }}
-                            </div>
-                        @endif
-                        @if(session('discount_error'))
-                            <div class="mb-2 small fw-bold" style="color: var(--color-error);">
-                                ✕ {{ session('discount_error') }}
-                            </div>
-                        @endif
-
-                        <form action="{{ route('cart.discount') }}" method="POST"
-                              class="d-flex gap-2">
-                            @csrf
+                        <form class="d-flex gap-2">
                             <input type="text" name="code" placeholder="CÓDIGO"
-                                   value="{{ $discount['code'] ?? '' }}"
                                    class="form-control rounded-pill"
                                    style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">
                             <button type="submit" class="btn btn-outline-secondary rounded-pill fw-bold px-4"
@@ -218,22 +214,6 @@
                                 Aplicar
                             </button>
                         </form>
-
-                        @if($discount)
-                            <form action="{{ route('cart.discount') }}" method="POST" class="mt-2">
-                                @csrf
-                                <input type="hidden" name="code" value="__remove__">
-                                <button type="submit" class="btn p-0 border-0 text-muted"
-                                        style="font-size: 0.78rem; text-decoration: underline;">
-                                    Quitar descuento
-                                </button>
-                            </form>
-                        @endif
-
-                        {{-- Códigos disponibles (demo) --}}
-                        <p class="text-muted mt-3 mb-0" style="font-size: 0.75rem;">
-                            Prueba: <code>FANDROBE10</code>, <code>FANDROBE20</code>, <code>ARTE5</code>
-                        </p>
                     </div>
 
                 </div>
