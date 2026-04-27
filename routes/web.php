@@ -18,6 +18,14 @@ Route::get('/artistas/{id}', [ArtistController::class, 'show'])->name('artists.s
 Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categorias/{id}', [CategoryController::class, 'show'])->name('categories.show');
 
+// Auth - Fortify view routes
+Route::get('/login', fn() => view('auth.login'))->name('login');
+Route::get('/register', fn() => view('auth.register'))->name('register');
+//Route::get('/forgot-password', fn() => view('auth.forgot-password'))->name('password.request');
+//Route::get('/reset-password/{token}', fn() => view('auth.reset-password'))->name('password.reset');
+//Route::get('/email/verify', fn() => view('auth.verify-email'))->name('verification.notice');
+//Route::get('/confirm-password', fn() => view('auth.confirm-password'))->name('password.confirm');
+
 // Carrito
 Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
 Route::post('/carrito/añadir', [CartController::class, 'add'])->name('cart.add');

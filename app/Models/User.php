@@ -33,7 +33,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password_hash',
+        'password',
     ];
 
     /**
@@ -44,17 +44,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'password ' => ' hashed ',
             'email_verified' => 'boolean',
             'is_active' => 'boolean',
         ];
-    }
-
-    /**
-     * Overriding the default password field name for Laravel Auth.
-     */
-    public function getAuthPassword()
-    {
-        return $this->password_hash;
     }
 
     /**
