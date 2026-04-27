@@ -190,9 +190,12 @@
                     </div>
 
                     {{-- CTA --}}
-                    <button class="btn btn-primary fw-bold w-100 mb-3" style="font-size: 1rem; padding: 1rem;">
-                        Finalizar Compra
-                    </button>
+                    <form action="{{ route('orders.store') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary fw-bold w-100 mb-3" style="font-size: 1rem; padding: 1rem;">
+                            Finalizar Compra
+                        </button>
+                    </form>
 
                     {{-- Métodos de pago --}}
                     <div class="d-flex justify-content-center gap-3 mb-4 opacity-50">
