@@ -34,14 +34,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Remember Me -->
-                            <div class="mb-3 form-check">
-                                <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-                                <label class="form-check-label" for="remember_me">
-                                    {{ __('Recordarme') }}
-                                </label>
-                            </div>
-
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Iniciar Sesión') }}
