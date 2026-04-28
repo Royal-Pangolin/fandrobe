@@ -7,6 +7,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminOrderController;
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminArtistController;
+use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -56,4 +61,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/pedidos', [OrderController::class, 'store'])->name('orders.store');
 
+});
+
+// Admin
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::resource('pedidos', AdminOrderController::class)->only(['index', 'show', 'update']);
+    Route::resource('productos', AdminProductController::class);
+    Route::resource('artistas', AdminArtistController::class);
+    Route::resource('usuarios', AdminUserController::class)->only(['index', 'show']);
 });
