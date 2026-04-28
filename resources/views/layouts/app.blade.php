@@ -77,17 +77,20 @@
                         $navCart = \App\Models\ShoppingCart::where('user_id', 1)->where('status', 'active')->first();
                         $cartCount = $navCart ? $navCart->items()->sum('quantity') : 0;
                     @endphp
-                    <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative" style="color: var(--color-shadow);" title="Mi carrito">
+                    <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative"
+                        style="color: var(--color-shadow);" title="Mi carrito">
                         <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
-                        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge bg-primary text-shadow"
+                        <span id="cart-badge"
+                            class="position-absolute top-0 start-100 translate-middle badge bg-primary text-shadow"
                             style="font-size: 0.6rem; border-radius: 500px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
                             {{ $cartCount }}
                         </span>
                     </a>
-                    <a href="#" class="btn btn-primary btn-sm">Entrar</a>
+                    <a href="/login" class="btn btn-primary btn-sm">Entrar</a>
+                    <a href="/register" class="btn btn-secondary btn-sm">Registrar</a>
                 </div>
             </div>
         </div>
@@ -143,11 +146,13 @@
                         Explorar
                     </h6>
                     <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.9rem;">
-                        <li><a href="{{ route('products.index') }}" class="text-decoration-none fw-medium footer-link"
+                        <li><a href="{{ route('products.index') }}"
+                                class="text-decoration-none fw-medium footer-link"
                                 style="color: var(--color-primary);">Catálogo</a></li>
                         <li><a href="{{ route('artists.index') }}" class="text-decoration-none fw-medium footer-link"
                                 style="color: var(--color-primary);">Artistas</a></li>
-                        <li><a href="{{ route('categories.index') }}" class="text-decoration-none fw-medium footer-link"
+                        <li><a href="{{ route('categories.index') }}"
+                                class="text-decoration-none fw-medium footer-link"
                                 style="color: var(--color-primary);">Disciplinas</a></li>
                         <li><a href="#" class="text-decoration-none fw-medium footer-link"
                                 style="color: var(--color-primary);">Autenticidad</a></li>
@@ -184,13 +189,15 @@
     @stack('scripts')
     <script>
         // Navbar se vuelve sólida al hacer scroll
-        (function () {
+        (function() {
             const navbar = document.querySelector('.navbar');
             if (!navbar) return;
             const onScroll = () => {
                 navbar.classList.toggle('scrolled', window.scrollY > 20);
             };
-            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('scroll', onScroll, {
+                passive: true
+            });
             onScroll(); // run on load
         })();
     </script>

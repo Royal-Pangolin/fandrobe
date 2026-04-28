@@ -34,6 +34,17 @@
                                 @enderror
                             </div>
 
+                            <!-- Phone -->
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">{{ __('Teléfono') }}</label>
+                                <input id="phone" type="tel"
+                                    class="form-control @error('phone') is-invalid @enderror" name="phone"
+                                    value="{{ old('phone') }}" required autocomplete="tel">
+                                @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Email Address -->
                             <div class="mb-3">
                                 <label for="email" class="form-label">{{ __('Correo Electrónico') }}</label>
