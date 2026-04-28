@@ -148,3 +148,5 @@ $RECYCLE.BIN/
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+/storage/logs/
