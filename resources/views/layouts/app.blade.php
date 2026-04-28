@@ -99,25 +99,44 @@
 
                         <!-- User dropdown -->
                         <div class="dropdown">
-                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                            <button class="btn btn-sm fw-semibold dropdown-toggle btn-user-menu" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ auth()->user()->first_name }}
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><span class="dropdown-item-text text-muted small">{{ auth()->user()->email }}</span>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm dropdown-menu-user">
+
+                                {{-- Identidad --}}
+                                <li class="px-3 py-2">
+                                    <p class="fw-bold mb-0 small">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</p>
+                                    <p class="text-muted mb-0 admin-email-small">{{ auth()->user()->email }}</p>
                                 </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('profile') }}">Mi perfil</a></li>
-                                <li><a class="dropdown-item" href="{{ route('cart.index') }}">Mi carrito</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
+
+                                @if(auth()->user()->role?->name === 'admin')
+                                    <li><hr class="dropdown-divider my-1"></li>
+                                    <li>
+                                        <a class="dropdown-item fw-bold d-flex align-items-center gap-2 rounded-2 dropdown-item-admin"
+                                           href="{{ route('admin.index') }}">
+                                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                            Panel de administración
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li><hr class="dropdown-divider my-1"></li>
+
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm" href="{{ route('profile') }}">Mi perfil</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm" href="{{ route('orders.index') }}">Mis pedidos</a></li>
+
+                                <li><hr class="dropdown-divider my-1"></li>
+
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button type="submit" class="dropdown-item text-danger">
+                                        <button type="submit" class="dropdown-item rounded-2 dropdown-item-sm text-danger fw-semibold">
                                             Cerrar sesión
                                         </button>
                                     </form>
