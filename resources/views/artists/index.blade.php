@@ -24,10 +24,12 @@
             <div class="col">
                 <a href="{{ route('artists.show', $artist->id) }}" class="artist-portrait-card">
                     <div class="artist-img-wrapper">
-                        <!-- Reemplazar con la imagen real cuando el backend la soporte -->
-                        <div class="placeholder-img">
-                            {{ substr($artist->name, 0, 1) }}
-                        </div>
+                        @if($artist->image_url)
+                            @php $imgUrl = asset('storage/artists/' . $artist->image_url); @endphp
+                            <img src="{{ $imgUrl }}" alt="{{ $artist->name }}">
+                        @else
+                            <div class="placeholder-img">{{ substr($artist->name, 0, 1) }}</div>
+                        @endif
                     </div>
                     <div class="artist-name-reveal">
                         {{ $artist->name }}
@@ -41,8 +43,5 @@
         @endforelse
     </div>
     
-    <div class="mt-5 pt-4 d-flex justify-content-center">
-        <button class="btn btn-outline-secondary rounded-pill fw-bold px-5 py-3">Cargar Más</button>
-    </div>
 </div>
 @endsection

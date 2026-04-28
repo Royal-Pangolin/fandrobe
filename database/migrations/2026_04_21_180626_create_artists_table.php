@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('genre_id')->constrained('genres');
             $table->string('name')->unique();
             $table->text('bio')->nullable();
+            $table->string('image_url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
