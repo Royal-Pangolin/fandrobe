@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -17,6 +18,18 @@ Route::get('/artistas/{id}', [ArtistController::class, 'show'])->name('artists.s
 
 Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categorias/{id}', [CategoryController::class, 'show'])->name('categories.show');
+
+// Auth
+Route::get('/signin', fn() => view('auth.signin'))->name('signin');
+Route::get('/login', fn() => view('auth.login'))->name('login');
+Route::post('/logout', [\Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'destroy'])->name('logout');
+//Route::get('/forgot-password', fn() => view('auth.forgot-password'))->name('password.request');
+//Route::get('/reset-password/{token}', fn() => view('auth.reset-password'))->name('password.reset');
+//Route::get('/email/verify', fn() => view('auth.verify-email'))->name('verification.notice');
+//Route::get('/confirm-password', fn() => view('auth.confirm-password'))->name('password.confirm');
+
+// Profile
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 
 // Carrito
 Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
