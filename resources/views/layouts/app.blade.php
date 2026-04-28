@@ -71,26 +71,70 @@
                     </li>
                 </ul>
 
-                <!-- Right Side (Cart / Login placeholder) -->
+                <!-- Right Side -->
                 <div class="d-flex align-items-center gap-3">
                     @php
-                        $navCart = \App\Models\ShoppingCart::where('user_id', 1)->where('status', 'active')->first();
+                        $navCart = auth()->check()
+                            ? \App\Models\ShoppingCart::where('user_id', auth()->id())
+                                ->where('status', 'active')
+                                ->first()
+                            : null;
                         $cartCount = $navCart ? $navCart->items()->sum('quantity') : 0;
                     @endphp
-                    <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative"
-                        style="color: var(--color-shadow);" title="Mi carrito">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                        <span id="cart-badge"
-                            class="position-absolute top-0 start-100 translate-middle badge bg-primary text-shadow"
-                            style="font-size: 0.6rem; border-radius: 500px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
-                            {{ $cartCount }}
-                        </span>
-                    </a>
-                    <a href="/login" class="btn btn-primary btn-sm">Entrar</a>
-                    <a href="/register" class="btn btn-secondary btn-sm">Registrar</a>
+
+                    @auth
+                        <!-- Cart -->
+                        <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative"
+                            style="color: var(--color-shadow);" title="Mi carrito">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                            <span id="cart-badge"
+                                class="position-absolute top-0 start-100 translate-middle badge bg-primary text-shadow"
+                                style="font-size: 0.6rem; border-radius: 500px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
+                                {{ $cartCount }}
+                            </span>
+                        </a>
+
+                        <!-- User dropdown -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ auth()->user()->first_name }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><span class="dropdown-item-text text-muted small">{{ auth()->user()->email }}</span>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('cart.index') }}">Mi carrito</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Cerrar sesión
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative"
+                            style="color: var(--color-shadow);" title="Mi carrito">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                        </a>
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Entrar</a>
+                        <a href="{{ route('register') }}" class="btn btn-secondary btn-sm">Registrarse</a>
+                    @endauth
                 </div>
             </div>
         </div>
