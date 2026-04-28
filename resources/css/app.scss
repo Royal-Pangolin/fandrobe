@@ -1,4 +1,4 @@
-@import "bootstrap/scss/bootstrap";
+@use "bootstrap/scss/bootstrap";
 
 // Paleta de colores principal
 $color-primario: #F7F1E7; // Beige principal: fondo base, identidad visual
@@ -373,6 +373,15 @@ footer {
     opacity: 0.6;
     animation: orb-drift ease-in-out infinite;
     will-change: transform;
+}
+
+.hero-slide:not(.active) .hero-orb {
+    display: none;
+}
+
+.hero-slide {
+    isolation: isolate;
+    contain: layout style;
 }
 
 @keyframes orb-drift {
