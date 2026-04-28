@@ -109,7 +109,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a></li>
                                 <li><a class="dropdown-item" href="{{ route('cart.index') }}">Mi carrito</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
@@ -133,7 +133,7 @@
                             </svg>
                         </a>
                         <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Entrar</a>
-                        <a href="{{ route('register') }}" class="btn btn-secondary btn-sm">Registrarse</a>
+                        <a href="{{ route('signin') }}" class="btn btn-secondary btn-sm">Registrarse</a>
                     @endauth
                 </div>
             </div>
