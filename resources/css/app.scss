@@ -363,6 +363,24 @@ footer {
     }
 }
 
+// Orbes difuminados para el hero y el banner de artista
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.6;
+    animation: orb-drift ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes orb-drift {
+    0%   { transform: translate(0,   0)   scale(1);    }
+    25%  { transform: translate(4%,  -7%) scale(1.07); }
+    50%  { transform: translate(-4%,  6%) scale(0.95); }
+    75%  { transform: translate(5%,   3%) scale(1.04); }
+    100% { transform: translate(0,   0)   scale(1);    }
+}
+
 // Latest release card hover
 .latest-release-card {
     transition: background-color 0.3s ease;
