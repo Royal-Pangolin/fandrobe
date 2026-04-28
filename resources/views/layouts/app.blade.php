@@ -109,7 +109,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile') }}">Mi perfil</a></li>
                                 <li><a class="dropdown-item" href="{{ route('cart.index') }}">Mi carrito</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
