@@ -6,6 +6,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -38,7 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/carrito/añadir', [CartController::class, 'add'])->name('cart.add');
     Route::put('/carrito/actualizar/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/carrito/eliminar/{id}', [CartController::class, 'remove'])->name('cart.remove');
-    Route::post('/carrito/descuento', [CartController::class, 'applyDiscount'])->name('cart.discount');
 
     // Pedidos
     Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');

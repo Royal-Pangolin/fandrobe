@@ -23,6 +23,12 @@ class CartController extends Controller
     // Añadir producto al carrito
     public function add(Request $request)
     {
+        $request->validate([
+            'product_id' => ['required', 'integer', 'exists:products,id'],
+            'variant_id' => ['nullable', 'integer', 'exists:product_variants,id'],
+            'quantity'   => ['nullable', 'integer', 'min:1'],
+        ]);
+
         $cart = ShoppingCart::firstOrCreate(
             ['user_id' => auth()->id(), 'status' => 'active']
         );
@@ -50,6 +56,10 @@ class CartController extends Controller
     // Actualizar cantidad
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'quantity' => ['required', 'integer', 'min:1', 'max:99'],
+        ]);
+
         $item = CartItem::findOrFail($id);
         $item->quantity = $request->quantity;
         $item->save();
