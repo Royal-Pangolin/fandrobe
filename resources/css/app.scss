@@ -520,3 +520,148 @@ html {
     background-color: var(--color-accent);
     color: var(--color-shadow);
 }
+
+// ---- ADMIN PANEL ----
+
+// Contenedores de página
+.admin-container    { max-width: 1100px; margin: 0 auto; }
+.admin-container-md { max-width: 900px;  margin: 0 auto; }
+.admin-container-sm { max-width: 700px;  margin: 0 auto; }
+
+// Alertas flash
+.alert-admin-success {
+    background: rgba(110, 117, 86, 0.12);
+    border: 1px solid rgba(110, 117, 86, 0.3);
+    color: #4a5240;
+}
+
+.alert-admin-error {
+    background: rgba(180, 50, 50, 0.08);
+    border: 1px solid rgba(180, 50, 50, 0.2);
+    color: #7a2020;
+}
+
+// Tarjetas y paneles
+.admin-card {
+    background: rgba(30, 28, 25, 0.04);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+}
+
+.admin-item-row {
+    background: rgba(30, 28, 25, 0.03);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+}
+
+.admin-sidebar {
+    background: rgba(30, 28, 25, 0.04);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+// Tipografía
+.admin-stat-number {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.admin-section-title {
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.admin-label {
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.admin-form-label {
+    letter-spacing: 0.06em;
+}
+
+.text-verified {
+    color: var(--color-verified) !important;
+}
+
+.admin-total-amount { font-size: 1.2rem; }
+.admin-email-small  { font-size: 0.8rem; }
+
+// Tabla
+.admin-table-wrapper { border: 1px solid rgba(30, 28, 25, 0.1); }
+.admin-table         { font-size: 0.9rem; }
+.admin-thead         { background: rgba(30, 28, 25, 0.05); }
+.admin-tr            { border-top: 1px solid rgba(30, 28, 25, 0.07); }
+.admin-total-divider { border-top: 1px solid rgba(30, 28, 25, 0.1); }
+
+// Badges
+.badge-admin-status   { background: rgba(30, 28, 25, 0.08);    color: inherit; font-size: 0.75rem; }
+.badge-admin-active   { background: rgba(110, 117, 86, 0.12);  color: #4a5240; font-size: 0.75rem; }
+.badge-admin-inactive { background: rgba(30, 28, 25, 0.08);    color: #666;    font-size: 0.75rem; }
+
+// Botones
+.btn-admin-ghost {
+    background: rgba(30, 28, 25, 0.06);
+    border: 1px solid rgba(30, 28, 25, 0.12) !important;
+    &:hover { background: rgba(30, 28, 25, 0.1); }
+}
+
+.btn-admin-danger {
+    background: rgba(180, 50, 50, 0.08);
+    border: 1px solid rgba(180, 50, 50, 0.15) !important;
+    color: #7a2020;
+    &:hover { background: rgba(180, 50, 50, 0.14); }
+}
+
+.admin-btn-submit { padding: 0.85rem !important; }
+
+// Formularios
+.admin-checkbox-row {
+    background: rgba(30, 28, 25, 0.03);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+}
+
+.admin-checkbox {
+    width: 1.2rem !important;
+    height: 1.2rem !important;
+}
+
+// Accesos rápidos (dashboard)
+.admin-quick-link {
+    background: rgba(30, 28, 25, 0.04);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+    transition: background 0.2s ease;
+    &:hover { background: rgba(30, 28, 25, 0.08); }
+}
+
+// Navbar — botón de usuario
+.btn-user-menu {
+    border: 1.5px solid rgba(30, 28, 25, 0.2) !important;
+    border-radius: 500px !important;
+    padding: 0.4rem 1.1rem !important;
+    color: inherit !important;
+    background: transparent !important;
+    &:hover {
+        background: rgba(30, 28, 25, 0.05) !important;
+        border-color: rgba(30, 28, 25, 0.35) !important;
+    }
+}
+
+.dropdown-menu-user {
+    min-width: 220px;
+    border: 1px solid rgba(30, 28, 25, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 6px !important;
+}
+
+.dropdown-item-admin {
+    color: #1e1c19 !important;
+    background: rgba(30, 28, 25, 0.05);
+    font-size: 0.9rem;
+    &:hover { background: rgba(30, 28, 25, 0.1); }
+}
+
+.dropdown-item-sm { font-size: 0.9rem; }
