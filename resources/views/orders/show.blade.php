@@ -2,29 +2,38 @@
 @section('title', 'Pedido #' . str_pad($order->id, 5, '0', STR_PAD_LEFT))
 
 @section('content')
-<div class="container-fluid px-4 px-lg-5 py-5">
 
+<div class="container-fluid px-4 px-lg-5 py-5">
     <div style="height: 76px;"></div>
 
     <div class="row g-5" style="max-width: 1200px; margin: 0 auto;">
 
-        {{-- ====================================================
-             Columna izquierda: productos del pedido
-        ==================================================== --}}
         <div class="col-lg-7">
 
-            {{-- Breadcrumb --}}
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb" style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('orders.index') }}" class="text-decoration-none text-dark">Mis Pedidos</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('orders.index') }}" class="text-decoration-none text-dark">Mis Pedidos</a>
+                    </li>
                     <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">
                         Pedido #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                     </li>
                 </ol>
             </nav>
 
-            {{-- Encabezado --}}
+            @php
+                $statusClass = match(strtolower($order->status->name ?? '')) {
+                    'enviado', 'shipped',
+                    'entregado', 'delivered',
+                    'completado', 'completed' => 'badge-verified',
+                    'cancelado', 'cancelled'  => 'badge-urgent',
+                    default                   => 'badge-limited',
+                };
+            @endphp
+
             <div class="d-flex align-items-start justify-content-between mb-5">
                 <div>
                     <h1 class="fw-bolder mb-1" style="letter-spacing: -0.03em;">
@@ -34,22 +43,11 @@
                         Realizado el {{ \Carbon\Carbon::parse($order->placed_at)->format('d \d\e F \d\e Y') }}
                     </span>
                 </div>
-
-                @php
-                    $statusClass = match(strtolower($order->status->name ?? '')) {
-                        'enviado', 'shipped'              => 'badge-verified',
-                        'entregado', 'delivered',
-                        'completado', 'completed'         => 'badge-verified',
-                        'cancelado', 'cancelled'          => 'badge-urgent',
-                        default                           => 'badge-limited',
-                    };
-                @endphp
                 <span class="badge {{ $statusClass }} ms-3" style="font-size: 0.8rem; padding: 0.5em 1em;">
                     {{ $order->status->name }}
                 </span>
             </div>
 
-            {{-- Artículos --}}
             <h5 class="fw-bolder mb-3" style="letter-spacing: -0.02em;">
                 Artículos ({{ $order->items->count() }})
             </h5>
@@ -58,8 +56,6 @@
                 @foreach($order->items as $item)
                     <div class="d-flex gap-4 p-4 rounded-3"
                          style="background: rgba(30,28,25,0.03); border: 1px solid rgba(30,28,25,0.08);">
-
-                        {{-- Info producto --}}
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
@@ -67,25 +63,22 @@
                                         {{ $item->product->name }}
                                     </p>
                                     @if($item->variant)
-                                        <p class="text-muted small mb-1">
-                                            SKU: {{ $item->variant->sku }}
-                                        </p>
+                                        <p class="text-muted small mb-1">SKU: {{ $item->variant->sku }}</p>
                                     @endif
                                     <p class="text-muted small mb-0">
                                         {{ $item->quantity }} × €{{ number_format($item->unit_price, 2) }}
                                     </p>
                                 </div>
-                                <span class="fw-bolder ms-3" style="font-size: 1.1rem; letter-spacing: -0.02em; white-space: nowrap;">
+                                <span class="fw-bolder ms-3"
+                                      style="font-size: 1.1rem; letter-spacing: -0.02em; white-space: nowrap;">
                                     €{{ number_format($item->total_price, 2) }}
                                 </span>
                             </div>
                         </div>
-
                     </div>
                 @endforeach
             </div>
 
-            {{-- Volver a pedidos --}}
             <div class="mt-5">
                 <a href="{{ route('orders.index') }}"
                    class="text-decoration-none text-muted fw-bold d-inline-flex align-items-center gap-2"
@@ -99,24 +92,18 @@
 
         </div>
 
-        {{-- ====================================================
-             Columna derecha: resumen + dirección
-        ==================================================== --}}
         <div class="col-lg-5">
             <div style="position: sticky; top: 100px;">
 
-                {{-- Resumen económico --}}
                 <div class="p-4 rounded-4 mb-4" style="background: rgba(30,28,25,0.04);">
                     <h5 class="fw-bolder mb-4" style="letter-spacing: -0.02em;">Resumen del pedido</h5>
 
                     <div class="d-flex flex-column gap-2 mb-4"
                          style="border-bottom: 1px solid rgba(30,28,25,0.1); padding-bottom: 1rem;">
-
                         <div class="d-flex justify-content-between">
                             <span class="text-muted">Subtotal</span>
                             <span class="fw-bold">€{{ number_format($order->subtotal, 2) }}</span>
                         </div>
-
                         @if($order->discount_amount > 0)
                             <div class="d-flex justify-content-between">
                                 <span class="text-muted">Descuento</span>
@@ -125,7 +112,6 @@
                                 </span>
                             </div>
                         @endif
-
                         <div class="d-flex justify-content-between">
                             <span class="text-muted">Envío</span>
                             @if($order->shipping_amount > 0)
@@ -134,7 +120,6 @@
                                 <span class="fw-bold" style="color: var(--color-verified);">Gratis</span>
                             @endif
                         </div>
-
                     </div>
 
                     <div class="d-flex justify-content-between align-items-baseline">
@@ -145,7 +130,6 @@
                     </div>
                 </div>
 
-                {{-- Dirección de envío --}}
                 @if($order->address)
                     <div class="p-4 rounded-4" style="background: rgba(30,28,25,0.04);">
                         <h5 class="fw-bolder mb-3" style="letter-spacing: -0.02em;">Dirección de envío</h5>
@@ -154,9 +138,7 @@
                                 <p class="mb-1">{{ $order->address->street }}</p>
                             @endif
                             @if($order->address->city || $order->address->postal_code)
-                                <p class="mb-1">
-                                    {{ $order->address->postal_code }} {{ $order->address->city }}
-                                </p>
+                                <p class="mb-1">{{ $order->address->postal_code }} {{ $order->address->city }}</p>
                             @endif
                             @if($order->address->state)
                                 <p class="mb-1">{{ $order->address->state }}</p>

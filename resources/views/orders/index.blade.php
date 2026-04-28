@@ -2,21 +2,21 @@
 @section('title', 'Mis Pedidos')
 
 @section('content')
-<div class="container-fluid px-4 px-lg-5 py-5">
 
+<div class="container-fluid px-4 px-lg-5 py-5">
     <div style="height: 76px;"></div>
 
     <div style="max-width: 900px; margin: 0 auto;">
 
-        {{-- Breadcrumb --}}
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb" style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
+                </li>
                 <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">Mis Pedidos</li>
             </ol>
         </nav>
 
-        {{-- Heading --}}
         <div class="d-flex align-items-end justify-content-between mb-5">
             <h1 class="fw-bolder mb-0" style="letter-spacing: -0.03em;">Mis Pedidos</h1>
             @if($orders->count())
@@ -26,7 +26,6 @@
             @endif
         </div>
 
-        {{-- Flash messages --}}
         @if(session('mensaje'))
             <div class="alert d-flex align-items-center gap-2 rounded-3 mb-4"
                  style="background: rgba(110,117,86,0.12); border: 1px solid rgba(110,117,86,0.3); color: #4a5240;">
@@ -38,76 +37,69 @@
         @endif
 
         @if($orders->count())
-
             <div class="d-flex flex-column gap-3">
                 @foreach($orders as $order)
                     @php
                         $statusClass = match(strtolower($order->status->name ?? '')) {
-                            'enviado', 'shipped'              => 'badge-verified',
+                            'enviado', 'shipped',
                             'entregado', 'delivered',
-                            'completado', 'completed'         => 'badge-verified',
-                            'cancelado', 'cancelled'          => 'badge-urgent',
-                            default                           => 'badge-limited',
+                            'completado', 'completed' => 'badge-verified',
+                            'cancelado', 'cancelled'  => 'badge-urgent',
+                            default                   => 'badge-limited',
                         };
                     @endphp
-
                     <div class="d-flex align-items-center justify-content-between p-4 rounded-3"
                          style="background: rgba(30,28,25,0.03); border: 1px solid rgba(30,28,25,0.08);">
 
-                        {{-- Info izquierda --}}
                         <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-5">
-
                             <div>
-                                <p class="text-muted mb-1" style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
+                                <p class="text-muted mb-1"
+                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
                                     Pedido
                                 </p>
-                                <span class="fw-bolder" style="font-size: 1.05rem;">#{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span>
+                                <span class="fw-bolder" style="font-size: 1.05rem;">
+                                    #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
+                                </span>
                             </div>
-
                             <div>
-                                <p class="text-muted mb-1" style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
+                                <p class="text-muted mb-1"
+                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
                                     Fecha
                                 </p>
                                 <span class="fw-bold" style="font-size: 0.95rem;">
                                     {{ \Carbon\Carbon::parse($order->placed_at)->format('d M Y') }}
                                 </span>
                             </div>
-
                             <div>
-                                <p class="text-muted mb-1" style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
+                                <p class="text-muted mb-1"
+                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
                                     Estado
                                 </p>
                                 <span class="badge {{ $statusClass }}">{{ $order->status->name }}</span>
                             </div>
-
                         </div>
 
-                        {{-- Total + acción derecha --}}
                         <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-5 ms-3">
-
                             <div class="text-md-end">
-                                <p class="text-muted mb-1" style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
+                                <p class="text-muted mb-1"
+                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
                                     Total
                                 </p>
                                 <span class="fw-bolder" style="font-size: 1.25rem; letter-spacing: -0.02em;">
                                     €{{ number_format($order->total_amount, 2) }}
                                 </span>
                             </div>
-
                             <a href="{{ route('orders.show', $order->id) }}"
                                class="btn btn-primary fw-bold"
                                style="font-size: 0.85rem; padding: 0.6rem 1.5rem; white-space: nowrap;">
                                 Ver detalle
                             </a>
-
                         </div>
 
                     </div>
                 @endforeach
             </div>
-
         @else
-            {{-- Estado vacío --}}
             <div class="text-center py-5 mt-4">
                 <svg width="80" height="80" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      class="mb-4 opacity-25">

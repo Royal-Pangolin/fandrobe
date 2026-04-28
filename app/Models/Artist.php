@@ -10,6 +10,7 @@ class Artist extends Model
         'genre_id',
         'name',
         'bio',
+        'image_url',
         'is_active',
     ];
 
