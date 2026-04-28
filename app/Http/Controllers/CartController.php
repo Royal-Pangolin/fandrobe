@@ -11,7 +11,7 @@ class CartController extends Controller
     // Ver el carrito
     public function index()
     {
-        $cart = ShoppingCart::where('user_id', 1)
+        $cart = ShoppingCart::where('user_id', auth()->id())
             ->where('status', 'active')
             ->first();
 
@@ -24,7 +24,7 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $cart = ShoppingCart::firstOrCreate(
-            ['user_id' => 1, 'status' => 'active']
+            ['user_id' => auth()->id(), 'status' => 'active']
         );
 
         $item = CartItem::where('cart_id', $cart->id)
