@@ -5,10 +5,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -42,8 +44,16 @@ Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index']
 
 // Carrito
 Route::middleware('auth')->group(function () {
+
+    // Carrito
     Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
     Route::post('/carrito/añadir', [CartController::class, 'add'])->name('cart.add');
     Route::put('/carrito/actualizar/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/carrito/eliminar/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+    // Pedidos
+    Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/pedidos', [OrderController::class, 'store'])->name('orders.store');
+
 });
