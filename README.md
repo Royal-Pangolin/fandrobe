@@ -126,5 +126,3 @@ Press `Ctrl + C` in the terminal to stop all running services.
 ---
 
 **:sparkles: Now you're ready to explore Fandrobe locally!**
-
----
