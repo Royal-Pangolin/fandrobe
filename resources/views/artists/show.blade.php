@@ -38,7 +38,27 @@
             <h1 class="artist-hero-title fw-bolder text-white mb-0">{{ $artist->name }}</h1>
         </div>
         <div class="mb-2">
-            <button class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</button>
+            @auth
+                @php
+                    $isFollowing = auth()->user()->followedArtists()->where('artist_id', $artist->id)->exists();
+                @endphp
+                <form method="POST" action="{{ route('favorites.toggleArtist') }}">
+                    @csrf
+                    <input type="hidden" name="artist_id" value="{{ $artist->id }}">
+                    @if($isFollowing)
+                        <button type="submit" class="btn btn-light rounded-pill fw-bold text-uppercase px-4 border-0 d-flex align-items-center gap-2">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"></path>
+                            </svg>
+                            Siguiendo
+                        </button>
+                    @else
+                        <button type="submit" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</button>
+                    @endif
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</a>
+            @endauth
         </div>
     </div>
 </div>
