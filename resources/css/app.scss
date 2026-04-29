@@ -1,4 +1,4 @@
-@import "bootstrap/scss/bootstrap";
+@use "bootstrap/scss/bootstrap";
 
 // Paleta de colores principal
 $color-primario: #F7F1E7; // Beige principal: fondo base, identidad visual
@@ -73,7 +73,45 @@ $navbar-dark-bg: transparent;
 
 body {
     letter-spacing: -0.01em;
+    font-family: var(--bs-body-font-family);
 }
+
+main {
+    min-height: calc(100vh - 250px);
+    padding-bottom: 60px;
+}
+
+// ---- NAVBAR ----
+.navbar-brand svg { margin-right: 8px; }
+.navbar-spacer    { height: 76px; }
+.nav-cart-link    { color: var(--color-shadow); }
+#cart-badge       { font-size: 0.6rem; border-radius: 500px; }
+
+// ---- FOOTER ----
+.site-footer {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+.footer-brand { color: var(--color-primary); }
+
+.footer-description {
+    color: rgba(247, 241, 231, 0.55);
+    font-size: 0.875rem;
+    max-width: 320px;
+    line-height: 1.7;
+}
+
+.footer-section-title {
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    color: rgba(247, 241, 231, 0.5);
+}
+
+.footer-nav-list { font-size: 0.9rem; }
+.footer-bottom   { border-top: 1px solid rgba(247, 241, 231, 0.12); }
+.footer-copyright{ color: rgba(247, 241, 231, 0.4); }
+.badge-sm        { font-size: 0.7rem; }
 
 // Títulos
 h1, h2, h3, h4, h5, h6 {
@@ -365,6 +403,33 @@ footer {
     }
 }
 
+// Orbes difuminados para el hero y el banner de artista
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.6;
+    animation: orb-drift ease-in-out infinite;
+    will-change: transform;
+}
+
+.hero-slide:not(.active) .hero-orb {
+    display: none;
+}
+
+.hero-slide {
+    isolation: isolate;
+    contain: layout style;
+}
+
+@keyframes orb-drift {
+    0%   { transform: translate(0,   0)   scale(1);    }
+    25%  { transform: translate(4%,  -7%) scale(1.07); }
+    50%  { transform: translate(-4%,  6%) scale(0.95); }
+    75%  { transform: translate(5%,   3%) scale(1.04); }
+    100% { transform: translate(0,   0)   scale(1);    }
+}
+
 // Latest release card hover
 .latest-release-card {
     transition: background-color 0.3s ease;
@@ -493,3 +558,430 @@ html {
     background-color: var(--color-accent);
     color: var(--color-shadow);
 }
+
+// ---- ADMIN PANEL ----
+
+// Contenedores de página
+.admin-container    { max-width: 1100px; margin: 0 auto; }
+.admin-container-md { max-width: 900px;  margin: 0 auto; }
+.admin-container-sm { max-width: 700px;  margin: 0 auto; }
+
+// Alertas flash
+.alert-admin-success {
+    background: rgba(110, 117, 86, 0.12);
+    border: 1px solid rgba(110, 117, 86, 0.3);
+    color: #4a5240;
+}
+
+.alert-admin-error {
+    background: rgba(180, 50, 50, 0.08);
+    border: 1px solid rgba(180, 50, 50, 0.2);
+    color: #7a2020;
+}
+
+// Tarjetas y paneles
+.admin-card {
+    background: rgba(30, 28, 25, 0.04);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+}
+
+.admin-item-row {
+    background: rgba(30, 28, 25, 0.03);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+}
+
+.admin-sidebar {
+    background: rgba(30, 28, 25, 0.04);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+// Tipografía
+.admin-stat-number {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.admin-section-title {
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.admin-label {
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.admin-form-label {
+    letter-spacing: 0.06em;
+}
+
+.text-verified {
+    color: var(--color-verified) !important;
+}
+
+.admin-total-amount { font-size: 1.2rem; }
+.admin-email-small  { font-size: 0.8rem; }
+
+// Tabla
+.admin-table-wrapper { border: 1px solid rgba(30, 28, 25, 0.1); }
+.admin-table         { font-size: 0.9rem; }
+.admin-thead         { background: rgba(30, 28, 25, 0.05); }
+.admin-tr            { border-top: 1px solid rgba(30, 28, 25, 0.07); }
+.admin-total-divider { border-top: 1px solid rgba(30, 28, 25, 0.1); }
+
+// Badges
+.badge-admin-status   { background: rgba(30, 28, 25, 0.08);    color: inherit; font-size: 0.75rem; }
+.badge-admin-active   { background: rgba(110, 117, 86, 0.12);  color: #4a5240; font-size: 0.75rem; }
+.badge-admin-inactive { background: rgba(30, 28, 25, 0.08);    color: #666;    font-size: 0.75rem; }
+
+// Botones
+.btn-admin-ghost {
+    background: rgba(30, 28, 25, 0.06);
+    border: 1px solid rgba(30, 28, 25, 0.12) !important;
+    &:hover { background: rgba(30, 28, 25, 0.1); }
+}
+
+.btn-admin-danger {
+    background: rgba(180, 50, 50, 0.08);
+    border: 1px solid rgba(180, 50, 50, 0.15) !important;
+    color: #7a2020;
+    &:hover { background: rgba(180, 50, 50, 0.14); }
+}
+
+.admin-btn-submit { padding: 0.85rem !important; }
+
+// Formularios
+.admin-checkbox-row {
+    background: rgba(30, 28, 25, 0.03);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+}
+
+.admin-checkbox {
+    width: 1.2rem !important;
+    height: 1.2rem !important;
+}
+
+// Accesos rápidos (dashboard)
+.admin-quick-link {
+    background: rgba(30, 28, 25, 0.04);
+    border: 1px solid rgba(30, 28, 25, 0.08);
+    transition: background 0.2s ease;
+    &:hover { background: rgba(30, 28, 25, 0.08); }
+}
+
+// Navbar — botón de usuario
+.btn-user-menu {
+    border: 1.5px solid rgba(30, 28, 25, 0.2) !important;
+    border-radius: 500px !important;
+    padding: 0.4rem 1.1rem !important;
+    color: inherit !important;
+    background: transparent !important;
+    &:hover {
+        background: rgba(30, 28, 25, 0.05) !important;
+        border-color: rgba(30, 28, 25, 0.35) !important;
+    }
+}
+
+.dropdown-menu-user {
+    min-width: 220px;
+    border: 1px solid rgba(30, 28, 25, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 6px !important;
+}
+
+.dropdown-item-admin {
+    color: #1e1c19 !important;
+    background: rgba(30, 28, 25, 0.05);
+    font-size: 0.9rem;
+    &:hover { background: rgba(30, 28, 25, 0.1); }
+}
+
+.dropdown-item-sm { font-size: 0.9rem; }
+
+// ================================================================
+// ---- CLASES REUTILIZABLES (extraídas de vistas) ----
+// ================================================================
+
+// ---- LAYOUT ----
+.content-container-lg { max-width: 1200px; margin: 0 auto; }
+.content-container-md { max-width: 900px;  margin: 0 auto; }
+.sticky-side           { position: sticky; top: 100px; }
+
+// Paneles / tarjetas de fondo sutil
+.panel        { background: rgba(30,28,25,0.04); border: 1px solid rgba(30,28,25,0.08); }
+.panel-subtle { background: rgba(30,28,25,0.03); border: 1px solid rgba(30,28,25,0.08); }
+
+// Divisores
+.divider-subtle        { border-top:    1px solid rgba(30,28,25,0.1); }
+.divider-bottom-subtle { border-bottom: 1px solid rgba(30,28,25,0.06); }
+
+// ---- TIPOGRAFÍA ----
+.text-tight   { letter-spacing: -0.02em; }
+.text-tighter { letter-spacing: -0.03em; }
+.text-neutral { color: var(--color-neutral); }
+.text-verified-color { color: var(--color-verified); }
+
+.label-xs {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.section-link {
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.link-back {
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+}
+
+.breadcrumb-nav {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+// ---- BOTONES ----
+.btn-light { color: var(--color-shadow) !important; }
+
+// ---- ALERTAS FLASH ----
+.alert-success-flash {
+    background: rgba(110,117,86,0.12);
+    border: 1px solid rgba(110,117,86,0.3);
+    color: #4a5240;
+}
+
+// ---- HOME HERO ----
+.home-hero {
+    height: 90vh;
+    min-height: 500px;
+    margin-top: -76px;
+}
+
+.hero-static-bg {
+    background-color: #100C09;
+    overflow: hidden;
+}
+
+.hero-orb-1 {
+    position: absolute;
+    width: 65%; aspect-ratio: 1;
+    background: #C49A3C;
+    top: -15%; left: -10%;
+    border-radius: 50%;
+    filter: blur(100px);
+}
+
+.hero-orb-2 {
+    position: absolute;
+    width: 50%; aspect-ratio: 1;
+    background: #8B3A10;
+    bottom: -15%; right: -8%;
+    border-radius: 50%;
+    filter: blur(100px);
+}
+
+.hero-orb-3 {
+    position: absolute;
+    width: 38%; aspect-ratio: 1;
+    background: #E8C46A;
+    top: 25%; left: 40%;
+    border-radius: 50%;
+    filter: blur(100px);
+}
+
+.hero-fade {
+    background: linear-gradient(to bottom, rgba(30,28,25,0.3) 0%, transparent 35%, var(--color-primary) 100%);
+    pointer-events: none;
+}
+
+.hero-label {
+    letter-spacing: 0.15em;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.125rem;
+    max-width: 520px;
+    opacity: 0.85;
+    line-height: 1.7;
+}
+
+// ---- SCROLL CARD (carrusel horizontal) ----
+.scroll-card {
+    width: 200px;
+    scroll-snap-align: start;
+}
+
+.card-action-btn-sm {
+    width: 40px !important;
+    height: 40px !important;
+    bottom: 12px !important;
+    right: 12px !important;
+}
+
+// ---- PRODUCT SHOW ----
+.product-img-frame {
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(30,28,25,0.04);
+    aspect-ratio: 1/1;
+    width: 100%;
+
+    img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.product-artist-link { font-size: 0.85rem; letter-spacing: 0.1em; }
+.product-title       { font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.05; }
+.product-price-lg    { font-size: 2.5rem; letter-spacing: -0.02em; }
+.product-description { font-size: 1.05rem; max-width: 480px; }
+.product-actions     { max-width: 400px; }
+.product-detail-row  { border-bottom: 1px solid rgba(30,28,25,0.06); }
+.product-detail-label{ letter-spacing: 0.05em; }
+
+// ---- ARTIST SHOW ----
+.artist-hero {
+    height: 50vh;
+    min-height: 400px;
+    margin-top: -76px;
+}
+
+.artist-hero-fade {
+    background: linear-gradient(transparent 0%, rgba(30,28,25,0.9) 100%);
+}
+
+.artist-hero-title {
+    letter-spacing: -0.04em;
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 1;
+}
+
+.artist-bio-panel { background-color: rgba(30,28,25,0.04); max-width: 800px; }
+.artist-filter-search { width: 250px; }
+
+// ---- CART ----
+.cart-item-card {
+    background: rgba(30,28,25,0.03);
+    border: 1px solid rgba(30,28,25,0.08);
+}
+
+.cart-item-thumbnail {
+    width: 96px; height: 96px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+
+    img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.cart-qty-control { border: 1px solid rgba(30,28,25,0.15); }
+.cart-qty-input   { width: 40px; font-size: 0.9rem; background: transparent; }
+.cart-price-lg    { font-size: 1.15rem; }
+.cart-total-price { font-size: 2rem; letter-spacing: -0.02em; }
+.cart-summary-panel { position: sticky; top: 100px; }
+
+.payment-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+// ---- ORDERS ----
+.order-card {
+    background: rgba(30,28,25,0.03);
+    border: 1px solid rgba(30,28,25,0.08);
+}
+
+.order-meta-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.order-number-text { font-size: 1.05rem; }
+.order-total-text  { font-size: 1.25rem; letter-spacing: -0.02em; }
+.order-item-price  { font-size: 1.1rem; letter-spacing: -0.02em; }
+.order-address-text{ font-size: 0.9rem; line-height: 1.7; }
+
+// ---- CONFIRM PEDIDO ----
+.confirm-icon-circle {
+    width: 96px; height: 96px;
+    background: rgba(110,117,86,0.12);
+}
+
+.confirm-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+}
+
+.confirm-message {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto 2rem;
+}
+
+.confirm-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--color-shadow);
+}
+
+// ---- CATEGORY CARDS ----
+.category-card {
+    cursor: pointer;
+    height: 280px;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s ease;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    &:hover .category-arrow {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+}
+
+.category-letter {
+    font-size: 14rem;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.08;
+    user-select: none;
+    pointer-events: none;
+}
+
+.category-arrow {
+    width: 44px; height: 44px;
+    bottom: 24px; right: 24px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s ease;
+}
+
+.category-title { font-size: 1.75rem; letter-spacing: -0.02em; }
+.category-desc  { font-size: 0.9rem; opacity: 0.75; }

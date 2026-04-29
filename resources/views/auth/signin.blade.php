@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                <a href="{{ route('login') }}" class="text-decoration-none">
+                                <a href="{{ route('login') }}" class="text-decoration-none text-dark">
                                     {{ __('¿Ya tienes cuenta? Inicia sesión') }}
                                 </a>
                             </div>

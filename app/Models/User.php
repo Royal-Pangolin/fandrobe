@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class User extends Authenticatable
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -44,7 +47,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'password ' => ' hashed ',
+            'password' => 'hashed',
             'email_verified' => 'boolean',
             'is_active' => 'boolean',
         ];
@@ -57,4 +60,27 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function hasVerifiedEmail(): bool
+    {
+        return (bool) $this->email_verified;
+    }
+
+    public function markEmailAsVerified(): bool
+    {
+        return $this->forceFill([
+            'email_verified' => true,
+        ])->save();
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new \Illuminate\Auth\Notifications\VerifyEmail);
+    }
+
+    public function getEmailForVerification(): string
+    {
+        return $this->email;
+    }
+
 }

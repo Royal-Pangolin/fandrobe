@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Everlasting Art - @yield('title', 'Inicio')</title>
+    <title>Fandrobe - @yield('title', 'Inicio')</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,20 +16,6 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
-    <style>
-        body {
-            font-family: var(--bs-body-font-family);
-        }
-
-        .navbar-brand svg {
-            margin-right: 8px;
-        }
-
-        main {
-            min-height: calc(100vh - 250px);
-            padding-bottom: 60px;
-        }
-    </style>
 </head>
 
 <body class="bg-body text-dark d-flex flex-column min-vh-100">
@@ -37,13 +25,11 @@
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center fw-bolder fs-4 text-dark" href="{{ route('home') }}">
-                <svg class="h-8 w-8 text-primary" width="32" height="32" viewBox="0 0 24 24" stroke-width="2.5"
-                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <path
-                        d="M12 21a9 9 0 0 1 -3.665 -17.236l1.092 1.942a7 7 0 0 0 5.146 11.294l-1.093 1.942a9 9 0 0 1 -1.48 .058z">
-                    </path>
-                    <path d="M12 18l-.5 -1l2.5 -4.5l-2 -3.5l1.5 -3l2.5 4.5l-2 3.5l1.5 3l-3.5 1z"></path>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13" />
+                    <circle cx="6" cy="18" r="3" />
+                    <circle cx="18" cy="16" r="3" />
                 </svg>
                 Fandrobe
             </a>
@@ -66,9 +52,6 @@
                     <li class="nav-item">
                         <a class="nav-link fw-semibold" href="{{ route('artists.index') }}">Artistas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="{{ route('categories.index') }}">Disciplinas</a>
-                    </li>
                 </ul>
 
                 <!-- Right Side -->
@@ -84,40 +67,72 @@
 
                     @auth
                         <!-- Cart -->
-                        <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative"
-                            style="color: var(--color-shadow);" title="Mi carrito">
+                        <a href="{{ route('cart.index') }}" class="nav-cart-link text-decoration-none position-relative"
+                            title="Mi carrito">
                             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             <span id="cart-badge"
-                                class="position-absolute top-0 start-100 translate-middle badge bg-primary text-shadow"
-                                style="font-size: 0.6rem; border-radius: 500px; {{ $cartCount === 0 ? 'display:none;' : '' }}">
+                                class="position-absolute top-0 start-100 translate-middle badge bg-dark text-white"
+                                style="{{ $cartCount === 0 ? 'display:none;' : '' }}">
                                 {{ $cartCount }}
                             </span>
                         </a>
 
                         <!-- User dropdown -->
                         <div class="dropdown">
-                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
+                            <button class="btn btn-sm fw-semibold dropdown-toggle btn-user-menu" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ auth()->user()->first_name }}
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><span class="dropdown-item-text text-muted small">{{ auth()->user()->email }}</span>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm dropdown-menu-user">
+
+                                {{-- Identidad --}}
+                                <li class="px-3 py-2">
+                                    <p class="fw-bold mb-0 small">{{ auth()->user()->first_name }}
+                                        {{ auth()->user()->last_name }}</p>
+                                    <p class="text-muted mb-0 admin-email-small">{{ auth()->user()->email }}</p>
                                 </li>
+
+                                @if (auth()->user()->role?->name === 'admin')
+                                    <li>
+                                        <hr class="dropdown-divider my-1">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item fw-bold d-flex align-items-center gap-2 rounded-2 dropdown-item-admin"
+                                            href="{{ route('admin.index') }}">
+                                            <svg width="14" height="14" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                                </path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                            Panel de administración
+                                        </a>
+                                    </li>
+                                @endif
+
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <hr class="dropdown-divider my-1">
                                 </li>
-                                <li><a class="dropdown-item" href="{{ route('profile.index') }}">Mi perfil</a></li>
-                                <li><a class="dropdown-item" href="{{ route('cart.index') }}">Mi carrito</a></li>
+
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm" href="{{ route('profile') }}">Mi
+                                        perfil</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm"
+                                        href="{{ route('orders.index') }}">Mis pedidos</a></li>
+
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <hr class="dropdown-divider my-1">
                                 </li>
+
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button type="submit" class="dropdown-item text-danger">
+                                        <button type="submit"
+                                            class="dropdown-item rounded-2 dropdown-item-sm text-danger fw-semibold">
                                             Cerrar sesión
                                         </button>
                                     </form>
@@ -125,9 +140,10 @@
                             </ul>
                         </div>
                     @else
-                        <a href="{{ route('cart.index') }}" class="text-decoration-none position-relative"
-                            style="color: var(--color-shadow);" title="Mi carrito">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('cart.index') }}" class="nav-cart-link text-decoration-none position-relative"
+                            title="Mi carrito">
+                            <svg width="24" height="24" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
@@ -148,85 +164,85 @@
             </div>
         </header>
     @else
-        <div style="height: 76px;"></div> <!-- Spacer for fixed navbar -->
+        <div class="navbar-spacer"></div>
     @endif
 
     <!-- Page Content -->
-    <main class="flex-grow-1">
-        @yield('content')
-    </main>
+    @auth
+        @if (!auth()->user()->hasVerifiedEmail())
+            <div class="alert alert-warning alert-dismissible fade show mb-0 rounded-0 d-flex align-items-center gap-2"
+                role="alert">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    style="flex-shrink:0;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                </svg>
+                <span>
+                    Tu correo electrónico no está verificado.
+                    <form method="POST" action="{{ route('verification.send') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="alert-link btn btn-link p-0 align-baseline fw-semibold">
+                            Reenviar correo de verificación
+                        </button>
+                    </form>
+                </span>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+    @endauth
 
+    @yield('content')
     <!-- Footer -->
-    <footer class="py-5 mt-auto" style="background-color: var(--color-secondary); color: var(--color-primary);">
+    <footer class="site-footer py-5 mt-auto">
         <div class="container-fluid px-4 px-lg-5">
             <div class="row g-5">
                 <div class="col-md-5">
                     <a href="{{ route('home') }}"
-                        class="d-flex align-items-center mb-3 text-decoration-none fw-bolder fs-4"
-                        style="color: var(--color-primary);">
-                        <svg class="me-2" width="28" height="28" viewBox="0 0 24 24" stroke-width="2.5"
-                            stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path
-                                d="M12 21a9 9 0 0 1 -3.665 -17.236l1.092 1.942a7 7 0 0 0 5.146 11.294l-1.093 1.942a9 9 0 0 1 -1.48 .058z">
-                            </path>
-                            <path d="M12 18l-.5 -1l2.5 -4.5l-2 -3.5l1.5 -3l2.5 4.5l-2 3.5l1.5 3l-3.5 1z"></path>
+                        class="footer-brand d-flex align-items-center mb-3 text-decoration-none fw-bolder fs-4">
+                        <svg class="me-2" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13" />
+                            <circle cx="6" cy="18" r="3" />
+                            <circle cx="18" cy="16" r="3" />
                         </svg>
                         Fandrobe
                     </a>
-                    <p style="color: rgba(247,241,231,0.55); font-size: 0.875rem; max-width: 320px; line-height: 1.7;">
+                    <p class="footer-description">
                         Conectando artistas excepcionales con coleccionistas apasionados.
                         Autenticidad garantizada en cada obra y mercancía oficial.
                     </p>
                     <div class="d-flex gap-3 mt-4">
-                        <span class="badge badge-verified" style="font-size: 0.7rem;">Piezas Oficiales</span>
-                        <span class="badge badge-limited" style="font-size: 0.7rem;">Cert. Autenticidad</span>
+                        <span class="badge badge-verified badge-sm">Piezas Oficiales</span>
+                        <span class="badge badge-limited badge-sm">Cert. Autenticidad</span>
                     </div>
                 </div>
 
                 <div class="col-md-3 offset-md-1">
-                    <h6 class="fw-bold mb-4 text-uppercase"
-                        style="letter-spacing: 0.12em; font-size: 0.75rem; color: rgba(247,241,231,0.5);">
-                        Explorar
-                    </h6>
-                    <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.9rem;">
+                    <h6 class="footer-section-title fw-bold mb-4 text-uppercase">Explorar</h6>
+                    <ul class="footer-nav-list list-unstyled d-flex flex-column gap-2">
                         <li><a href="{{ route('products.index') }}"
-                                class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">Catálogo</a></li>
-                        <li><a href="{{ route('artists.index') }}" class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">Artistas</a></li>
-                        <li><a href="{{ route('categories.index') }}"
-                                class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">Disciplinas</a></li>
-                        <li><a href="#" class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">Autenticidad</a></li>
+                                class="footer-link text-decoration-none fw-medium">Catálogo</a></li>
+                        <li><a href="{{ route('artists.index') }}"
+                                class="footer-link text-decoration-none fw-medium">Artistas</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">Autenticidad</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3">
-                    <h6 class="fw-bold mb-4 text-uppercase"
-                        style="letter-spacing: 0.12em; font-size: 0.75rem; color: rgba(247,241,231,0.5);">
-                        Ayuda
-                    </h6>
-                    <ul class="list-unstyled d-flex flex-column gap-2" style="font-size: 0.9rem;">
-                        <li><a href="#" class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">Contacto</a></li>
-                        <li><a href="#" class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">Envíos y devoluciones</a></li>
-                        <li><a href="#" class="text-decoration-none fw-medium footer-link"
-                                style="color: var(--color-primary);">FAQ</a></li>
+                    <h6 class="footer-section-title fw-bold mb-4 text-uppercase">Ayuda</h6>
+                    <ul class="footer-nav-list list-unstyled d-flex flex-column gap-2">
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">Contacto</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">Envíos y
+                                devoluciones</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">FAQ</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="mt-5 pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2"
-                style="border-top: 1px solid rgba(247,241,231,0.12);">
-                <p class="mb-0 small" style="color: rgba(247,241,231,0.4);">
-                    &copy; 2026 Everlasting Art. Todos los derechos reservados.
-                </p>
-                <p class="mb-0 small" style="color: rgba(247,241,231,0.4);">
-                    Hecho con arte · Verificado con confianza
-                </p>
+            <div
+                class="footer-bottom mt-5 pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <p class="footer-copyright mb-0 small">&copy; 2026 Fandrobe. Todos los derechos reservados.</p>
+                <p class="footer-copyright mb-0 small">Hecho con arte · Verificado con confianza</p>
             </div>
         </div>
     </footer>
