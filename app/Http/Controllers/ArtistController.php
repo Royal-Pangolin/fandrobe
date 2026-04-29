@@ -6,9 +6,15 @@ use App\Models\Artist;
 
 class ArtistController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $artists = Artist::where('is_active', true)->get();
+        $query = Artist::where('is_active', true);
+
+        if ($search = $request->input('q')) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $artists = $query->orderBy('name')->get();
 
         return view('artists.index', compact('artists'));
     }
