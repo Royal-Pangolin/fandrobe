@@ -6,8 +6,11 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\ArtistUser;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -40,6 +43,33 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Productos favoritos del usuario.
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Productos marcados como favoritos (acceso directo).
+     */
+    public function favoriteProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'favorites')
+            ->withPivot('added_at');
+    }
+
+    /**
+     * Artistas seguidos por el usuario.
+     */
+    public function followedArtists(): BelongsToMany
+    {
+        return $this->belongsToMany(Artist::class, 'artist_user')
+            ->using(ArtistUser::class)
+            ->withPivot('followed_at');
     }
 
     public function hasVerifiedEmail(): bool

@@ -123,6 +123,10 @@
                                         perfil</a></li>
                                 <li><a class="dropdown-item rounded-2 dropdown-item-sm"
                                         href="{{ route('orders.index') }}">Mis pedidos</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm"
+                                        href="{{ route('favorites.products') }}">Mis favoritos</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm"
+                                        href="{{ route('favorites.artists') }}">Artistas seguidos</a></li>
 
                                 <li>
                                     <hr class="dropdown-divider my-1">
