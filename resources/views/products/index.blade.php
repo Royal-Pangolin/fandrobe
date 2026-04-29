@@ -3,6 +3,8 @@
 
 @section('content')
 
+    <form method="GET" action="{{ route('products.index') }}">
+
     {{-- Hero del catálogo --}}
     <div class="hero-gradient px-3 mb-5" style="padding-top: calc(76px + 32px);">
         <div class="container-fluid px-4 px-lg-5 pb-5">
@@ -16,10 +18,17 @@
                     </p>
                 </div>
                 {{-- Buscador --}}
-                <div style="width: 100%; max-width: 320px;">
-                    <input type="text" class="form-control rounded-pill py-3 px-4"
-                           placeholder="Buscar obra o artista..."
-                           style="background-color: rgba(247,241,231,0.9); border: none; backdrop-filter: blur(4px);">
+                <div class="position-relative" style="width: 100%; max-width: 320px;">
+                    <input type="text" name="q" value="{{ request('q') }}"
+                           class="form-control rounded-pill py-3 px-4"
+                           placeholder="Buscar producto o artista..."
+                           style="background-color: rgba(247,241,231,0.9); border: none; backdrop-filter: blur(4px); padding-right: 3.5rem !important;">
+                    <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-1"
+                            style="background: none; border: none; color: var(--color-secondary);">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -39,7 +48,9 @@
                         @foreach($categories as $category)
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="checkbox"
+                                       name="categories[]"
                                        value="{{ $category->id }}" id="cat-{{ $category->id }}"
+                                       {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}
                                        style="border-color: rgba(30,28,25,0.3);">
                                 <label class="form-check-label text-muted" for="cat-{{ $category->id }}"
                                        style="font-size: 0.875rem;">
@@ -52,17 +63,27 @@
                     {{-- Precio --}}
                     <div class="mb-4">
                         <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">Precio máximo</span>
-                        <input type="range" class="form-range" min="0" max="500" id="priceRange"
+                        <input type="range" class="form-range"
+                               name="price_max"
+                               min="0" max="{{ $absoluteMax }}"
+                               value="{{ request('price_max', $absoluteMax) }}"
+                               id="priceRange"
                                oninput="document.getElementById('priceVal').textContent = this.value + '€'">
                         <div class="d-flex justify-content-between text-muted mt-1" style="font-size: 0.8rem;">
                             <span>0€</span>
-                            <span id="priceVal" class="fw-bold" style="color: var(--color-shadow);">500€</span>
+                            <span id="priceVal" class="fw-bold" style="color: var(--color-shadow);">{{ request('price_max', $absoluteMax) }}€</span>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary fw-bold w-100" style="font-size: 0.85rem;">
+                    <button type="submit" class="btn btn-primary fw-bold w-100" style="font-size: 0.85rem;">
                         Aplicar Filtros
                     </button>
+
+                    @if(request()->hasAny(['q', 'categories', 'price_max', 'sort']))
+                        <a href="{{ route('products.index') }}" class="btn btn-secondary fw-bold w-100 mt-2" style="font-size: 0.85rem;">
+                            Limpiar filtros
+                        </a>
+                    @endif
                 </div>
             </div>
 
@@ -71,13 +92,14 @@
                 {{-- Toolbar --}}
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <span class="text-muted" style="font-size: 0.875rem;">
-                        <span class="fw-bold text-dark">{{ $products->count() }}</span> obras encontradas
+                        <span class="fw-bold text-dark">{{ $products->total() }}</span> productos encontrados
                     </span>
-                    <select class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;">
-                        <option>Ordenar: Destacados</option>
-                        <option>Precio: menor a mayor</option>
-                        <option>Precio: mayor a menor</option>
-                        <option>Más recientes</option>
+                    <select name="sort" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;"
+                            onchange="this.form.submit()">
+                        <option value="featured" {{ request('sort', 'featured') === 'featured' ? 'selected' : '' }}>Ordenar: Destacados</option>
+                        <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Precio: menor a mayor</option>
+                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Precio: mayor a menor</option>
+                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Más recientes</option>
                     </select>
                 </div>
 
@@ -121,30 +143,17 @@
                     @endforelse
                 </div>
 
-                {{-- Paginación --}}
-                @if($products->count() >= 12)
+                {{-- Paginación real de Laravel --}}
+                @if($products->hasPages())
                     <div class="mt-5 d-flex justify-content-center">
-                        <nav aria-label="Paginación">
-                            <ul class="pagination gap-1">
-                                <li class="page-item disabled">
-                                    <a class="page-link rounded-pill px-4" href="#">Anterior</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link rounded-pill" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link rounded-pill" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link rounded-pill px-4" href="#">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        {{ $products->links() }}
                     </div>
                 @endif
             </div>
 
         </div>
     </div>
+
+    </form>
 
 @endsection
