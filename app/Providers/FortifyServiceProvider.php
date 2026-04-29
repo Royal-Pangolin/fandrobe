@@ -21,7 +21,10 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\VerifyEmailResponse::class,
+            \App\Http\Responses\VerifyEmailResponse::class
+        );
     }
 
     /**
@@ -46,6 +49,6 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::loginView(fn() => view('auth.login'));
-        Fortify::registerView(fn() => view('auth.register'));
+        Fortify::registerView(fn() => view('auth.signin'));
     }
 }

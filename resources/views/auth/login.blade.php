@@ -42,14 +42,14 @@
 
                             @if (Route::has('password.request'))
                                 <div class="text-center mt-3">
-                                    <a href="{{ route('password.request') }}" class="text-decoration-none">
+                                    <a href="{{ route('password.request') }}" class="text-decoration-none text-dark">
                                         {{ __('¿Olvidaste tu contraseña?') }}
                                     </a>
                                 </div>
                             @endif
 
                             <div class="text-center mt-2">
-                                <a href="{{ route('register') }}" class="text-decoration-none">
+                                <a href="{{ route('register') }}" class="text-decoration-none text-dark">
                                     {{ __('¿No tienes cuenta? Regístrate') }}
                                 </a>
                             </div>
