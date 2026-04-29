@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
 use App\Models\ShoppingCart;
 use App\Models\Discount;
 use App\Models\Payment;
+
 
 class OrderController extends Controller
 {
@@ -116,6 +119,11 @@ class OrderController extends Controller
             session()->forget('discount');
 
             DB::commit();
+
+            Mail::to($order->user->email)
+                ->send(new \App\Mail\OrderConfirmationMail(
+                    $order->load('items.product', 'items.variant', 'status', 'address', 'user')
+                ));
 
             return redirect()->route('orders.show', $order->id)
                              ->with('mensaje', '¡Pedido realizado correctamente!');
