@@ -12,7 +12,7 @@
 ### :busts_in_silhouette: Authors
 
 - Enrique Rojas, Pablo
-- Medina, Alberto
+- Medina Pérez, Alberto
 - Sánchez Troncoso, Pablo
 
 ---
