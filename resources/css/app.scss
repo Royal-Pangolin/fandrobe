@@ -985,3 +985,55 @@ html {
 
 .category-title { font-size: 1.75rem; letter-spacing: -0.02em; }
 .category-desc  { font-size: 0.9rem; opacity: 0.75; }
+
+// ---- FAVORITOS ----
+
+// Botón de favorito activo (corazón relleno)
+.btn-favorite-active {
+    background-color: rgba(168, 70, 50, 0.1) !important;
+    border: 1px solid rgba(168, 70, 50, 0.25) !important;
+    color: var(--color-error) !important;
+
+    &:hover {
+        background-color: rgba(168, 70, 50, 0.15) !important;
+        border-color: rgba(168, 70, 50, 0.4) !important;
+    }
+}
+
+// Botón flotante para quitar favorito (en cards de favoritos)
+.btn-favorite-remove {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(247, 241, 231, 0.9);
+    backdrop-filter: blur(6px);
+    border: none;
+    color: var(--color-error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: var(--color-error);
+        color: white;
+        transform: scale(1.1);
+    }
+}
+
+// Botón "Siguiendo" artista (estado activo)
+.btn-following-active {
+    background-color: rgba(110, 117, 86, 0.12) !important;
+    border: 1px solid rgba(110, 117, 86, 0.3) !important;
+    color: #4a5240 !important;
+    font-size: 0.8rem !important;
+
+    &:hover {
+        background-color: rgba(168, 70, 50, 0.1) !important;
+        border-color: rgba(168, 70, 50, 0.25) !important;
+        color: var(--color-error) !important;
+    }
+}
+
