@@ -86,7 +86,7 @@ class FavoriteController extends Controller
             ->orderByDesc('added_at')
             ->get();
 
-        return view('favorites.products', compact('favorites'));
+        return view('favorites.index', compact('favorites'));
     }
 
     /**
@@ -100,6 +100,6 @@ class FavoriteController extends Controller
             ->orderByDesc('artist_user.followed_at')
             ->get();
 
-        return view('favorites.artists', compact('artists'));
+        return view('followings.index', compact('artists'));
     }
 }

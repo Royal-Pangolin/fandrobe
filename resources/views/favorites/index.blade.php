@@ -15,8 +15,8 @@
                 </p>
             </div>
             <div class="d-flex gap-2">
-                <a href="{{ route('favorites.products') }}" class="btn btn-primary btn-sm">Productos</a>
-                <a href="{{ route('favorites.artists') }}" class="btn btn-secondary btn-sm">Artistas Seguidos</a>
+                <a href="{{ route('favorites.index') }}" class="btn btn-primary btn-sm">Productos</a>
+                <a href="{{ route('followings.index') }}" class="btn btn-secondary btn-sm">Artistas Seguidos</a>
             </div>
         </div>
     </div>

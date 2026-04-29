@@ -65,8 +65,8 @@ Route::middleware('auth')->group(function () {
     // Favoritos
     Route::post('/favoritos/producto', [FavoriteController::class, 'toggleProduct'])->name('favorites.toggleProduct');
     Route::post('/favoritos/artista', [FavoriteController::class, 'toggleArtist'])->name('favorites.toggleArtist');
-    Route::get('/favoritos/productos', [FavoriteController::class, 'favoriteProducts'])->name('favorites.products');
-    Route::get('/favoritos/artistas', [FavoriteController::class, 'followedArtists'])->name('favorites.artists');
+    Route::get('/favoritos/productos', [FavoriteController::class, 'favoriteProducts'])->name('favorites.index');
+    Route::get('/favoritos/artistas', [FavoriteController::class, 'followedArtists'])->name('followings.index');
 
 });
 
