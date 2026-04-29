@@ -4,12 +4,12 @@
 @section('content')
 
 <div class="container-fluid px-4 px-lg-5 py-5">
-    <div style="height: 76px;"></div>
+    <div class="navbar-spacer"></div>
 
-    <div style="max-width: 900px; margin: 0 auto;">
+    <div class="content-container-md">
 
         <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb" style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;">
+            <ol class="breadcrumb breadcrumb-nav">
                 <li class="breadcrumb-item">
                     <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
                 </li>
@@ -18,17 +18,16 @@
         </nav>
 
         <div class="d-flex align-items-end justify-content-between mb-5">
-            <h1 class="fw-bolder mb-0" style="letter-spacing: -0.03em;">Mis Pedidos</h1>
+            <h1 class="fw-bolder mb-0 text-tighter">Mis Pedidos</h1>
             @if($orders->count())
-                <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.06em;">
+                <span class="section-link text-muted small fw-bold text-uppercase">
                     {{ $orders->count() }} pedido(s)
                 </span>
             @endif
         </div>
 
         @if(session('mensaje'))
-            <div class="alert d-flex align-items-center gap-2 rounded-3 mb-4"
-                 style="background: rgba(110,117,86,0.12); border: 1px solid rgba(110,117,86,0.3); color: #4a5240;">
+            <div class="alert alert-success-flash d-flex align-items-center gap-2 rounded-3 mb-4">
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                 </svg>
@@ -48,50 +47,35 @@
                             default                   => 'badge-limited',
                         };
                     @endphp
-                    <div class="d-flex align-items-center justify-content-between p-4 rounded-3"
-                         style="background: rgba(30,28,25,0.03); border: 1px solid rgba(30,28,25,0.08);">
+                    <div class="order-card d-flex align-items-center justify-content-between p-4 rounded-3">
 
                         <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-5">
                             <div>
-                                <p class="text-muted mb-1"
-                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
-                                    Pedido
-                                </p>
-                                <span class="fw-bolder" style="font-size: 1.05rem;">
+                                <p class="order-meta-label text-muted mb-1">Pedido</p>
+                                <span class="order-number-text fw-bolder">
                                     #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                                 </span>
                             </div>
                             <div>
-                                <p class="text-muted mb-1"
-                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
-                                    Fecha
-                                </p>
+                                <p class="order-meta-label text-muted mb-1">Fecha</p>
                                 <span class="fw-bold" style="font-size: 0.95rem;">
                                     {{ \Carbon\Carbon::parse($order->placed_at)->format('d M Y') }}
                                 </span>
                             </div>
                             <div>
-                                <p class="text-muted mb-1"
-                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
-                                    Estado
-                                </p>
+                                <p class="order-meta-label text-muted mb-1">Estado</p>
                                 <span class="badge {{ $statusClass }}">{{ $order->status->name }}</span>
                             </div>
                         </div>
 
                         <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-5 ms-3">
                             <div class="text-md-end">
-                                <p class="text-muted mb-1"
-                                   style="font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;">
-                                    Total
-                                </p>
-                                <span class="fw-bolder" style="font-size: 1.25rem; letter-spacing: -0.02em;">
+                                <p class="order-meta-label text-muted mb-1">Total</p>
+                                <span class="order-total-text fw-bolder">
                                     €{{ number_format($order->total_amount, 2) }}
                                 </span>
                             </div>
-                            <a href="{{ route('orders.show', $order->id) }}"
-                               class="btn btn-primary fw-bold"
-                               style="font-size: 0.85rem; padding: 0.6rem 1.5rem; white-space: nowrap;">
+                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary fw-bold">
                                 Ver detalle
                             </a>
                         </div>

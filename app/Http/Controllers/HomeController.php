@@ -9,9 +9,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Artistas para el hero slideshow
-        $heroArtists = Artist::where('is_active', true)->take(6)->get();
-
         // Últimos lanzamientos (fila horizontal, hasta 12)
         $latestProducts = Product::where('is_active', true)
             ->latest()
@@ -31,13 +28,8 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        // Compatibilidad
-        $products = $latestProducts;
-        $artists = $heroArtists;
-
         return view('home.index', compact(
-            'products', 'artists',
-            'heroArtists', 'latestProducts',
+            'latestProducts',
             'topProducts', 'newestArtists'
         ));
     }
