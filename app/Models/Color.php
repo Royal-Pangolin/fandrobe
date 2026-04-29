@@ -9,20 +9,10 @@ class Color extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'hex_code',
     ];
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 }
