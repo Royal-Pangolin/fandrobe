@@ -45,8 +45,6 @@ Follow these steps to set up and run the application locally.
 - [Node.js 18+](https://nodejs.org/) (for frontend assets)
 - [MySQL](https://www.mysql.com/) (database)
 
----
-
 ### :one: Clone the Repository
 
 ```bash
