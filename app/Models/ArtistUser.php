@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ArtistUser extends Model
+class ArtistUser extends Pivot
 {
     public $timestamps = false;
 
