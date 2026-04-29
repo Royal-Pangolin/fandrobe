@@ -10,11 +10,20 @@
         <p class="lead text-shadow mx-auto mb-5" style="max-width: 600px; opacity: 0.9;">
             Descubre el talento que da vida a nuestras piezas exclusivas. Cada artista es verificado oficialmente.
         </p>
-        <div class="d-flex justify-content-center">
+        <form method="GET" action="{{ route('artists.index') }}" class="d-flex justify-content-center">
             <div class="position-relative" style="width: 100%; max-width: 400px;">
-                <input type="text" class="form-control rounded-pill py-3 px-4 shadow-sm" placeholder="Buscar artista..." style="background-color: var(--color-primary); border: none;">
+                <input type="text" name="q" value="{{ request('q') }}"
+                       class="form-control rounded-pill py-3 px-4 shadow-sm"
+                       placeholder="Buscar artista..."
+                       style="background-color: var(--color-primary); border: none; padding-right: 3.5rem !important;">
+                <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-1"
+                        style="background: none; border: none; color: var(--color-secondary);">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
+                    </svg>
+                </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -38,7 +47,12 @@
             </div>
         @empty
             <div class="col-12 text-center text-muted py-5">
-                <h4>No hay artistas disponibles en este momento.</h4>
+                @if(request('q'))
+                    <h4>No se encontraron artistas para "{{ request('q') }}".</h4>
+                    <a href="{{ route('artists.index') }}" class="btn btn-secondary mt-3">Ver todos los artistas</a>
+                @else
+                    <h4>No hay artistas disponibles en este momento.</h4>
+                @endif
             </div>
         @endforelse
     </div>

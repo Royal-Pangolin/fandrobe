@@ -19,13 +19,13 @@
     $categories  = $allProducts->pluck('category')->filter()->unique('id')->values();
 @endphp
 
-<div class="position-relative overflow-hidden" style="height: 50vh; min-height: 400px; margin-top: -76px; background-color: {{ $bg }};">
+<div class="artist-hero position-relative overflow-hidden" style="background-color: {{ $bg }};">
+    {{-- Orbes dinámicos: color depende del artista, deben quedar inline --}}
     <div class="hero-orb" style="width: 65%; aspect-ratio:1; background:{{ $set[0] }}; top:-15%; left:-10%; animation-duration:9s;"></div>
     <div class="hero-orb" style="width: 50%; aspect-ratio:1; background:{{ $set[1] }}; bottom:-15%; right:-8%; animation-duration:12s; animation-delay:-4s; animation-direction:reverse;"></div>
     <div class="hero-orb" style="width: 38%; aspect-ratio:1; background:{{ $set[2] }}; top:25%; left:40%; animation-duration:15s; animation-delay:-8s;"></div>
 
-    <div class="position-absolute top-0 start-0 w-100 h-100"
-         style="background: linear-gradient(transparent 0%, rgba(30, 28, 25, 0.9) 100%);"></div>
+    <div class="artist-hero-fade position-absolute top-0 start-0 w-100 h-100"></div>
 
     <div class="container-fluid px-4 px-lg-5 position-relative h-100 d-flex align-items-end justify-content-between pb-4">
         <div>
@@ -35,10 +35,7 @@
                 </svg>
                 <span class="text-white fw-bold">Artista Verificado</span>
             </div>
-            <h1 class="fw-bolder text-white mb-0"
-                style="letter-spacing: -0.04em; font-size: clamp(4rem, 8vw, 8rem); line-height: 1;">
-                {{ $artist->name }}
-            </h1>
+            <h1 class="artist-hero-title fw-bolder text-white mb-0">{{ $artist->name }}</h1>
         </div>
         <div class="mb-2">
             <button class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</button>
@@ -53,13 +50,11 @@
             {{ $allProducts->count() }} obras disponibles
         </span>
         <div class="d-flex gap-3 flex-wrap">
-            <div style="width: 250px;">
+            <div class="artist-filter-search">
                 <input type="text" id="artistProductSearch" class="form-control rounded-pill py-2 px-4"
-                       placeholder="Buscar obra..."
-                       style="font-size: 0.875rem;">
+                       placeholder="Buscar obra..." style="font-size: 0.875rem;">
             </div>
-            <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold"
-                    style="max-width: 200px; font-size: 0.85rem;">
+            <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;">
                 <option value="all">Todas las categorías</option>
                 @foreach($categories as $cat)
                     <option value="{{ Str::slug($cat->name) }}">{{ $cat->name }}</option>
@@ -71,17 +66,15 @@
     @if($allProducts->count())
         <div class="artist-category-section mb-5" data-category="all">
             <div class="d-flex justify-content-between align-items-end mb-3">
-                <h3 class="fw-bold mb-0" style="letter-spacing: -0.02em;">Obras Populares</h3>
-                <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">
+                <h3 class="fw-bold mb-0 text-tight">Obras Populares</h3>
+                <span class="section-link text-muted small fw-bold text-uppercase">
                     {{ $allProducts->count() }} obras
                 </span>
             </div>
-            <div class="horizontal-scroll-row d-flex gap-3 pb-3"
-                 style="overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+            <div class="horizontal-scroll-row d-flex gap-3 pb-3 overflow-hidden">
                 @foreach($allProducts as $product)
                     <a href="{{ route('products.show', $product->id) }}"
-                       class="text-decoration-none flex-shrink-0 artist-product-card"
-                       style="width: 200px; scroll-snap-align: start;"
+                       class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
                        data-name="{{ strtolower($product->name) }}"
                        data-category="{{ $product->category ? Str::slug($product->category->name) : '' }}">
                         <div class="card h-100">
@@ -97,16 +90,16 @@
                                         </svg>
                                     </div>
                                 @endif
-                                <button class="card-action-btn" style="width: 40px; height: 40px; bottom: 12px; right: 12px;">
+                                <button class="card-action-btn card-action-btn-sm">
                                     <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                                     </svg>
                                 </button>
                             </div>
-                            <h5 class="card-title mt-2" style="font-size: 0.9rem;">{{ $product->name }}</h5>
+                            <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
-                                <span class="badge badge-verified" style="font-size: 0.6rem;">Oficial</span>
+                                <span class="badge badge-verified badge-sm">Oficial</span>
                             </div>
                         </div>
                     </a>
@@ -122,17 +115,15 @@
         @if($catProducts->count())
             <div class="artist-category-section mb-5" data-category="{{ Str::slug($cat->name) }}">
                 <div class="d-flex justify-content-between align-items-end mb-3">
-                    <h3 class="fw-bold mb-0" style="letter-spacing: -0.02em;">{{ $cat->name }}</h3>
-                    <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">
+                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->name }}</h3>
+                    <span class="section-link text-muted small fw-bold text-uppercase">
                         {{ $catProducts->count() }} obras
                     </span>
                 </div>
-                <div class="horizontal-scroll-row d-flex gap-3 pb-3"
-                     style="overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+                <div class="horizontal-scroll-row d-flex gap-3 pb-3 overflow-hidden">
                     @foreach($catProducts as $product)
                         <a href="{{ route('products.show', $product->id) }}"
-                           class="text-decoration-none flex-shrink-0 artist-product-card"
-                           style="width: 200px; scroll-snap-align: start;"
+                           class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
                            data-name="{{ strtolower($product->name) }}"
                            data-category="{{ Str::slug($cat->name) }}">
                             <div class="card h-100">
@@ -148,16 +139,16 @@
                                             </svg>
                                         </div>
                                     @endif
-                                    <button class="card-action-btn" style="width: 40px; height: 40px; bottom: 12px; right: 12px;">
+                                    <button class="card-action-btn card-action-btn-sm">
                                         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                                         </svg>
                                     </button>
                                 </div>
-                                <h5 class="card-title mt-2" style="font-size: 0.9rem;">{{ $product->name }}</h5>
+                                <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
-                                    <span class="badge badge-verified" style="font-size: 0.6rem;">Oficial</span>
+                                    <span class="badge badge-verified badge-sm">Oficial</span>
                                 </div>
                             </div>
                         </a>
@@ -169,7 +160,7 @@
 
     <div class="mt-5">
         <h4 class="fw-bold mb-3 text-dark">Acerca de</h4>
-        <div class="p-4 rounded" style="background-color: rgba(30, 28, 25, 0.04); max-width: 800px;">
+        <div class="artist-bio-panel p-4 rounded">
             <p class="text-muted lh-lg fs-5 mb-4">
                 {{ $artist->bio ?? 'No hay biografía disponible de momento.' }}
             </p>

@@ -6,7 +6,7 @@
 <div class="container-fluid px-4 px-lg-5 py-5">
 
     <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb" style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6;">
+        <ol class="breadcrumb breadcrumb-nav">
             <li class="breadcrumb-item">
                 <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
             </li>
@@ -21,21 +21,20 @@
         </ol>
     </nav>
 
-    <div class="row g-5" style="max-width: 1200px;">
+    <div class="row g-5 content-container-lg">
 
         <div class="col-lg-6">
-            <div style="border-radius: 16px; overflow: hidden; background: rgba(30,28,25,0.04); aspect-ratio: 1/1; width: 100%;">
+            <div class="product-img-frame">
                 @if($product->images && $product->images->count() > 0)
                     @php $imgUrl = $product->images->first()->url; @endphp
                     <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                         alt="{{ $product->name }}"
-                         style="width: 100%; height: 100%; object-fit: cover;">
+                         alt="{{ $product->name }}">
                 @else
                     <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted">
                         <svg width="80" height="80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
-                        <span class="mt-3 small text-uppercase fw-bold" style="letter-spacing: 0.1em;">Sin imagen</span>
+                        <span class="mt-3 small text-uppercase fw-bold label-xs">Sin imagen</span>
                     </div>
                 @endif
             </div>
@@ -57,31 +56,25 @@
 
             @if($product->artist)
                 <a href="{{ route('artists.show', $product->artist->id) }}"
-                   class="text-decoration-none text-muted fw-bold text-uppercase mb-2 d-block"
-                   style="font-size: 0.85rem; letter-spacing: 0.1em;">
+                   class="product-artist-link text-decoration-none text-muted fw-bold text-uppercase mb-2 d-block">
                     {{ $product->artist->name }}
                 </a>
             @endif
 
-            <h1 class="fw-bolder mb-4"
-                style="font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.05;">
-                {{ $product->name }}
-            </h1>
+            <h1 class="product-title fw-bolder mb-4">{{ $product->name }}</h1>
 
             <div class="mb-4 d-flex align-items-baseline gap-3">
-                <span class="fw-bolder" style="font-size: 2.5rem; letter-spacing: -0.02em;">
+                <span class="product-price-lg fw-bolder">
                     €{{ number_format($product->base_price, 2) }}
                 </span>
-                <span class="text-muted small text-uppercase fw-bold" style="letter-spacing: 0.08em;">IVA incluido</span>
+                <span class="text-muted small text-uppercase fw-bold label-xs">IVA incluido</span>
             </div>
 
             @if($product->description)
-                <p class="text-muted lh-lg mb-4" style="font-size: 1.05rem; max-width: 480px;">
-                    {{ $product->description }}
-                </p>
+                <p class="product-description text-muted lh-lg mb-4">{{ $product->description }}</p>
             @endif
 
-            <div class="d-flex flex-column gap-3 mb-5" style="max-width: 400px;">
+            <div class="product-actions d-flex flex-column gap-3 mb-5">
                 <form action="{{ route('cart.add') }}" method="POST">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -99,25 +92,22 @@
                 </button>
             </div>
 
-            <div class="pt-4" style="border-top: 1px solid rgba(30,28,25,0.1);">
-                <h4 class="fw-bold mb-3"
-                    style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">
-                    Detalles
-                </h4>
+            <div class="product-details-section pt-4">
+                <h4 class="label-xs fw-bold mb-3" style="color: var(--color-muted);">Detalles</h4>
                 <div class="d-flex flex-column gap-2">
                     @if($product->sku)
-                        <div class="d-flex justify-content-between py-2" style="border-bottom: 1px solid rgba(30,28,25,0.06);">
-                            <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">SKU</span>
+                        <div class="product-detail-row d-flex justify-content-between py-2">
+                            <span class="product-detail-label text-muted small fw-bold text-uppercase">SKU</span>
                             <span class="fw-bold small">{{ $product->sku }}</span>
                         </div>
                     @endif
-                    <div class="d-flex justify-content-between py-2" style="border-bottom: 1px solid rgba(30,28,25,0.06);">
-                        <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">Disponibilidad</span>
-                        <span class="fw-bold small" style="color: var(--color-verified);">En stock</span>
+                    <div class="product-detail-row d-flex justify-content-between py-2">
+                        <span class="product-detail-label text-muted small fw-bold text-uppercase">Disponibilidad</span>
+                        <span class="fw-bold small text-verified-color">En stock</span>
                     </div>
                     @if($product->artist)
                         <div class="d-flex justify-content-between py-2">
-                            <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.05em;">Artista</span>
+                            <span class="product-detail-label text-muted small fw-bold text-uppercase">Artista</span>
                             <a href="{{ route('artists.show', $product->artist->id) }}"
                                class="fw-bold small text-decoration-none text-dark">
                                 {{ $product->artist->name }}
