@@ -74,7 +74,7 @@
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                             <span id="cart-badge"
-                                class="position-absolute top-0 start-100 translate-middle badge bg-primary text-shadow"
+                                class="position-absolute top-0 start-100 translate-middle badge bg-dark text-white"
                                 style="{{ $cartCount === 0 ? 'display:none;' : '' }}">
                                 {{ $cartCount }}
                             </span>
@@ -123,6 +123,10 @@
                                         perfil</a></li>
                                 <li><a class="dropdown-item rounded-2 dropdown-item-sm"
                                         href="{{ route('orders.index') }}">Mis pedidos</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm"
+                                        href="{{ route('favorites.index') }}">Mis favoritos</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm"
+                                        href="{{ route('followings.index') }}">Artistas seguidos</a></li>
 
                                 <li>
                                     <hr class="dropdown-divider my-1">

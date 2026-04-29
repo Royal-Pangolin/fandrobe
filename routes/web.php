@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -47,7 +48,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 // Profile
 Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware(['auth', 'verified']);
 
-// Carrito
+// Carrito y funciones autenticadas
 Route::middleware('auth')->group(function () {
 
     // Carrito
@@ -60,6 +61,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/pedidos', [OrderController::class, 'store'])->name('orders.store');
+
+    // Favoritos
+    Route::post('/favoritos/producto', [FavoriteController::class, 'toggleProduct'])->name('favorites.toggleProduct');
+    Route::post('/favoritos/artista', [FavoriteController::class, 'toggleArtist'])->name('favorites.toggleArtist');
+    Route::get('/favoritos/productos', [FavoriteController::class, 'favoriteProducts'])->name('favorites.index');
+    Route::get('/favoritos/artistas', [FavoriteController::class, 'followedArtists'])->name('followings.index');
 
 });
 
