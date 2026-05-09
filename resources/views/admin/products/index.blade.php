@@ -43,7 +43,9 @@
                             <td class="px-4 py-3 text-muted fw-bold">{{ $product->id }}</td>
                             <td class="py-3 fw-bold">{{ $product->name }}</td>
                             <td class="py-3 text-muted">{{ $product->artist->name ?? '—' }}</td>
-                            <td class="py-3 text-muted">{{ $product->category->name ?? '—' }}</td>
+                            <td class="py-3 text-muted">
+                                {{ $product->categories->pluck('name')->join(', ') ?: '—' }}
+                            </td>
                             <td class="py-3 fw-bold">€{{ number_format($product->base_price, 2) }}</td>
                             <td class="py-3">
                                 @if($product->is_active)
