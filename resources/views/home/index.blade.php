@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Bienvenido')
+@section('title', __('messages.nav_home'))
 
 @section('content')
 
@@ -18,25 +18,25 @@
             <div class="col-lg-7">
                 <div class="mb-3">
                     <span class="hero-label text-white fw-bold text-uppercase">
-                        Descubre nuestros artistas
+                        {{ __('messages.hero_label') }}
                     </span>
                 </div>
 
                 <h1 class="hero-title text-white mb-4 fw-bolder">
-                    Coleccionables Oficiales.<br>
-                    <span class="text-neutral">Arte con Firma.</span>
+                    {{ __('messages.hero_title_1') }}<br>
+                    <span class="text-neutral">{{ __('messages.hero_title_2') }}</span>
                 </h1>
 
                 <p class="hero-subtitle text-white mb-5">
-                    Ropa y accesorios exclusivos de tus artistas favoritos. Ediciones limitadas con certificado de autenticidad oficial.
+                    {{ __('messages.hero_subtitle') }}
                 </p>
 
                 <div class="d-flex gap-3 flex-wrap">
                     <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg fw-bold">
-                        Explorar Colección
+                        {{ __('messages.explore_collection') }}
                     </a>
                     <a href="{{ route('artists.index') }}" class="btn btn-light btn-lg fw-bold rounded-pill">
-                        Ver Artistas
+                        {{ __('messages.view_artists') }}
                     </a>
                 </div>
             </div>
@@ -48,11 +48,11 @@
     <div class="px-4 px-lg-5 py-5">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div class="d-flex align-items-center gap-3">
-                <span class="badge badge-limited badge-sm fw-bold">NUEVO</span>
-                <h2 class="mb-0 fw-bolder text-tight">Últimos Lanzamientos</h2>
+                <span class="badge badge-limited badge-sm fw-bold">{{ __('messages.new_badge') }}</span>
+                <h2 class="mb-0 fw-bolder text-tight">{{ __('messages.latest_releases') }}</h2>
             </div>
             <a href="{{ route('products.index') }}"
-               class="section-link text-muted text-decoration-none fw-bold small text-uppercase">Ver todo</a>
+               class="section-link text-muted text-decoration-none fw-bold small text-uppercase">{{ __('messages.view_all') }}</a>
         </div>
 
         <div class="horizontal-scroll-row d-flex gap-3 pb-3">
@@ -79,7 +79,7 @@
                             </button>
                         </div>
                         <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
-                        <p class="card-text" style="font-size: 0.78rem;">{{ $product->artist->name ?? 'Artista Oficial' }}</p>
+                        <p class="card-text" style="font-size: 0.78rem;">{{ $product->artist->name ?? __('messages.official_artist') }}</p>
                         <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
                     </div>
                 </a>
@@ -90,9 +90,9 @@
 
 <div class="px-4 px-lg-5 pb-5">
     <div class="d-flex justify-content-between align-items-end mb-4">
-        <h2 class="mb-0 fw-bolder text-tight">Obras Más Vendidas</h2>
+        <h2 class="mb-0 fw-bolder text-tight">{{ __('messages.best_sellers') }}</h2>
         <a href="{{ route('products.index') }}"
-           class="section-link text-muted text-decoration-none fw-bold small text-uppercase">Mostrar todo</a>
+           class="section-link text-muted text-decoration-none fw-bold small text-uppercase">{{ __('messages.show_all') }}</a>
     </div>
 
     <div class="row g-3 row-cols-2 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
@@ -119,14 +119,14 @@
                             </button>
                         </div>
                         <h5 class="card-title mt-2">{{ $product->name }}</h5>
-                        <p class="card-text">{{ $product->artist->name ?? 'Artista Oficial' }}</p>
+                        <p class="card-text">{{ $product->artist->name ?? __('messages.official_artist') }}</p>
                         <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
                     </div>
                 </a>
             </div>
         @empty
             <div class="col-12 text-center text-muted py-5">
-                <p>No hay obras disponibles.</p>
+                <p>{{ __('messages.no_products') }}</p>
             </div>
         @endforelse
     </div>
@@ -135,11 +135,11 @@
 <div class="px-4 px-lg-5 py-5 mb-4">
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div>
-            <h2 class="mb-1 fw-bolder text-tight">Nuestros Artistas Nuevos</h2>
-            <p class="text-muted mb-0" style="font-size: 0.9rem;">Las últimas incorporaciones a la plataforma.</p>
+            <h2 class="mb-1 fw-bolder text-tight">{{ __('messages.new_artists') }}</h2>
+            <p class="text-muted mb-0" style="font-size: 0.9rem;">{{ __('messages.new_artists_desc') }}</p>
         </div>
         <a href="{{ route('artists.index') }}"
-           class="section-link text-muted text-decoration-none fw-bold small text-uppercase">Ver todos</a>
+           class="section-link text-muted text-decoration-none fw-bold small text-uppercase">{{ __('messages.view_all_artists') }}</a>
     </div>
 
     <div class="row g-3 row-cols-3 row-cols-md-4 row-cols-lg-6">
@@ -163,7 +163,7 @@
             </div>
         @empty
             <div class="col-12 text-center text-muted">
-                <p>No hay artistas disponibles.</p>
+                <p>{{ __('messages.no_artists_available') }}</p>
             </div>
         @endforelse
     </div>

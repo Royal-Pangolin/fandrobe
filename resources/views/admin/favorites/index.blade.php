@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Productos favoritos — Admin')
+@section('title', __('messages.favorite_products') . ' — Admin')
 
 @section('content')
 <div class="container-fluid px-4 px-lg-5 py-5">
@@ -8,9 +8,9 @@
         <div class="d-flex align-items-end justify-content-between mb-5">
             <div>
                 <a href="{{ route('admin.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
-                    ← Panel
+                    ← {{ __('messages.panel') }}
                 </a>
-                <h1 class="fw-bolder mb-0">Productos favoritos</h1>
+                <h1 class="fw-bolder mb-0">{{ __('messages.favorite_products') }}</h1>
             </div>
         </div>
 
@@ -19,9 +19,9 @@
                 <thead class="admin-thead">
                     <tr>
                         <th class="fw-bold px-4 py-3">#</th>
-                        <th class="fw-bold py-3">Nombre</th>
-                        <th class="fw-bold py-3">Artista</th>
-                        <th class="fw-bold py-3 text-end pe-4">Favoritos</th>
+                        <th class="fw-bold py-3">{{ __('messages.name') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.artist_label') }}</th>
+                        <th class="fw-bold py-3 text-end pe-4">{{ __('messages.favorites') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center py-5 text-muted">Ningún producto ha sido marcado como favorito todavía.</td>
+                            <td colspan="4" class="text-center py-5 text-muted">{{ __('messages.no_favorites_yet') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
