@@ -60,6 +60,7 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert($products);
 
         // Categorías: 1=Camisetas, 2=Sudaderas, 3=Gorras, 4=Accesorios, 5=Vinilo, 6=Pósters
+        // Asignamos varias categorías por producto para demostrar la relación N:M
         DB::table('category_product')->insert([
             ['product_id' => 1, 'category_id' => 1], // Bad Bunny → Camisetas
             ['product_id' => 1, 'category_id' => 4], // Bad Bunny → Accesorios
