@@ -83,6 +83,12 @@
                     Usuarios
                 </a>
             </div>
+            <div class="col-md-3">
+                <a href="{{ route('admin.categorias.index') }}"
+                   class="d-block p-4 rounded-3 text-decoration-none text-dark fw-bold admin-quick-link">
+                    Categorías
+                </a>
+            </div>
         </div>
 
     </div>
