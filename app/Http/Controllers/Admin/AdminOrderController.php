@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderStatus;
-use App\Models\OrderSummary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +12,10 @@ class AdminOrderController extends Controller
 {
     public function index()
     {
-        $orders   = OrderSummary::orderBy('placed_at', 'desc')->paginate(20);
+        $orders = Order::with('user', 'status')
+                       ->orderBy('placed_at', 'desc')
+                       ->paginate(20);
+
         $statuses = OrderStatus::all();
 
         return view('admin.orders.index', compact('orders', 'statuses'));
