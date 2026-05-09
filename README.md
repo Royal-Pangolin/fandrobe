@@ -12,7 +12,7 @@
 ### :busts_in_silhouette: Authors
 
 - Enrique Rojas, Pablo
-- Medina, Alberto
+- Medina Pérez, Alberto
 - Sánchez Troncoso, Pablo
 
 ---
@@ -44,8 +44,6 @@ Follow these steps to set up and run the application locally.
 - [Composer](https://getcomposer.org/)
 - [Node.js 18+](https://nodejs.org/) (for frontend assets)
 - [MySQL](https://www.mysql.com/) (database)
-
----
 
 ### :one: Clone the Repository
 
@@ -128,5 +126,3 @@ Press `Ctrl + C` in the terminal to stop all running services.
 ---
 
 **:sparkles: Now you're ready to explore Fandrobe locally!**
-
----
