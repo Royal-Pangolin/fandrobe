@@ -8,10 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropColumn('category_id');
-        });
+        if (Schema::hasColumn('products', 'category_id')) {
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropForeign(['category_id']);
+                $table->dropColumn('category_id');
+            });
+        }
     }
 
     public function down(): void
