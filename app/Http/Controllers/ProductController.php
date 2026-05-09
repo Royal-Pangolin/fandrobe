@@ -20,7 +20,7 @@ class ProductController extends Controller
         }
 
         if ($cats = $request->input('categories')) {
-            $query->whereIn('category_id', $cats);
+            $query->whereHas('categories', fn($q) => $q->whereIn('categories.id', $cats));
         }
 
         if ($priceMax = $request->input('price_max')) {
@@ -43,7 +43,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::with(['variants', 'images', 'artist', 'reviews'])->findOrFail($id);
+        $product = Product::with(['variants', 'images', 'artist', 'reviews', 'categories'])->findOrFail($id);
 
         return view('products.show', compact('product'));
     }
