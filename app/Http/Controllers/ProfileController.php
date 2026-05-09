@@ -8,8 +8,12 @@ class ProfileController extends Controller
 {
     public function index(Request $request)
     {
+        $user = $request->user()->load(['addresses' => function ($q) {
+            $q->orderByDesc('is_default')->orderBy('created_at');
+        }]);
+
         return view('profile.index', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 }
