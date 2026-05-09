@@ -12,7 +12,6 @@ class ProductSeeder extends Seeder
         $products = [
             [
                 'artist_id'   => 1,
-                'category_id' => 1,
                 'name'        => 'Camiseta Bad Bunny Un Verano Sin Ti',
                 'slug'        => 'camiseta-bad-bunny-un-verano-sin-ti',
                 'description' => 'Camiseta oficial de la gira Un Verano Sin Ti.',
@@ -22,7 +21,6 @@ class ProductSeeder extends Seeder
             ],
             [
                 'artist_id'   => 2,
-                'category_id' => 1,
                 'name'        => 'Camiseta Rosalía Motomami',
                 'slug'        => 'camiseta-rosalia-motomami',
                 'description' => 'Camiseta oficial del álbum Motomami.',
@@ -32,7 +30,6 @@ class ProductSeeder extends Seeder
             ],
             [
                 'artist_id'   => 3,
-                'category_id' => 2,
                 'name'        => 'Sudadera C. Tangana El Madrileño',
                 'slug'        => 'sudadera-c-tangana-el-madrileno',
                 'description' => 'Sudadera oficial del álbum El Madrileño.',
@@ -42,7 +39,6 @@ class ProductSeeder extends Seeder
             ],
             [
                 'artist_id'   => 4,
-                'category_id' => 3,
                 'name'        => 'Gorra Bizarrap Sessions',
                 'slug'        => 'gorra-bizarrap-sessions',
                 'description' => 'Gorra oficial de las Bizarrap Music Sessions.',
@@ -52,7 +48,6 @@ class ProductSeeder extends Seeder
             ],
             [
                 'artist_id'   => 5,
-                'category_id' => 1,
                 'name'        => 'Camiseta Coldplay Music of the Spheres',
                 'slug'        => 'camiseta-coldplay-music-of-the-spheres',
                 'description' => 'Camiseta oficial de la gira Music of the Spheres.',
@@ -63,5 +58,17 @@ class ProductSeeder extends Seeder
         ];
 
         DB::table('products')->insert($products);
+
+        // Categorías: 1=Camisetas, 2=Sudaderas, 3=Gorras, 4=Accesorios, 5=Vinilo, 6=Pósters
+        // Asignamos varias categorías por producto para demostrar la relación N:M
+        DB::table('category_product')->insert([
+            ['product_id' => 1, 'category_id' => 1], // Bad Bunny → Camisetas
+            ['product_id' => 1, 'category_id' => 4], // Bad Bunny → Accesorios
+            ['product_id' => 2, 'category_id' => 1], // Rosalía → Camisetas
+            ['product_id' => 3, 'category_id' => 2], // C. Tangana → Sudaderas
+            ['product_id' => 4, 'category_id' => 3], // Bizarrap → Gorras
+            ['product_id' => 4, 'category_id' => 4], // Bizarrap → Accesorios
+            ['product_id' => 5, 'category_id' => 1], // Coldplay → Camisetas
+        ]);
     }
 }

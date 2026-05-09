@@ -10,13 +10,13 @@
             <li class="breadcrumb-item">
                 <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
             </li>
-            @if($product->category)
+            @foreach($product->categories as $category)
                 <li class="breadcrumb-item">
-                    <a href="{{ route('categories.show', $product->category->id) }}" class="text-decoration-none text-dark">
-                        {{ $product->category->name }}
+                    <a href="{{ route('categories.show', $category->id) }}" class="text-decoration-none text-dark">
+                        {{ $category->name }}
                     </a>
                 </li>
-            @endif
+            @endforeach
             <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">{{ $product->name }}</li>
         </ol>
     </nav>
@@ -49,8 +49,9 @@
                     </svg>
                     Autenticado
                 </span>
-                @if($product->category)
-                    <span class="badge badge-limited">{{ $product->category->name }}</span>
+                @foreach($product->categories as $category)
+                    <span class="badge badge-limited">{{ $category->name }}</span>
+                @endforeach
                 @endif
             </div>
 

@@ -8,7 +8,6 @@ class Product extends Model
 {
     protected $fillable = [
         'artist_id',
-        'category_id',
         'name',
         'slug',
         'description',
@@ -22,9 +21,9 @@ class Product extends Model
         return $this->belongsTo(Artist::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function variants()
