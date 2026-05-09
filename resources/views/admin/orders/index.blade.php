@@ -27,7 +27,6 @@
                     <tr>
                         <th class="fw-bold px-4 py-3">#</th>
                         <th class="fw-bold py-3">Cliente</th>
-                        <th class="fw-bold py-3">Artículos</th>
                         <th class="fw-bold py-3">Total</th>
                         <th class="fw-bold py-3">Estado</th>
                         <th class="fw-bold py-3">Fecha</th>
@@ -39,14 +38,13 @@
                         <tr class="admin-tr">
                             <td class="px-4 py-3 fw-bold text-muted">{{ $order->id }}</td>
                             <td class="py-3">
-                                {{ $order->customer_name }}
-                                <span class="d-block text-muted admin-email-small">{{ $order->customer_email }}</span>
+                                {{ $order->user->first_name }} {{ $order->user->last_name }}
+                                <span class="d-block text-muted admin-email-small">{{ $order->user->email }}</span>
                             </td>
-                            <td class="py-3 text-muted">{{ $order->item_count }}</td>
                             <td class="py-3 fw-bold">€{{ number_format($order->total_amount, 2) }}</td>
                             <td class="py-3">
                                 <span class="badge rounded-pill fw-semibold px-3 py-2 badge-admin-status">
-                                    {{ $order->status_name }}
+                                    {{ $order->status->name ?? '—' }}
                                 </span>
                             </td>
                             <td class="py-3 text-muted">{{ \Carbon\Carbon::parse($order->placed_at)->format('d/m/Y') }}</td>
@@ -59,7 +57,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center py-5 text-muted">No hay pedidos registrados.</td>
+                            <td colspan="6" class="text-center py-5 text-muted">No hay pedidos registrados.</td>
                         </tr>
                     @endforelse
                 </tbody>
