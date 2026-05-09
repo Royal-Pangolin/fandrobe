@@ -59,7 +59,7 @@
                                            class="form-check-input admin-checkbox"
                                            {{ in_array($category->id, old('categories', $selectedCategories)) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="cat-{{ $category->id }}">
-                                        {{ $category->name }}
+                                        {{ $category->translated_name }}
                                     </label>
                                 </div>
                             @endforeach

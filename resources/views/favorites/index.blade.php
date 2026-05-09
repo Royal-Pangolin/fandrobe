@@ -53,7 +53,7 @@
                                     @if($product->images && $product->images->count() > 0)
                                         @php $imgUrl = $product->images->first()->url; @endphp
                                         <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                             alt="{{ $product->name }}" class="card-img-top">
+                                             alt="{{ $product->translated_name }}" class="card-img-top">
                                     @else
                                         <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                             <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -64,7 +64,7 @@
                                       style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">
                                     {{ $product->artist->name ?? __('messages.official_artist') }}
                                 </span>
-                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <h5 class="card-title">{{ $product->translated_name }}</h5>
                                 <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
                             </a>
                         </div>

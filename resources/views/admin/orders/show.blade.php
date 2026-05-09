@@ -27,7 +27,7 @@
                     @foreach($order->items as $item)
                         <div class="d-flex justify-content-between align-items-center p-3 rounded-3 admin-item-row">
                             <div>
-                                <p class="fw-bold mb-0">{{ $item->product->name ?? '—' }}</p>
+                                <p class="fw-bold mb-0">{{ $item->product->translated_name ?? '—' }}</p>
                                 @if($item->variant)
                                     <p class="text-muted small mb-0">
                                         @if($item->variant->size){{ $item->variant->size->name }}@endif

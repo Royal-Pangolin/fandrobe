@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $product->name)
+@section('title', $product->translated_name)
 
 @section('content')
 
@@ -13,11 +13,11 @@
             @foreach($product->categories as $category)
                 <li class="breadcrumb-item">
                     <a href="{{ route('categories.show', $category->id) }}" class="text-decoration-none text-dark">
-                        {{ $category->name }}
+                        {{ $category->translated_name }}
                     </a>
                 </li>
             @endforeach
-            <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">{{ $product->name }}</li>
+            <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">{{ $product->translated_name }}</li>
         </ol>
     </nav>
 
@@ -28,7 +28,7 @@
                 @if($product->images && $product->images->count() > 0)
                     @php $imgUrl = $product->images->first()->url; @endphp
                     <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                         alt="{{ $product->name }}">
+                         alt="{{ $product->translated_name }}">
                 @else
                     <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted">
                         <svg width="80" height="80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@
                     {{ __('messages.authenticated') }}
                 </span>
                 @foreach($product->categories as $category)
-                    <span class="badge badge-limited">{{ $category->name }}</span>
+                    <span class="badge badge-limited">{{ $category->translated_name }}</span>
                 @endforeach
             </div>
 
@@ -61,7 +61,7 @@
                 </a>
             @endif
 
-            <h1 class="product-title fw-bolder mb-4">{{ $product->name }}</h1>
+            <h1 class="product-title fw-bolder mb-4">{{ $product->translated_name }}</h1>
 
             <div class="mb-4 d-flex align-items-baseline gap-3">
                 <span class="product-price-lg fw-bolder">
@@ -70,8 +70,8 @@
                 <span class="text-muted small text-uppercase fw-bold label-xs">{{ __('messages.vat_included') }}</span>
             </div>
 
-            @if($product->description)
-                <p class="product-description text-muted lh-lg mb-4">{{ $product->description }}</p>
+            @if($product->translated_description)
+                <p class="product-description text-muted lh-lg mb-4">{{ $product->translated_description }}</p>
             @endif
 
             <div class="product-actions d-flex flex-column gap-3 mb-5">
