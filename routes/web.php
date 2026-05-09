@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -68,6 +69,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/favoritos/artista', [FavoriteController::class, 'toggleArtist'])->name('favorites.toggleArtist');
     Route::get('/favoritos/productos', [FavoriteController::class, 'favoriteProducts'])->name('favorites.index');
     Route::get('/favoritos/artistas', [FavoriteController::class, 'followedArtists'])->name('followings.index');
+
+    // Direcciones de envío
+    Route::post('/perfil/direcciones', [AddressController::class, 'store'])->name('addresses.store');
+    Route::put('/perfil/direcciones/{id}', [AddressController::class, 'update'])->name('addresses.update');
+    Route::delete('/perfil/direcciones/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+    Route::post('/perfil/direcciones/{id}/predeterminar', [AddressController::class, 'setDefault'])->name('addresses.setDefault');
 
 });
 
