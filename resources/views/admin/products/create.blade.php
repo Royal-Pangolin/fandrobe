@@ -49,16 +49,21 @@
                         @error('artist_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-bold small text-uppercase admin-form-label">Categoría *</label>
-                        <select name="category_id" class="form-select rounded-pill @error('category_id') is-invalid @enderror" required>
-                            <option value="">Seleccionar categoría</option>
+                        <label class="form-label fw-bold small text-uppercase admin-form-label">Categorías *</label>
+                        <div class="p-3 rounded-3 border @error('categories') border-danger @enderror">
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
+                                <div class="form-check">
+                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                           id="cat-{{ $category->id }}"
+                                           class="form-check-input"
+                                           {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="cat-{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
                             @endforeach
-                        </select>
-                        @error('category_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        @error('categories')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
                 </div>
 
