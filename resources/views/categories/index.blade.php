@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('title', 'Disciplinas')
+@section('title', __('messages.disciplines'))
 
 @section('content')
 
     <div class="hero-gradient px-3 mb-5">
         <div class="container-fluid px-4 px-lg-5 text-center pb-5">
             <h1 class="display-3 text-shadow mb-3 fw-bolder text-tighter">
-                Disciplinas Artísticas
+                {{ __('messages.disciplines') }}
             </h1>
             <p class="lead text-shadow mx-auto" style="max-width: 560px; opacity: 0.9;">
-                Sumérgete en las corrientes creativas que conforman la red de Fandrobe.
+                {{ __('messages.disciplines_desc') }}
             </p>
         </div>
     </div>
@@ -31,10 +31,10 @@
                                  style="background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);"></div>
 
                             <div class="position-absolute bottom-0 start-0 p-4 w-100">
-                                <span class="badge badge-limited badge-sm mb-2">Disciplina</span>
+                                <span class="badge badge-limited badge-sm mb-2">{{ __('messages.discipline') }}</span>
                                 <h3 class="category-title fw-bolder text-white mb-1">{{ $category->name }}</h3>
                                 <p class="category-desc text-white mb-0">
-                                    {{ Str::limit($category->description ?? 'Explora esta disciplina artística.', 60) }}
+                                    {{ Str::limit($category->description ?? __('messages.explore_discipline'), 60) }}
                                 </p>
                             </div>
 
@@ -48,7 +48,7 @@
                 </div>
             @empty
                 <div class="col-12 text-center text-muted py-5">
-                    <h4>No hay categorías disponibles.</h4>
+                    <h4>{{ __('messages.no_categories') }}</h4>
                 </div>
             @endforelse
         </div>

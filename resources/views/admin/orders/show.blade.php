@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Pedido #{{ $order->id }} — Admin')
+@section('title', __('messages.order') . ' #' . $order->id . ' — Admin')
 
 @section('content')
 <div class="container-fluid px-4 px-lg-5 py-5">
@@ -7,9 +7,9 @@
 
         <div class="mb-5">
             <a href="{{ route('admin.pedidos.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
-                ← Pedidos
+                ← {{ __('messages.orders') }}
             </a>
-            <h1 class="fw-bolder mb-0">Pedido #{{ $order->id }}</h1>
+            <h1 class="fw-bolder mb-0">{{ __('messages.order') }} #{{ $order->id }}</h1>
         </div>
 
         @if(session('mensaje'))
@@ -22,7 +22,7 @@
         <div class="row g-4">
             {{-- Items --}}
             <div class="col-lg-7">
-                <h2 class="fw-bold mb-3 admin-label">Artículos</h2>
+                <h2 class="fw-bold mb-3 admin-label">{{ __('messages.items_label') }}</h2>
                 <div class="d-flex flex-column gap-2">
                     @foreach($order->items as $item)
                         <div class="d-flex justify-content-between align-items-center p-3 rounded-3 admin-item-row">
@@ -45,21 +45,21 @@
                 {{-- Totals --}}
                 <div class="mt-4 p-4 rounded-3 admin-item-row">
                     <div class="d-flex justify-content-between mb-2">
-                        <span class="text-muted">Subtotal</span>
+                        <span class="text-muted">{{ __('messages.subtotal') }}</span>
                         <span class="fw-bold">€{{ number_format($order->subtotal, 2) }}</span>
                     </div>
                     @if($order->discount_amount > 0)
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Descuento</span>
+                            <span class="text-muted">{{ __('messages.discount') }}</span>
                             <span class="fw-bold">−€{{ number_format($order->discount_amount, 2) }}</span>
                         </div>
                     @endif
                     <div class="d-flex justify-content-between mb-2">
-                        <span class="text-muted">Envío</span>
+                        <span class="text-muted">{{ __('messages.shipping') }}</span>
                         <span class="fw-bold">€{{ number_format($order->shipping_amount, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between pt-2 admin-total-divider">
-                        <span class="fw-bolder">Total</span>
+                        <span class="fw-bolder">{{ __('messages.total') }}</span>
                         <span class="fw-bolder admin-total-amount">€{{ number_format($order->total_amount, 2) }}</span>
                     </div>
                 </div>
@@ -69,21 +69,21 @@
             <div class="col-lg-5">
                 <div class="p-4 rounded-4 admin-sidebar">
 
-                    <h2 class="fw-bold mb-3 admin-label">Cliente</h2>
+                    <h2 class="fw-bold mb-3 admin-label">{{ __('messages.customer') }}</h2>
                     <p class="fw-bold mb-0">{{ $order->user->first_name }} {{ $order->user->last_name }}</p>
                     <p class="text-muted small mb-4">{{ $order->user->email }}</p>
 
-                    <h2 class="fw-bold mb-3 admin-label">Fecha</h2>
+                    <h2 class="fw-bold mb-3 admin-label">{{ __('messages.date') }}</h2>
                     <p class="mb-4">{{ \Carbon\Carbon::parse($order->placed_at)->format('d/m/Y H:i') }}</p>
 
-                    <h2 class="fw-bold mb-3 admin-label">Estado actual</h2>
+                    <h2 class="fw-bold mb-3 admin-label">{{ __('messages.status') }}</h2>
                     <p class="mb-4">
                         <span class="badge rounded-pill fw-semibold px-3 py-2 badge-admin-status">
                             {{ $order->status->name ?? '—' }}
                         </span>
                     </p>
 
-                    <h2 class="fw-bold mb-3 admin-label">Cambiar estado</h2>
+                    <h2 class="fw-bold mb-3 admin-label">{{ __('messages.update_status') }}</h2>
                     <form action="{{ route('admin.pedidos.update', $order->id) }}" method="POST">
                         @csrf
                         @method('PUT')
@@ -96,7 +96,7 @@
                             @endforeach
                         </select>
                         <button type="submit" class="btn btn-primary fw-bold w-100">
-                            Actualizar estado
+                            {{ __('messages.update_status') }}
                         </button>
                     </form>
 
