@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Pedidos — Admin')
+@section('title', __('messages.orders') . ' — Admin')
 
 @section('content')
 <div class="container-fluid px-4 px-lg-5 py-5">
@@ -8,9 +8,9 @@
         <div class="d-flex align-items-end justify-content-between mb-5">
             <div>
                 <a href="{{ route('admin.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
-                    ← Panel
+                    ← {{ __('messages.panel') }}
                 </a>
-                <h1 class="fw-bolder mb-0">Pedidos</h1>
+                <h1 class="fw-bolder mb-0">{{ __('messages.orders') }}</h1>
             </div>
         </div>
 
@@ -26,10 +26,10 @@
                 <thead class="admin-thead">
                     <tr>
                         <th class="fw-bold px-4 py-3">#</th>
-                        <th class="fw-bold py-3">Cliente</th>
-                        <th class="fw-bold py-3">Total</th>
-                        <th class="fw-bold py-3">Estado</th>
-                        <th class="fw-bold py-3">Fecha</th>
+                        <th class="fw-bold py-3">{{ __('messages.customer') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.total') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.status') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.date') }}</th>
                         <th class="fw-bold py-3"></th>
                     </tr>
                 </thead>
@@ -51,13 +51,13 @@
                             <td class="py-3">
                                 <a href="{{ route('admin.pedidos.show', $order->id) }}"
                                    class="btn btn-sm fw-bold px-3 btn-admin-ghost">
-                                    Ver
+                                    {{ __('messages.view') }}
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5 text-muted">No hay pedidos registrados.</td>
+                            <td colspan="6" class="text-center py-5 text-muted">{{ __('messages.no_orders_registered') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
