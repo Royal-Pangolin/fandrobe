@@ -598,6 +598,19 @@ footer {
     border-color: var(--color-shadow);
 }
 
+// Admin checkbox override — extra dark & visible
+.admin-checkbox,
+.admin-container-sm .form-check-input {
+    border-color: #1E1C19 !important;
+    border-width: 2px !important;
+    background-color: rgba(30, 28, 25, 0.05) !important;
+
+    &:checked {
+        background-color: #1E1C19 !important;
+        border-color: #1E1C19 !important;
+    }
+}
+
 // ---- SMOOTH SCROLL GLOBAL ----
 html {
     scroll-behavior: smooth;

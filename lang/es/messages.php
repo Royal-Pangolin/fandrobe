@@ -206,6 +206,33 @@ return [
     'active' => 'Activo',
     'inactive' => 'Inactivo',
 
+    // ── Perfil — Direcciones ──
+    'shipping_addresses' => 'Direcciones de envío',
+    'add_address' => '+ Añadir',
+    'alias' => 'Alias',
+    'street' => 'Calle y número',
+    'city' => 'Ciudad',
+    'state' => 'Provincia',
+    'zip_code' => 'Código postal',
+    'country' => 'País',
+    'default_address' => 'Predeterminada',
+    'save_address' => 'Guardar dirección',
+    'no_addresses' => 'No tienes direcciones de envío guardadas.',
+    'address_fallback' => 'Dirección',
+    'set_default_title' => 'Usar como predeterminada',
+    'edit_address' => 'Editar dirección',
+    'confirm_delete_address' => '¿Eliminar esta dirección?',
+    'cancel' => 'Cancelar',
+    'tel_label' => 'Tel',
+    'address_created' => 'Dirección añadida correctamente.',
+    'address_updated' => 'Dirección actualizada correctamente.',
+    'address_deleted' => 'Dirección eliminada correctamente.',
+    'address_default_updated' => 'Dirección predeterminada actualizada.',
+    'address_create_error' => 'Error al guardar la dirección.',
+    'address_update_error' => 'Error al actualizar la dirección.',
+    'address_delete_error' => 'Error al eliminar la dirección.',
+    'address_default_error' => 'Error al cambiar la dirección predeterminada.',
+
     // ── Perfil — Idioma ──
     'language' => 'Idioma',
     'language_desc' => 'Selecciona tu idioma preferido para la interfaz.',
@@ -263,9 +290,15 @@ return [
     'update_product' => 'Actualizar Producto',
     'create_artist' => 'Crear Artista',
     'update_artist' => 'Actualizar Artista',
+    'edit_product' => 'Editar Producto',
+    'edit_artist' => 'Editar Artista',
+    'active_product' => 'Producto activo',
+    'active_artist' => 'Artista activo',
     'artist_name_label' => 'Nombre del artista',
     'biography' => 'Biografía',
     'image' => 'Imagen',
+    'image_url' => 'URL de imagen',
+    'bio' => 'Biografía',
     'select_genre' => 'Selecciona un género',
 
     // ── Admin — Pedidos ──
@@ -273,11 +306,18 @@ return [
     'customer' => 'Cliente',
     'update_status' => 'Actualizar estado',
     'save_status' => 'Guardar',
+    'no_orders_registered' => 'No hay pedidos registrados.',
     'back_to_panel' => '← Panel',
 
     // ── Admin — Usuarios ──
     'user_detail' => 'Detalle del usuario',
     'back_to_users' => '← Usuarios',
+    'view' => 'Ver',
+    'user' => 'Usuario',
+    'registered' => 'Registrado',
+    'favorites' => 'Favoritos',
+    'no_favorites_yet' => 'No hay favoritos todavía.',
+    'admin_categories' => 'Categorías',
 
     // ── Mensajes Flash ──
     'cart_added' => 'Producto añadido al carrito',
@@ -300,5 +340,39 @@ return [
     'artist_update_error' => 'Error al actualizar el artista.',
     'artist_delete_error' => 'Error al eliminar el artista.',
     'status_update_error' => 'Error al actualizar el estado del pedido.',
+
+    // ── Contenido dinámico — Categorías ──
+    'cat_camisetas' => 'Camisetas',
+    'cat_sudaderas' => 'Sudaderas',
+    'cat_gorras' => 'Gorras',
+    'cat_accesorios' => 'Accesorios',
+    'cat_vinilo' => 'Vinilo',
+    'cat_posters' => 'Pósters',
+
+    // ── Contenido dinámico — Descripciones de artistas ──
+    'bio_bad_bunny' => 'Artista urbano puertorriqueño, referente del reggaeton y trap latino.',
+    'bio_rosalia' => 'Cantante española de flamenco fusionado con pop y urbano.',
+    'bio_c_tangana' => 'Artista madrileño de música urbana y fusión española.',
+    'bio_bizarrap' => 'Productor y DJ argentino conocido por sus Music Sessions.',
+    'bio_coldplay' => 'Banda británica de rock alternativo y pop.',
+    'bio_taylor_swift' => 'Cantautora estadounidense de pop y country, una de las artistas más vendidas de la historia.',
+    'bio_kendrick_lamar' => 'Rapero y compositor estadounidense, considerado uno de los mejores de su generación.',
+    'bio_arctic_monkeys' => 'Banda británica de rock indie, conocida por su estilo crudo y letras ingeniosas.',
+    'bio_daft_punk' => 'Dúo francés de música electrónica, pioneros del house y el electronic pop.',
+    'bio_quevedo' => 'Artista canario de música urbana española, conocido por su hit Quédate.',
+    'bio_j_balvin' => 'Artista colombiano de reggaeton, uno de los más influyentes del género.',
+    'bio_dua_lipa' => 'Cantante británico-albanesa de pop y dance-pop, con éxitos mundiales.',
+
+    // ── Contenido dinámico — Productos ──
+    'prod_camiseta_bad_bunny_un_verano_sin_ti_name' => 'Camiseta Bad Bunny Un Verano Sin Ti',
+    'prod_camiseta_bad_bunny_un_verano_sin_ti_desc' => 'Camiseta oficial de la gira Un Verano Sin Ti.',
+    'prod_camiseta_rosalia_motomami_name' => 'Camiseta Rosalía Motomami',
+    'prod_camiseta_rosalia_motomami_desc' => 'Camiseta oficial del álbum Motomami.',
+    'prod_sudadera_c_tangana_el_madrileno_name' => 'Sudadera C. Tangana El Madrileño',
+    'prod_sudadera_c_tangana_el_madrileno_desc' => 'Sudadera oficial del álbum El Madrileño.',
+    'prod_gorra_bizarrap_sessions_name' => 'Gorra Bizarrap Sessions',
+    'prod_gorra_bizarrap_sessions_desc' => 'Gorra oficial de las Bizarrap Music Sessions.',
+    'prod_camiseta_coldplay_music_of_the_spheres_name' => 'Camiseta Coldplay Music of the Spheres',
+    'prod_camiseta_coldplay_music_of_the_spheres_desc' => 'Camiseta oficial de la gira Music of the Spheres.',
 
 ];

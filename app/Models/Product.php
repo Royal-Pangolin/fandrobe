@@ -16,6 +16,26 @@ class Product extends Model
         'is_active',
     ];
 
+    /**
+     * Nombre traducido del producto.
+     */
+    public function getTranslatedNameAttribute(): string
+    {
+        $key = 'messages.prod_' . str_replace('-', '_', $this->slug) . '_name';
+        $translated = __($key);
+        return $translated !== $key ? $translated : $this->name;
+    }
+
+    /**
+     * Descripción traducida del producto.
+     */
+    public function getTranslatedDescriptionAttribute(): ?string
+    {
+        $key = 'messages.prod_' . str_replace('-', '_', $this->slug) . '_desc';
+        $translated = __($key);
+        return $translated !== $key ? $translated : $this->description;
+    }
+
     public function artist()
     {
         return $this->belongsTo(Artist::class);

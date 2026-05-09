@@ -53,10 +53,10 @@ class AddressController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Error al guardar la dirección.');
+            return back()->withInput()->with('error', __('messages.address_create_error'));
         }
 
-        return back()->with('mensaje', 'Dirección añadida correctamente.');
+        return back()->with('mensaje', __('messages.address_created'));
     }
 
     /**
@@ -106,10 +106,10 @@ class AddressController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Error al actualizar la dirección.');
+            return back()->withInput()->with('error', __('messages.address_update_error'));
         }
 
-        return back()->with('mensaje', 'Dirección actualizada correctamente.');
+        return back()->with('mensaje', __('messages.address_updated'));
     }
 
     /**
@@ -141,10 +141,10 @@ class AddressController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al eliminar la dirección.');
+            return back()->with('error', __('messages.address_delete_error'));
         }
 
-        return back()->with('mensaje', 'Dirección eliminada correctamente.');
+        return back()->with('mensaje', __('messages.address_deleted'));
     }
 
     /**
@@ -171,9 +171,9 @@ class AddressController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al cambiar la dirección predeterminada.');
+            return back()->with('error', __('messages.address_default_error'));
         }
 
-        return back()->with('mensaje', 'Dirección predeterminada actualizada.');
+        return back()->with('mensaje', __('messages.address_default_updated'));
     }
 }
