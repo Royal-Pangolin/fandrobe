@@ -51,7 +51,7 @@ class OrderController extends Controller
 
             if (!$cart || $cart->items->isEmpty()) {
                 return redirect()->route('cart.index')
-                                 ->with('error', 'Tu carrito está vacío.');
+                                 ->with('error', __('messages.cart_empty_error'));
             }
 
             // 2. Calcular subtotal
@@ -126,12 +126,12 @@ class OrderController extends Controller
                 ));
 
             return redirect()->route('orders.show', $order->id)
-                             ->with('mensaje', '¡Pedido realizado correctamente!');
+                             ->with('mensaje', __('messages.order_success'));
 
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('cart.index')
-                             ->with('error', 'Error al procesar el pedido. Inténtalo de nuevo.');
+                             ->with('error', __('messages.order_error'));
         }
     }
 }

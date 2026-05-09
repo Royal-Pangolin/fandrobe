@@ -50,7 +50,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route('cart.index')->with('mensaje', 'Producto añadido al carrito');
+        return redirect()->route('cart.index')->with('mensaje', __('messages.cart_added'));
     }
 
     // Actualizar cantidad
@@ -64,7 +64,7 @@ class CartController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('cart.index')->with('mensaje', 'Cantidad actualizada');
+        return redirect()->route('cart.index')->with('mensaje', __('messages.cart_updated'));
     }
 
     // Eliminar item
@@ -73,6 +73,6 @@ class CartController extends Controller
         $item = CartItem::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('cart.index')->with('mensaje', 'Producto eliminado');
+        return redirect()->route('cart.index')->with('mensaje', __('messages.cart_removed'));
     }
 }

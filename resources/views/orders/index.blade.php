@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Mis Pedidos')
+@section('title', __('messages.my_orders'))
 
 @section('content')
 
@@ -11,17 +11,17 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb breadcrumb-nav">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
+                    <a href="{{ route('home') }}" class="text-decoration-none text-dark">{{ __('messages.breadcrumb_home') }}</a>
                 </li>
-                <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">Mis Pedidos</li>
+                <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">{{ __('messages.my_orders') }}</li>
             </ol>
         </nav>
 
         <div class="d-flex align-items-end justify-content-between mb-5">
-            <h1 class="fw-bolder mb-0 text-tighter">Mis Pedidos</h1>
+            <h1 class="fw-bolder mb-0 text-tighter">{{ __('messages.my_orders') }}</h1>
             @if($orders->count())
                 <span class="section-link text-muted small fw-bold text-uppercase">
-                    {{ $orders->count() }} pedido(s)
+                    {{ $orders->count() }} {{ __('messages.orders_count') }}
                 </span>
             @endif
         </div>
@@ -51,32 +51,32 @@
 
                         <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-5">
                             <div>
-                                <p class="order-meta-label text-muted mb-1">Pedido</p>
+                                <p class="order-meta-label text-muted mb-1">{{ __('messages.order') }}</p>
                                 <span class="order-number-text fw-bolder">
                                     #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                                 </span>
                             </div>
                             <div>
-                                <p class="order-meta-label text-muted mb-1">Fecha</p>
+                                <p class="order-meta-label text-muted mb-1">{{ __('messages.date') }}</p>
                                 <span class="fw-bold" style="font-size: 0.95rem;">
                                     {{ \Carbon\Carbon::parse($order->placed_at)->format('d M Y') }}
                                 </span>
                             </div>
                             <div>
-                                <p class="order-meta-label text-muted mb-1">Estado</p>
+                                <p class="order-meta-label text-muted mb-1">{{ __('messages.status') }}</p>
                                 <span class="badge {{ $statusClass }}">{{ $order->status->name }}</span>
                             </div>
                         </div>
 
                         <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-5 ms-3">
                             <div class="text-md-end">
-                                <p class="order-meta-label text-muted mb-1">Total</p>
+                                <p class="order-meta-label text-muted mb-1">{{ __('messages.total') }}</p>
                                 <span class="order-total-text fw-bolder">
                                     €{{ number_format($order->total_amount, 2) }}
                                 </span>
                             </div>
                             <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary fw-bold">
-                                Ver detalle
+                                {{ __('messages.view_detail') }}
                             </a>
                         </div>
 
@@ -90,10 +90,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                           d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                 </svg>
-                <h4 class="fw-bold mb-2">Aún no tienes pedidos</h4>
-                <p class="text-muted mb-4">Descubre nuestras piezas oficiales y realiza tu primer pedido.</p>
+                <h4 class="fw-bold mb-2">{{ __('messages.no_orders') }}</h4>
+                <p class="text-muted mb-4">{{ __('messages.no_orders_desc') }}</p>
                 <a href="{{ route('products.index') }}" class="btn btn-primary fw-bold px-5">
-                    Explorar Colección
+                    {{ __('messages.explore_collection') }}
                 </a>
             </div>
         @endif
