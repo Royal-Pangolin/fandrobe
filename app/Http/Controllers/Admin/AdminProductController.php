@@ -14,7 +14,7 @@ class AdminProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('artist', 'category')
+        $products = Product::with('artist', 'categories')
                            ->orderBy('created_at', 'desc')
                            ->paginate(20);
 
@@ -32,21 +32,21 @@ class AdminProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'artist_id'   => ['required', 'integer', 'exists:artists,id'],
-            'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'description' => ['nullable', 'string'],
-            'base_price'  => ['required', 'numeric', 'min:0'],
-            'sku'         => ['nullable', 'string', 'max:100', 'unique:products,sku'],
-            'is_active'   => ['boolean'],
+            'name'         => ['required', 'string', 'max:255'],
+            'artist_id'    => ['required', 'integer', 'exists:artists,id'],
+            'categories'   => ['required', 'array', 'min:1'],
+            'categories.*' => ['integer', 'exists:categories,id'],
+            'description'  => ['nullable', 'string'],
+            'base_price'   => ['required', 'numeric', 'min:0'],
+            'sku'          => ['nullable', 'string', 'max:100', 'unique:products,sku'],
+            'is_active'    => ['boolean'],
         ]);
 
         try {
             DB::beginTransaction();
 
-            Product::create([
+            $product = Product::create([
                 'artist_id'   => $request->artist_id,
-                'category_id' => $request->category_id,
                 'name'        => $request->name,
                 'slug'        => Str::slug($request->name),
                 'description' => $request->description,
@@ -54,6 +54,8 @@ class AdminProductController extends Controller
                 'base_price'  => $request->base_price,
                 'is_active'   => $request->boolean('is_active'),
             ]);
+
+            $product->categories()->sync($request->categories);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -66,11 +68,12 @@ class AdminProductController extends Controller
 
     public function edit($id)
     {
-        $product    = Product::findOrFail($id);
-        $artists    = Artist::orderBy('name')->get();
-        $categories = Category::orderBy('name')->get();
+        $product            = Product::with('categories')->findOrFail($id);
+        $artists            = Artist::orderBy('name')->get();
+        $categories         = Category::orderBy('name')->get();
+        $selectedCategories = $product->categories->pluck('id')->toArray();
 
-        return view('admin.products.edit', compact('product', 'artists', 'categories'));
+        return view('admin.products.edit', compact('product', 'artists', 'categories', 'selectedCategories'));
     }
 
     public function update(Request $request, $id)
@@ -78,13 +81,14 @@ class AdminProductController extends Controller
         $product = Product::findOrFail($id);
 
         $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'artist_id'   => ['required', 'integer', 'exists:artists,id'],
-            'category_id' => ['required', 'integer', 'exists:categories,id'],
-            'description' => ['nullable', 'string'],
-            'base_price'  => ['required', 'numeric', 'min:0'],
-            'sku'         => ['nullable', 'string', 'max:100', "unique:products,sku,{$id}"],
-            'is_active'   => ['boolean'],
+            'name'         => ['required', 'string', 'max:255'],
+            'artist_id'    => ['required', 'integer', 'exists:artists,id'],
+            'categories'   => ['required', 'array', 'min:1'],
+            'categories.*' => ['integer', 'exists:categories,id'],
+            'description'  => ['nullable', 'string'],
+            'base_price'   => ['required', 'numeric', 'min:0'],
+            'sku'          => ['nullable', 'string', 'max:100', "unique:products,sku,{$id}"],
+            'is_active'    => ['boolean'],
         ]);
 
         try {
@@ -92,7 +96,6 @@ class AdminProductController extends Controller
 
             $product->update([
                 'artist_id'   => $request->artist_id,
-                'category_id' => $request->category_id,
                 'name'        => $request->name,
                 'slug'        => Str::slug($request->name),
                 'description' => $request->description,
@@ -100,6 +103,8 @@ class AdminProductController extends Controller
                 'base_price'  => $request->base_price,
                 'is_active'   => $request->boolean('is_active'),
             ]);
+
+            $product->categories()->sync($request->categories);
 
             DB::commit();
         } catch (\Exception $e) {
