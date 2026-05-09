@@ -16,7 +16,7 @@
     $set = $orbSets[$artist->id % 6];
     $bg  = $bgColors[$artist->id % 6];
     $allProducts = $artist->products ?? collect();
-    $categories  = $allProducts->pluck('category')->filter()->unique('id')->values();
+    $categories  = $allProducts->flatMap->categories->unique('id')->values();
 @endphp
 
 <div class="artist-hero position-relative overflow-hidden" style="background-color: {{ $bg }};">
@@ -96,7 +96,7 @@
                     <a href="{{ route('products.show', $product->id) }}"
                        class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
                        data-name="{{ strtolower($product->name) }}"
-                       data-category="{{ $product->category ? Str::slug($product->category->name) : '' }}">
+                       data-category="{{ $product->categories->isNotEmpty() ? Str::slug($product->categories->first()->name) : '' }}">
                         <div class="card h-100">
                             <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
                                 @if($product->images && $product->images->count() > 0)
@@ -130,7 +130,7 @@
 
     @foreach($categories as $cat)
         @php
-            $catProducts = $allProducts->filter(fn($p) => $p->category && $p->category->id === $cat->id);
+            $catProducts = $allProducts->filter(fn($p) => $p->categories->contains('id', $cat->id));
         @endphp
         @if($catProducts->count())
             <div class="artist-category-section mb-5" data-category="{{ Str::slug($cat->name) }}">
