@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminArtistController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminUserController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -76,5 +77,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('pedidos', AdminOrderController::class)->only(['index', 'show', 'update']);
     Route::resource('productos', AdminProductController::class);
     Route::resource('artistas', AdminArtistController::class);
+    Route::resource('categorias', AdminCategoryController::class);
     Route::resource('usuarios', AdminUserController::class)->only(['index', 'show']);
 });
