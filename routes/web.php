@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
 // Admin
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/favoritos', [AdminController::class, 'favorites'])->name('favoritos');
     Route::resource('pedidos', AdminOrderController::class)->only(['index', 'show', 'update']);
     Route::resource('productos', AdminProductController::class);
     Route::resource('artistas', AdminArtistController::class);
