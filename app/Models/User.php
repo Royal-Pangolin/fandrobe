@@ -73,6 +73,14 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withPivot('followed_at');
     }
 
+    /**
+     * Direcciones de envío del usuario.
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
+
     public function hasVerifiedEmail(): bool
     {
         return (bool) $this->email_verified;
