@@ -46,9 +46,9 @@ class AdminOrderController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al actualizar el estado del pedido.');
+            return back()->with('error', __('messages.status_update_error'));
         }
 
-        return back()->with('mensaje', 'Estado del pedido actualizado.');
+        return back()->with('mensaje', __('messages.status_updated'));
     }
 }

@@ -60,10 +60,10 @@ class AdminProductController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Error al crear el producto.');
+            return back()->withInput()->with('error', __('messages.product_create_error'));
         }
 
-        return redirect()->route('admin.productos.index')->with('mensaje', 'Producto creado correctamente.');
+        return redirect()->route('admin.productos.index')->with('mensaje', __('messages.product_created'));
     }
 
     public function edit($id)
@@ -109,10 +109,10 @@ class AdminProductController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Error al actualizar el producto.');
+            return back()->withInput()->with('error', __('messages.product_update_error'));
         }
 
-        return redirect()->route('admin.productos.index')->with('mensaje', 'Producto actualizado correctamente.');
+        return redirect()->route('admin.productos.index')->with('mensaje', __('messages.product_updated'));
     }
 
     public function destroy($id)
@@ -125,9 +125,9 @@ class AdminProductController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al eliminar el producto.');
+            return back()->with('error', __('messages.product_delete_error'));
         }
 
-        return redirect()->route('admin.productos.index')->with('mensaje', 'Producto eliminado correctamente.');
+        return redirect()->route('admin.productos.index')->with('mensaje', __('messages.product_deleted'));
     }
 }

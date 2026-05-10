@@ -51,10 +51,10 @@ class AdminArtistController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Error al crear el artista.');
+            return back()->withInput()->with('error', __('messages.artist_create_error'));
         }
 
-        return redirect()->route('admin.artistas.index')->with('mensaje', 'Artista creado correctamente.');
+        return redirect()->route('admin.artistas.index')->with('mensaje', __('messages.artist_created'));
     }
 
     public function edit($id)
@@ -91,10 +91,10 @@ class AdminArtistController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withInput()->with('error', 'Error al actualizar el artista.');
+            return back()->withInput()->with('error', __('messages.artist_update_error'));
         }
 
-        return redirect()->route('admin.artistas.index')->with('mensaje', 'Artista actualizado correctamente.');
+        return redirect()->route('admin.artistas.index')->with('mensaje', __('messages.artist_updated'));
     }
 
     public function destroy($id)
@@ -107,9 +107,9 @@ class AdminArtistController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Error al eliminar el artista.');
+            return back()->with('error', __('messages.artist_delete_error'));
         }
 
-        return redirect()->route('admin.artistas.index')->with('mensaje', 'Artista eliminado correctamente.');
+        return redirect()->route('admin.artistas.index')->with('mensaje', __('messages.artist_deleted'));
     }
 }

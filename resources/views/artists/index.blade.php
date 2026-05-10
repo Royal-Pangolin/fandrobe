@@ -1,20 +1,20 @@
 @extends('layouts.app')
-@section('title', 'Nuestros Artistas')
+@section('title', __('messages.our_artists'))
 
 @section('content')
 <div class="hero-gradient px-3 mb-5">
     <div class="container-fluid px-4 px-lg-5 text-center pb-5">
         <h1 class="display-3 text-shadow mb-3 fw-bolder" style="letter-spacing: -0.03em;">
-            Nuestros Artistas
+            {{ __('messages.our_artists') }}
         </h1>
         <p class="lead text-shadow mx-auto mb-5" style="max-width: 600px; opacity: 0.9;">
-            Descubre el talento que da vida a nuestras piezas exclusivas. Cada artista es verificado oficialmente.
+            {{ __('messages.artists_subtitle') }}
         </p>
         <form method="GET" action="{{ route('artists.index') }}" class="d-flex justify-content-center">
             <div class="position-relative" style="width: 100%; max-width: 400px;">
                 <input type="text" name="q" value="{{ request('q') }}"
                        class="form-control rounded-pill py-3 px-4 shadow-sm"
-                       placeholder="Buscar artista..."
+                       placeholder="{{ __('messages.search_artist') }}"
                        style="background-color: var(--color-primary); border: none; padding-right: 3.5rem !important;">
                 <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-1"
                         style="background: none; border: none; color: var(--color-secondary);">
@@ -48,10 +48,10 @@
         @empty
             <div class="col-12 text-center text-muted py-5">
                 @if(request('q'))
-                    <h4>No se encontraron artistas para "{{ request('q') }}".</h4>
-                    <a href="{{ route('artists.index') }}" class="btn btn-secondary mt-3">Ver todos los artistas</a>
+                    <h4>{{ __('messages.no_artists_for') }} "{{ request('q') }}".</h4>
+                    <a href="{{ route('artists.index') }}" class="btn btn-secondary mt-3">{{ __('messages.view_all_artists_btn') }}</a>
                 @else
-                    <h4>No hay artistas disponibles en este momento.</h4>
+                    <h4>{{ __('messages.no_artists_now') }}</h4>
                 @endif
             </div>
         @endforelse

@@ -48,7 +48,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 //Route::get('/confirm-password', fn() => view('auth.confirm-password'))->name('password.confirm');
 
 // Profile
-Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware(['auth', 'verified']);
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile')->middleware(['auth', 'verified']);
+Route::post('/perfil/idioma', [ProfileController::class, 'updateLocale'])->name('profile.updateLocale')->middleware('auth');
 
 // Carrito y funciones autenticadas
 Route::middleware('auth')->group(function () {
