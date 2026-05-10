@@ -1,13 +1,9 @@
 @use "bootstrap/scss/bootstrap";
-
-// Paleta de colores principal
-$color-primario: #f7f1e7; // Beige principal: fondo base, identidad visual
-$color-secundario: #4b352a; // Marrón archivo: navegación, secciones fuertes
-$color-acentuacion: #b08a47; // Dorado viejo: CTAs
-$color-sombra: #1e1c19; // Negro tinta cálido: texto fuerte
-$color-neutro: #e6d198; // Marfil papel: cards, fondos alternativos
-
-// Colores adicionales
+$color-primario: #f7f1e7;
+$color-secundario: #4b352a;
+$color-acentuacion: #b08a47;
+$color-sombra: #1e1c19;
+$color-neutro: #e6d198;
 $color-verified: #6e7556;
 $color-error: #a84632;
 $color-muted: #746a5f;
@@ -22,8 +18,6 @@ $color-muted: #746a5f;
     --color-error: #{$color-error};
     --color-muted: #{$color-muted};
 }
-
-// Asignación de colores Bootstrap
 $primary: $color-primario;
 $secondary: $color-secundario;
 $info: $color-acentuacion;
@@ -31,12 +25,8 @@ $success: $color-verified;
 $danger: $color-error;
 $dark: $color-sombra;
 $light: $color-neutro;
-
-// ---- SPOTIFY-LIKE BEIGE EDITION: Variables ----
 $body-bg: $color-primario;
 $body-color: $color-sombra;
-
-// Tipografías
 $font-family-base:
     "Circular Std",
     "Inter",
@@ -48,37 +38,27 @@ $font-family-base:
     Arial,
     sans-serif;
 $headings-font-family: $font-family-base;
-$headings-font-weight: 800; // Bold y contundente
-
-// Bordes y Sombras (Estilo Spotify: sin bordes rígidos, mucho redondeo)
+$headings-font-weight: 800;
 $border-width: 0;
 $border-color: transparent;
-$border-radius: 8px; // Cards ligeramente redondeadas
+$border-radius: 8px;
 $border-radius-sm: 4px;
 $border-radius-lg: 16px;
-$border-radius-pill: 500px; // Botones tipo píldora
+$border-radius-pill: 500px;
 
 $box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 $box-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
 $box-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.15);
 
 $enable-shadows: true;
-
-// Opciones de componentes
-$card-bg: rgba($color-secundario, 0.05); // Fondo sutil para las tarjetas
+$card-bg: rgba($color-secundario, 0.05);
 $card-border-width: 0;
 $card-border-color: transparent;
-
-// Botones
 $btn-border-width: 0;
 $btn-border-radius: $border-radius-pill;
-
-// Navbar
 $navbar-dark-bg: transparent;
 
 @import "bootstrap/scss/bootstrap";
-
-// ---- ESTILOS PERSONALIZADOS: Spotify-Like ----
 
 body {
     letter-spacing: -0.01em;
@@ -89,8 +69,6 @@ main {
     min-height: calc(100vh - 250px);
     padding-bottom: 60px;
 }
-
-// ---- NAVBAR ----
 .navbar-brand svg {
     margin-right: 8px;
 }
@@ -104,8 +82,6 @@ main {
     font-size: 0.6rem;
     border-radius: 500px;
 }
-
-// ---- FOOTER ----
 .site-footer {
     background-color: var(--color-secondary);
     color: var(--color-primary);
@@ -140,8 +116,6 @@ main {
 .badge-sm {
     font-size: 0.7rem;
 }
-
-// Títulos
 h1,
 h2,
 h3,
@@ -152,8 +126,6 @@ h6 {
     letter-spacing: -0.03em;
     font-weight: 800;
 }
-
-// Botones Premium Spotify Style (Píldoras)
 .btn {
     border-radius: 500px !important;
     font-weight: 700;
@@ -178,7 +150,7 @@ h6 {
 .btn-primary {
     background-color: var(
         --color-shadow
-    ) !important; // En Spotify el botón principal resalta (verde ahí, aquí usamos el color sombra muy oscuro para contrastar con beige)
+    ) !important;
     color: var(--color-primary) !important;
     box-shadow: none !important;
 }
@@ -193,8 +165,6 @@ h6 {
         border-color: var(--color-shadow) !important;
     }
 }
-
-// Tarjetas tipo Spotify
 .card {
     background-color: rgba(30, 28, 25, 0.04);
     border: none;
@@ -206,8 +176,6 @@ h6 {
 
     &:hover {
         background-color: rgba(30, 28, 25, 0.08);
-
-        // Mostrar el botón circular de acción flotante (como el play de spotify)
         .card-action-btn {
             opacity: 1;
             transform: translateY(0);
@@ -241,8 +209,6 @@ h6 {
         overflow: hidden;
     }
 }
-
-// Botón de acción flotante (estilo Play de Spotify)
 .card-action-btn {
     position: absolute;
     bottom: 24px;
@@ -250,7 +216,7 @@ h6 {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: var(--color-accent); // Dorado viejo
+    background-color: var(--color-accent);
     color: var(--color-shadow);
     display: flex;
     align-items: center;
@@ -272,14 +238,10 @@ h6 {
         font-size: 24px;
     }
 }
-
-// Contenedor de la imagen de la card para poder posicionar el botón flotante
 .card-img-wrapper {
     position: relative;
     width: 100%;
 }
-
-// Hero Header (Fondo con degradado)
 .hero-gradient {
     background: linear-gradient(
         to bottom,
@@ -287,11 +249,9 @@ h6 {
         var(--color-primary) 100%
     );
     padding: 80px 0 40px;
-    margin-top: -76px; // Para subir detrás del navbar
+    margin-top: -76px;
     padding-top: calc(76px + 40px);
 }
-
-// Formularios
 .form-control,
 .form-select {
     background-color: rgba(30, 28, 25, 0.05);
@@ -309,15 +269,13 @@ h6 {
         box-shadow: 0 0 0 2px var(--color-shadow);
     }
 }
-
-// Navbar custom
 .navbar {
     background-color: rgba(
         247,
         241,
         231,
         0.9
-    ) !important; // Beige semi-transparente
+    ) !important;
     backdrop-filter: blur(10px);
     border: none;
     box-shadow: none;
@@ -335,15 +293,11 @@ h6 {
         }
     }
 }
-
-// Footer
 footer {
     background-color: var(--color-primary);
     color: var(--color-shadow);
     border-top: 1px solid rgba(30, 28, 25, 0.1);
 }
-
-// Badges
 .badge {
     padding: 0.4em 0.8em;
     font-weight: 700;
@@ -371,16 +325,12 @@ footer {
 .text-muted {
     color: var(--color-muted) !important;
 }
-
-// Imágenes redondeadas (estilo artistas Spotify)
 .img-artist {
     border-radius: 50%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
-
-// Tarjetas de Artistas (Portrait Reveal)
 .artist-portrait-card {
     position: relative;
     display: flex;
@@ -444,8 +394,6 @@ footer {
         }
     }
 }
-
-// ---- HERO SLIDESHOW ----
 .hero-slide {
     opacity: 0;
     transition: opacity 0.9s ease;
@@ -454,8 +402,6 @@ footer {
         opacity: 1;
     }
 }
-
-// Orbes difuminados para el hero y el banner de artista
 .hero-orb {
     position: absolute;
     border-radius: 50%;
@@ -491,8 +437,6 @@ footer {
         transform: translate(0, 0) scale(1);
     }
 }
-
-// Latest release card hover
 .latest-release-card {
     transition: background-color 0.3s ease;
 
@@ -500,13 +444,9 @@ footer {
         background-color: rgba(30, 28, 25, 0.07) !important;
     }
 }
-
-// Hero artist label transitions
 .hero-artist-label {
     transition: opacity 0.4s ease;
 }
-
-// Redondear imágenes de artistas en la sección home
 .home-artist-circle {
     .artist-img-wrapper {
         border-radius: 50% !important;
@@ -517,10 +457,7 @@ footer {
         }
     }
 }
-
-// ---- SCROLL HORIZONTAL (Últimos Lanzamientos) ----
 .horizontal-scroll-row {
-    // Scrollbar delgada y discreta
     &::-webkit-scrollbar {
         height: 4px;
     }
@@ -535,8 +472,6 @@ footer {
         background-color: rgba(30, 28, 25, 0.3);
     }
 }
-
-// ---- FOOTER LINKS ----
 .footer-link {
     opacity: 0.75;
     transition: opacity 0.2s ease;
@@ -546,8 +481,6 @@ footer {
         color: var(--color-neutral) !important;
     }
 }
-
-// ---- PAGINACIÓN ----
 .pagination {
     .page-link {
         background-color: transparent;
@@ -574,8 +507,6 @@ footer {
         opacity: 0.35;
     }
 }
-
-// ---- FORM RANGE (slider de precio) ----
 .form-range {
     &::-webkit-slider-thumb {
         background-color: var(--color-shadow);
@@ -587,44 +518,43 @@ footer {
         box-shadow: 0 0 0 3px rgba(30, 28, 25, 0.12);
     }
 }
+.form-check-input {
+    border-color: rgba(30, 28, 25, 0.4);
+}
 
-// ---- FORM CHECKBOX ----
 .form-check-input:checked {
     background-color: var(--color-shadow);
     border-color: var(--color-shadow);
 }
+.admin-checkbox,
+.admin-container-sm .form-check-input {
+    border-color: #1E1C19 !important;
+    border-width: 2px !important;
+    background-color: rgba(30, 28, 25, 0.05) !important;
 
-// ---- SMOOTH SCROLL GLOBAL ----
+    &:checked {
+        background-color: #1E1C19 !important;
+        border-color: #1E1C19 !important;
+    }
+}
 html {
     scroll-behavior: smooth;
 }
-
-// ---- SELECT PERSONALIZADO ----
 .form-select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%231E1C19' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
 }
-
-// ---- BREADCRUMB ----
 .breadcrumb-item + .breadcrumb-item::before {
     content: "›";
     color: var(--color-muted);
 }
-
-// ---- NAVBAR: transición a sólido al hacer scroll ----
 .navbar.scrolled {
     background-color: rgba(247, 241, 231, 0.98) !important;
     box-shadow: 0 2px 16px rgba(30, 28, 25, 0.08) !important;
 }
-
-// ---- SELECCIÓN DE TEXTO ----
 ::selection {
     background-color: var(--color-accent);
     color: var(--color-shadow);
 }
-
-// ---- ADMIN PANEL ----
-
-// Contenedores de página
 .admin-container {
     max-width: 1100px;
     margin: 0 auto;
@@ -637,8 +567,6 @@ html {
     max-width: 700px;
     margin: 0 auto;
 }
-
-// Alertas flash
 .alert-admin-success {
     background: rgba(110, 117, 86, 0.12);
     border: 1px solid rgba(110, 117, 86, 0.3);
@@ -650,8 +578,6 @@ html {
     border: 1px solid rgba(180, 50, 50, 0.2);
     color: #7a2020;
 }
-
-// Tarjetas y paneles
 .admin-card {
     background: rgba(30, 28, 25, 0.04);
     border: 1px solid rgba(30, 28, 25, 0.08);
@@ -668,8 +594,6 @@ html {
     position: sticky;
     top: 100px;
 }
-
-// Tipografía
 .admin-stat-number {
     font-size: 2.5rem;
     line-height: 1;
@@ -703,8 +627,6 @@ html {
 .admin-email-small {
     font-size: 0.8rem;
 }
-
-// Tabla
 .admin-table-wrapper {
     border: 1px solid rgba(30, 28, 25, 0.1);
 }
@@ -720,8 +642,6 @@ html {
 .admin-total-divider {
     border-top: 1px solid rgba(30, 28, 25, 0.1);
 }
-
-// Badges
 .badge-admin-status {
     background: rgba(30, 28, 25, 0.08);
     color: inherit;
@@ -737,8 +657,6 @@ html {
     color: #666;
     font-size: 0.75rem;
 }
-
-// Botones
 .btn-admin-ghost {
     background: rgba(30, 28, 25, 0.06);
     border: 1px solid rgba(30, 28, 25, 0.12) !important;
@@ -759,8 +677,6 @@ html {
 .admin-btn-submit {
     padding: 0.85rem !important;
 }
-
-// Formularios
 .admin-checkbox-row {
     background: rgba(30, 28, 25, 0.03);
     border: 1px solid rgba(30, 28, 25, 0.08);
@@ -770,8 +686,6 @@ html {
     width: 1.2rem !important;
     height: 1.2rem !important;
 }
-
-// Accesos rápidos (dashboard)
 .admin-quick-link {
     background: rgba(30, 28, 25, 0.04);
     border: 1px solid rgba(30, 28, 25, 0.08);
@@ -780,8 +694,6 @@ html {
         background: rgba(30, 28, 25, 0.08);
     }
 }
-
-// Navbar — botón de usuario
 .btn-user-menu {
     border: 1.5px solid rgba(30, 28, 25, 0.2) !important;
     border-radius: 500px !important;
@@ -813,12 +725,6 @@ html {
 .dropdown-item-sm {
     font-size: 0.9rem;
 }
-
-// ================================================================
-// ---- CLASES REUTILIZABLES (extraídas de vistas) ----
-// ================================================================
-
-// ---- LAYOUT ----
 .content-container-lg {
     max-width: 1200px;
     margin: 0 auto;
@@ -831,8 +737,6 @@ html {
     position: sticky;
     top: 100px;
 }
-
-// Paneles / tarjetas de fondo sutil
 .panel {
     background: rgba(30, 28, 25, 0.04);
     border: 1px solid rgba(30, 28, 25, 0.08);
@@ -841,16 +745,12 @@ html {
     background: rgba(30, 28, 25, 0.03);
     border: 1px solid rgba(30, 28, 25, 0.08);
 }
-
-// Divisores
 .divider-subtle {
     border-top: 1px solid rgba(30, 28, 25, 0.1);
 }
 .divider-bottom-subtle {
     border-bottom: 1px solid rgba(30, 28, 25, 0.06);
 }
-
-// ---- TIPOGRAFÍA ----
 .text-tight {
     letter-spacing: -0.02em;
 }
@@ -887,20 +787,14 @@ html {
     text-transform: uppercase;
     opacity: 0.6;
 }
-
-// ---- BOTONES ----
 .btn-light {
     color: var(--color-shadow) !important;
 }
-
-// ---- ALERTAS FLASH ----
 .alert-success-flash {
     background: rgba(110, 117, 86, 0.12);
     border: 1px solid rgba(110, 117, 86, 0.3);
     color: #4a5240;
 }
-
-// ---- HOME HERO ----
 .home-hero {
     height: 90vh;
     min-height: 500px;
@@ -974,8 +868,6 @@ html {
     opacity: 0.85;
     line-height: 1.7;
 }
-
-// ---- SCROLL CARD (carrusel horizontal) ----
 .scroll-card {
     width: 200px;
     scroll-snap-align: start;
@@ -987,8 +879,6 @@ html {
     bottom: 12px !important;
     right: 12px !important;
 }
-
-// ---- PRODUCT SHOW ----
 .product-img-frame {
     border-radius: 16px;
     overflow: hidden;
@@ -1029,8 +919,6 @@ html {
 .product-detail-label {
     letter-spacing: 0.05em;
 }
-
-// ---- ARTIST SHOW ----
 .artist-hero {
     height: 50vh;
     min-height: 400px;
@@ -1054,8 +942,6 @@ html {
 .artist-filter-search {
     width: 250px;
 }
-
-// ---- CART ----
 .cart-item-card {
     background: rgba(30, 28, 25, 0.03);
     border: 1px solid rgba(30, 28, 25, 0.08);
@@ -1101,8 +987,6 @@ html {
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
-
-// ---- ORDERS ----
 .order-card {
     background: rgba(30, 28, 25, 0.03);
     border: 1px solid rgba(30, 28, 25, 0.08);
@@ -1130,8 +1014,6 @@ html {
     font-size: 0.9rem;
     line-height: 1.7;
 }
-
-// ---- CONFIRM PEDIDO ----
 .confirm-icon-circle {
     width: 96px;
     height: 96px;
@@ -1157,8 +1039,6 @@ html {
     height: 1px;
     background: var(--color-shadow);
 }
-
-// ---- CATEGORY CARDS ----
 .category-card {
     cursor: pointer;
     height: 280px;
@@ -1204,8 +1084,6 @@ html {
     font-size: 0.9rem;
     opacity: 0.75;
 }
-
-// ---- ORDER CONFIRMATION EMAIL ----
 .email-body {
     background: #f5f5f5;
     margin: 0;

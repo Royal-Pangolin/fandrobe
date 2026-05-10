@@ -8,7 +8,6 @@ use App\Models\CartItem;
 
 class CartController extends Controller
 {
-    // Ver el carrito
     public function index()
     {
         $cart = ShoppingCart::where('user_id', auth()->id())
@@ -19,8 +18,6 @@ class CartController extends Controller
 
         return view('cart.index', compact('cart', 'items'));
     }
-
-    // Añadir producto al carrito
     public function add(Request $request)
     {
         $request->validate([
@@ -50,10 +47,8 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route('cart.index')->with('mensaje', 'Producto añadido al carrito');
+        return redirect()->route('cart.index')->with('mensaje', __('messages.cart_added'));
     }
-
-    // Actualizar cantidad
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -64,15 +59,13 @@ class CartController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return redirect()->route('cart.index')->with('mensaje', 'Cantidad actualizada');
+        return redirect()->route('cart.index')->with('mensaje', __('messages.cart_updated'));
     }
-
-    // Eliminar item
     public function remove($id)
     {
         $item = CartItem::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('cart.index')->with('mensaje', 'Producto eliminado');
+        return redirect()->route('cart.index')->with('mensaje', __('messages.cart_removed'));
     }
 }

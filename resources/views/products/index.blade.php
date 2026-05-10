@@ -1,27 +1,25 @@
 @extends('layouts.app')
-@section('title', 'Catálogo')
+@section('title', __('messages.catalog_title'))
 
 @section('content')
 
     <form method="GET" action="{{ route('products.index') }}">
 
-    {{-- Hero del catálogo --}}
     <div class="hero-gradient px-3 mb-5" style="padding-top: calc(76px + 32px);">
         <div class="container-fluid px-4 px-lg-5 pb-5">
             <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end justify-content-between gap-4">
                 <div>
                     <h1 class="text-shadow fw-bolder mb-2" style="font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.03em; line-height: 1.05;">
-                        Catálogo
+                        {{ __('messages.catalog_title') }}
                     </h1>
                     <p class="text-shadow mb-0" style="opacity: 0.85;">
-                        Todas las piezas oficiales y verificadas de nuestros artistas.
+                        {{ __('messages.catalog_subtitle') }}
                     </p>
                 </div>
-                {{-- Buscador --}}
                 <div class="position-relative" style="width: 100%; max-width: 320px;">
                     <input type="text" name="q" value="{{ request('q') }}"
                            class="form-control rounded-pill py-3 px-4"
-                           placeholder="Buscar producto o artista..."
+                           placeholder="{{ __('messages.search_placeholder') }}"
                            style="background-color: rgba(247,241,231,0.9); border: none; backdrop-filter: blur(4px); padding-right: 3.5rem !important;">
                     <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-1"
                             style="background: none; border: none; color: var(--color-secondary);">
@@ -37,14 +35,12 @@
     <div class="container-fluid px-4 px-lg-5 pb-5">
         <div class="row g-5">
 
-            {{-- ---- Sidebar Filtros ---- --}}
             <div class="col-md-3 col-lg-2">
                 <div class="p-4 rounded-3" style="background: rgba(30,28,25,0.04); position: sticky; top: 96px;">
-                    <h5 class="fw-bolder mb-4" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">Filtros</h5>
+                    <h5 class="fw-bolder mb-4" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">{{ __('messages.filters') }}</h5>
 
-                    {{-- Categorías --}}
                     <div class="mb-4">
-                        <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">Categorías</span>
+                        <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">{{ __('messages.categories') }}</span>
                         @foreach($categories as $category)
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="checkbox"
@@ -54,15 +50,14 @@
                                        style="border-color: rgba(30,28,25,0.3);">
                                 <label class="form-check-label text-muted" for="cat-{{ $category->id }}"
                                        style="font-size: 0.875rem;">
-                                    {{ $category->name }}
+                                    {{ $category->translated_name }}
                                 </label>
                             </div>
                         @endforeach
                     </div>
 
-                    {{-- Precio --}}
                     <div class="mb-4">
-                        <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">Precio máximo</span>
+                        <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">{{ __('messages.max_price') }}</span>
                         <input type="range" class="form-range"
                                name="price_max"
                                min="0" max="{{ $absoluteMax }}"
@@ -76,30 +71,28 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary fw-bold w-100" style="font-size: 0.85rem;">
-                        Aplicar Filtros
+                        {{ __('messages.apply_filters') }}
                     </button>
 
                     @if(request()->hasAny(['q', 'categories', 'price_max', 'sort']))
                         <a href="{{ route('products.index') }}" class="btn btn-secondary fw-bold w-100 mt-2" style="font-size: 0.85rem;">
-                            Limpiar filtros
+                            {{ __('messages.clear_filters') }}
                         </a>
                     @endif
                 </div>
             </div>
 
-            {{-- ---- Grid de Productos ---- --}}
             <div class="col-md-9 col-lg-10">
-                {{-- Toolbar --}}
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <span class="text-muted" style="font-size: 0.875rem;">
-                        <span class="fw-bold text-dark">{{ $products->total() }}</span> productos encontrados
+                        <span class="fw-bold text-dark">{{ $products->total() }}</span> {{ __('messages.products_found') }}
                     </span>
                     <select name="sort" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;"
                             onchange="this.form.submit()">
-                        <option value="featured" {{ request('sort', 'featured') === 'featured' ? 'selected' : '' }}>Ordenar: Destacados</option>
-                        <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Precio: menor a mayor</option>
-                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Precio: mayor a menor</option>
-                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Más recientes</option>
+                        <option value="featured" {{ request('sort', 'featured') === 'featured' ? 'selected' : '' }}>{{ __('messages.sort_featured') }}</option>
+                        <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>{{ __('messages.sort_price_asc') }}</option>
+                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>{{ __('messages.sort_price_desc') }}</option>
+                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>{{ __('messages.sort_newest') }}</option>
                     </select>
                 </div>
 
@@ -112,7 +105,7 @@
                                         @if($product->images && $product->images->count() > 0)
                                             @php $imgUrl = $product->images->first()->url; @endphp
                                             <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                                 alt="{{ $product->name }}" class="card-img-top">
+                                                 alt="{{ $product->translated_name }}" class="card-img-top">
                                         @else
                                             <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                                 <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -127,9 +120,9 @@
 
                                     <span class="mt-2 d-block text-muted"
                                           style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">
-                                        {{ $product->artist->name ?? 'Artista Oficial' }}
+                                        {{ $product->artist->name ?? __('messages.official_artist') }}
                                     </span>
-                                    <h5 class="card-title">{{ $product->name }}</h5>
+                                    <h5 class="card-title">{{ $product->translated_name }}</h5>
                                     <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
                                 </div>
                             </a>
@@ -137,13 +130,12 @@
                     @empty
                         <div class="col-12 text-center text-muted py-5">
                             <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="mb-3 opacity-25"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <h5 class="fw-bold">No hay productos disponibles</h5>
-                            <p class="small">Prueba a cambiar los filtros o vuelve pronto.</p>
+                            <h5 class="fw-bold">{{ __('messages.no_products_available') }}</h5>
+                            <p class="small">{{ __('messages.try_change_filters') }}</p>
                         </div>
                     @endforelse
                 </div>
 
-                {{-- Paginación real de Laravel --}}
                 @if($products->hasPages())
                     <div class="mt-5 d-flex justify-content-center">
                         {{ $products->links() }}

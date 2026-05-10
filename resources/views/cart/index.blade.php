@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Mi Carrito')
+@section('title', __('messages.my_cart'))
 
 @section('content')
 <div class="container-fluid px-4 px-lg-5 py-5">
@@ -13,14 +13,13 @@
 
     <div class="row g-5 content-container-lg">
 
-        {{-- Columna izquierda: productos del carrito --}}
         <div class="col-lg-7">
 
             <div class="d-flex align-items-end justify-content-between mb-4">
-                <h1 class="fw-bolder mb-0 text-tighter">Mi Carrito</h1>
+                <h1 class="fw-bolder mb-0 text-tighter">{{ __('messages.my_cart') }}</h1>
                 @if($items->count())
                     <span class="section-link text-muted small fw-bold text-uppercase">
-                        {{ $items->sum('quantity') }} artículo(s)
+                        {{ $items->sum('quantity') }} {{ __('messages.items_count') }}
                     </span>
                 @endif
             </div>
@@ -48,7 +47,7 @@
 
                             <div class="cart-item-thumbnail">
                                 @if($imgUrl)
-                                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}">
+                                    <img src="{{ $imgUrl }}" alt="{{ $product->translated_name }}">
                                 @else
                                     <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-secondary">
                                         <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -62,7 +61,7 @@
                                         <a href="{{ route('products.show', $product->id) }}"
                                            class="fw-bold text-decoration-none text-dark"
                                            style="font-size: 1.05rem;">
-                                            {{ $product->name }}
+                                            {{ $product->translated_name }}
                                         </a>
                                         @if($item->variant && ($item->variant->size || $item->variant->color))
                                             <p class="text-muted small mb-0 mt-1">
@@ -72,7 +71,7 @@
                                             </p>
                                         @endif
                                         <p class="text-muted small mb-0 mt-1">
-                                            €{{ number_format($unitPrice, 2) }} / unidad
+                                            €{{ number_format($unitPrice, 2) }} {{ __('messages.per_unit') }}
                                         </p>
                                     </div>
                                     <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="ms-3">
@@ -119,7 +118,7 @@
                         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
                         </svg>
-                        Seguir comprando
+                        {{ __('messages.continue_shopping') }}
                     </a>
                 </div>
 
@@ -130,35 +129,34 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                               d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                     </svg>
-                    <h4 class="fw-bold mb-2">Tu carrito está vacío</h4>
-                    <p class="text-muted mb-4">Descubre nuestras piezas oficiales y añade las que más te gusten.</p>
+                    <h4 class="fw-bold mb-2">{{ __('messages.cart_empty') }}</h4>
+                    <p class="text-muted mb-4">{{ __('messages.cart_empty_desc') }}</p>
                     <a href="{{ route('products.index') }}" class="btn btn-primary fw-bold px-5">
-                        Explorar Colección
+                        {{ __('messages.explore_collection') }}
                     </a>
                 </div>
             @endif
         </div>
 
-        {{-- Columna derecha: resumen del pedido --}}
         @if($items->count())
             <div class="col-lg-5">
                 <div class="panel p-4 rounded-4 cart-summary-panel">
 
-                    <h3 class="fw-bolder mb-4 text-tight">Resumen del pedido</h3>
+                    <h3 class="fw-bolder mb-4 text-tight">{{ __('messages.order_summary') }}</h3>
 
                     <div class="d-flex flex-column gap-2 mb-4 divider-subtle pb-4">
                         <div class="d-flex justify-content-between">
-                            <span class="text-muted">Subtotal</span>
+                            <span class="text-muted">{{ __('messages.subtotal') }}</span>
                             <span class="fw-bold">€{{ number_format($subtotal, 2) }}</span>
                         </div>
                         <div class="d-flex justify-content-between text-muted small">
-                            <span>Envío</span>
-                            <span class="fw-bold text-verified-color">Gratis</span>
+                            <span>{{ __('messages.shipping') }}</span>
+                            <span class="fw-bold text-verified-color">{{ __('messages.free') }}</span>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-baseline mb-5">
-                        <span class="fw-bolder fs-5">Total</span>
+                        <span class="fw-bolder fs-5">{{ __('messages.total') }}</span>
                         <span class="cart-total-price fw-bolder">
                             €{{ number_format($total, 2) }}
                         </span>
@@ -167,23 +165,23 @@
                     <form action="{{ route('orders.store') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-primary fw-bold w-100 mb-3 py-3">
-                            Finalizar Compra
+                            {{ __('messages.checkout') }}
                         </button>
                     </form>
 
                     <div class="d-flex justify-content-center gap-3 mb-4 opacity-50">
-                        <span class="payment-label">Pago seguro · Visa · Mastercard · PayPal</span>
+                        <span class="payment-label">{{ __('messages.secure_payment') }}</span>
                     </div>
 
                     <div class="divider-subtle pt-4">
-                        <p class="fw-bold mb-2" style="font-size: 0.875rem;">¿Tienes un código de descuento?</p>
+                        <p class="fw-bold mb-2" style="font-size: 0.875rem;">{{ __('messages.discount_code') }}</p>
                         <form class="d-flex gap-2">
-                            <input type="text" name="code" placeholder="CÓDIGO"
+                            <input type="text" name="code" placeholder="{{ __('messages.code_placeholder') }}"
                                    class="form-control rounded-pill"
                                    style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;">
                             <button type="submit" class="btn btn-outline-secondary rounded-pill fw-bold px-4"
                                     style="font-size: 0.875rem; white-space: nowrap;">
-                                Aplicar
+                                {{ __('messages.apply') }}
                             </button>
                         </form>
                     </div>

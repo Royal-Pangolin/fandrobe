@@ -6,24 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Fandrobe - @yield('title', 'Inicio')</title>
+    <title>Fandrobe - @yield('title', __('messages.nav_home'))</title>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 
 <body class="bg-body text-dark d-flex flex-column min-vh-100">
 
-    <!-- Header -->
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center fw-bolder fs-4 text-dark" href="{{ route('home') }}">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -34,27 +30,24 @@
                 Fandrobe
             </a>
 
-            <!-- Toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
                 aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navigation Links -->
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="{{ route('home') }}">Inicio</a>
+                        <a class="nav-link fw-semibold" href="{{ route('home') }}">{{ __('messages.nav_home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="{{ route('products.index') }}">Catálogo</a>
+                        <a class="nav-link fw-semibold" href="{{ route('products.index') }}">{{ __('messages.nav_catalog') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-semibold" href="{{ route('artists.index') }}">Artistas</a>
+                        <a class="nav-link fw-semibold" href="{{ route('artists.index') }}">{{ __('messages.nav_artists') }}</a>
                     </li>
                 </ul>
 
-                <!-- Right Side -->
                 <div class="d-flex align-items-center gap-3">
                     @php
                         $navCart = auth()->check()
@@ -66,9 +59,8 @@
                     @endphp
 
                     @auth
-                        <!-- Cart -->
                         <a href="{{ route('cart.index') }}" class="nav-cart-link text-decoration-none position-relative"
-                            title="Mi carrito">
+                            title="{{ __('messages.nav_cart') }}">
                             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
@@ -80,7 +72,6 @@
                             </span>
                         </a>
 
-                        <!-- User dropdown -->
                         <div class="dropdown">
                             <button class="btn btn-sm fw-semibold dropdown-toggle btn-user-menu" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,7 +79,6 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow-sm dropdown-menu-user">
 
-                                {{-- Identidad --}}
                                 <li class="px-3 py-2">
                                     <p class="fw-bold mb-0 small">{{ auth()->user()->first_name }}
                                         {{ auth()->user()->last_name }}</p>
@@ -110,7 +100,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                             </svg>
-                                            Panel de administración
+                                            {{ __('messages.nav_admin') }}
                                         </a>
                                     </li>
                                 @endif
@@ -119,14 +109,13 @@
                                     <hr class="dropdown-divider my-1">
                                 </li>
 
-                                <li><a class="dropdown-item rounded-2 dropdown-item-sm" href="{{ route('profile') }}">Mi
-                                        perfil</a></li>
+                                <li><a class="dropdown-item rounded-2 dropdown-item-sm" href="{{ route('profile') }}">{{ __('messages.nav_profile') }}</a></li>
                                 <li><a class="dropdown-item rounded-2 dropdown-item-sm"
-                                        href="{{ route('orders.index') }}">Mis pedidos</a></li>
+                                        href="{{ route('orders.index') }}">{{ __('messages.nav_orders') }}</a></li>
                                 <li><a class="dropdown-item rounded-2 dropdown-item-sm"
-                                        href="{{ route('favorites.index') }}">Mis favoritos</a></li>
+                                        href="{{ route('favorites.index') }}">{{ __('messages.nav_favorites') }}</a></li>
                                 <li><a class="dropdown-item rounded-2 dropdown-item-sm"
-                                        href="{{ route('followings.index') }}">Artistas seguidos</a></li>
+                                        href="{{ route('followings.index') }}">{{ __('messages.nav_followed_artists') }}</a></li>
 
                                 <li>
                                     <hr class="dropdown-divider my-1">
@@ -137,7 +126,7 @@
                                         @csrf
                                         <button type="submit"
                                             class="dropdown-item rounded-2 dropdown-item-sm text-danger fw-semibold">
-                                            Cerrar sesión
+                                            {{ __('messages.nav_logout') }}
                                         </button>
                                     </form>
                                 </li>
@@ -145,22 +134,21 @@
                         </div>
                     @else
                         <a href="{{ route('cart.index') }}" class="nav-cart-link text-decoration-none position-relative"
-                            title="Mi carrito">
+                            title="{{ __('messages.nav_cart') }}">
                             <svg width="24" height="24" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                             </svg>
                         </a>
-                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Entrar</a>
-                        <a href="{{ route('signin') }}" class="btn btn-secondary btn-sm">Registrarse</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">{{ __('messages.nav_login') }}</a>
+                        <a href="{{ route('signin') }}" class="btn btn-secondary btn-sm">{{ __('messages.nav_register') }}</a>
                     @endauth
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Page Heading -->
     @hasSection('header')
         <header class="hero-gradient">
             <div class="container">
@@ -171,7 +159,6 @@
         <div class="navbar-spacer"></div>
     @endif
 
-    <!-- Page Content -->
     @auth
         @if (!auth()->user()->hasVerifiedEmail())
             <div class="alert alert-warning alert-dismissible fade show mb-0 rounded-0 d-flex align-items-center gap-2"
@@ -182,11 +169,11 @@
                         d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
                 </svg>
                 <span>
-                    Tu correo electrónico no está verificado.
+                    {{ __('messages.email_not_verified') }}
                     <form method="POST" action="{{ route('verification.send') }}" class="d-inline">
                         @csrf
                         <button type="submit" class="alert-link btn btn-link p-0 align-baseline fw-semibold">
-                            Reenviar correo de verificación
+                            {{ __('messages.resend_verification') }}
                         </button>
                     </form>
                 </span>
@@ -196,7 +183,6 @@
     @endauth
 
     @yield('content')
-    <!-- Footer -->
     <footer class="site-footer py-5 mt-auto">
         <div class="container-fluid px-4 px-lg-5">
             <div class="row g-5">
@@ -212,47 +198,44 @@
                         Fandrobe
                     </a>
                     <p class="footer-description">
-                        Conectando artistas excepcionales con coleccionistas apasionados.
-                        Autenticidad garantizada en cada obra y mercancía oficial.
+                        {{ __('messages.footer_description') }}
                     </p>
                     <div class="d-flex gap-3 mt-4">
-                        <span class="badge badge-verified badge-sm">Piezas Oficiales</span>
-                        <span class="badge badge-limited badge-sm">Cert. Autenticidad</span>
+                        <span class="badge badge-verified badge-sm">{{ __('messages.footer_official') }}</span>
+                        <span class="badge badge-limited badge-sm">{{ __('messages.footer_authenticity') }}</span>
                     </div>
                 </div>
 
                 <div class="col-md-3 offset-md-1">
-                    <h6 class="footer-section-title fw-bold mb-4 text-uppercase">Explorar</h6>
+                    <h6 class="footer-section-title fw-bold mb-4 text-uppercase">{{ __('messages.footer_explore') }}</h6>
                     <ul class="footer-nav-list list-unstyled d-flex flex-column gap-2">
                         <li><a href="{{ route('products.index') }}"
-                                class="footer-link text-decoration-none fw-medium">Catálogo</a></li>
+                                class="footer-link text-decoration-none fw-medium">{{ __('messages.nav_catalog') }}</a></li>
                         <li><a href="{{ route('artists.index') }}"
-                                class="footer-link text-decoration-none fw-medium">Artistas</a></li>
-                        <li><a href="#" class="footer-link text-decoration-none fw-medium">Autenticidad</a></li>
+                                class="footer-link text-decoration-none fw-medium">{{ __('messages.nav_artists') }}</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">{{ __('messages.footer_authenticity_link') }}</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-3">
-                    <h6 class="footer-section-title fw-bold mb-4 text-uppercase">Ayuda</h6>
+                    <h6 class="footer-section-title fw-bold mb-4 text-uppercase">{{ __('messages.footer_help') }}</h6>
                     <ul class="footer-nav-list list-unstyled d-flex flex-column gap-2">
-                        <li><a href="#" class="footer-link text-decoration-none fw-medium">Contacto</a></li>
-                        <li><a href="#" class="footer-link text-decoration-none fw-medium">Envíos y
-                                devoluciones</a></li>
-                        <li><a href="#" class="footer-link text-decoration-none fw-medium">FAQ</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">{{ __('messages.footer_contact') }}</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">{{ __('messages.footer_shipping') }}</a></li>
+                        <li><a href="#" class="footer-link text-decoration-none fw-medium">{{ __('messages.footer_faq') }}</a></li>
                     </ul>
                 </div>
             </div>
 
             <div
                 class="footer-bottom mt-5 pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-                <p class="footer-copyright mb-0 small">&copy; 2026 Fandrobe. Todos los derechos reservados.</p>
-                <p class="footer-copyright mb-0 small">Hecho con arte · Verificado con confianza</p>
+                <p class="footer-copyright mb-0 small">{{ __('messages.footer_copyright') }}</p>
+                <p class="footer-copyright mb-0 small">{{ __('messages.footer_made_with') }}</p>
             </div>
         </div>
     </footer>
     @stack('scripts')
     <script>
-        // Navbar se vuelve sólida al hacer scroll
         (function() {
             const navbar = document.querySelector('.navbar');
             if (!navbar) return;
@@ -262,7 +245,7 @@
             window.addEventListener('scroll', onScroll, {
                 passive: true
             });
-            onScroll(); // run on load
+            onScroll();
         })();
     </script>
 </body>
