@@ -20,7 +20,6 @@
 @endphp
 
 <div class="artist-hero position-relative overflow-hidden" style="background-color: {{ $bg }};">
-    {{-- Orbes dinámicos: color depende del artista, deben quedar inline --}}
     <div class="hero-orb" style="width: 65%; aspect-ratio:1; background:{{ $set[0] }}; top:-15%; left:-10%; animation-duration:9s;"></div>
     <div class="hero-orb" style="width: 50%; aspect-ratio:1; background:{{ $set[1] }}; bottom:-15%; right:-8%; animation-duration:12s; animation-delay:-4s; animation-direction:reverse;"></div>
     <div class="hero-orb" style="width: 38%; aspect-ratio:1; background:{{ $set[2] }}; top:25%; left:40%; animation-duration:15s; animation-delay:-8s;"></div>

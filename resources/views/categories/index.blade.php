@@ -19,7 +19,6 @@
             @forelse ($categories as $category)
                 <div class="col">
                     <a href="{{ route('categories.show', $category->id) }}" class="text-decoration-none">
-                        {{-- Color dinámico por índice: debe quedar inline --}}
                         <div class="category-card position-relative overflow-hidden rounded-4"
                              style="background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B','#3B2A4B'][$loop->index % 6] }};">
 

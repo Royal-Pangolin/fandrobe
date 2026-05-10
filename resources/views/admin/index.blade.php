@@ -19,7 +19,6 @@
                 <div class="alert alert-admin-error rounded-3 mb-4">{{ session('error') }}</div>
             @endif
 
-            {{-- Stats --}}
             <div class="row g-4 mb-5">
                 <div class="col-sm-6 col-lg-3">
                     <div class="admin-card p-4 rounded-4 h-100">
@@ -60,7 +59,6 @@
                 </div>
             </div>
 
-            {{-- Quick links --}}
             <h2 class="fw-bolder mb-4 admin-section-title">{{ __('messages.quick_links') }}</h2>
             <div class="row g-3">
                 <div class="col-md-3">

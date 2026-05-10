@@ -37,7 +37,6 @@
                 @if($product)
                     <div class="col" id="fav-product-{{ $product->id }}">
                         <div class="card h-100 position-relative">
-                            {{-- Botón quitar de favoritos --}}
                             <form method="POST" action="{{ route('favorites.toggleProduct') }}" class="position-absolute" style="top: 24px; right: 24px; z-index: 3;">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">

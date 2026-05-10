@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
+@section('title', __('messages.forgot_password_title'))
+
 @section('content')
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">{{ __('messages.login_title') }}</h3>
+                        <h3 class="card-title">{{ __('messages.forgot_password_title') }}</h3>
                     </div>
                     <div class="card-body">
                         @if (session('status'))
@@ -15,7 +17,11 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('login') }}">
+                        <p class="text-muted">
+                            {{ __('messages.forgot_password_text') }}
+                        </p>
+
+                        <form method="POST" action="{{ route('password.email') }}">
                             @csrf
 
                             <div class="mb-3">
@@ -28,33 +34,15 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">{{ __('messages.password_label') }}</label>
-                                <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password" required
-                                    autocomplete="current-password">
-                                @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('messages.login_title') }}
+                                    {{ __('messages.send_reset_link') }}
                                 </button>
                             </div>
 
-                            @if (Route::has('password.request'))
-                                <div class="text-center mt-3">
-                                    <a href="{{ route('password.request') }}" class="text-decoration-none text-dark">
-                                        {{ __('messages.forgot_password') }}
-                                    </a>
-                                </div>
-                            @endif
-
-                            <div class="text-center mt-2">
-                                <a href="{{ route('register') }}" class="text-decoration-none text-dark">
-                                    {{ __('messages.no_account') }}
+                            <div class="text-center mt-3">
+                                <a href="{{ route('login') }}" class="text-decoration-none text-dark">
+                                    {{ __('messages.back_to_login') }}
                                 </a>
                             </div>
                         </form>

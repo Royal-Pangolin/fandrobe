@@ -5,7 +5,6 @@
 
     <form method="GET" action="{{ route('products.index') }}">
 
-    {{-- Hero del catálogo --}}
     <div class="hero-gradient px-3 mb-5" style="padding-top: calc(76px + 32px);">
         <div class="container-fluid px-4 px-lg-5 pb-5">
             <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end justify-content-between gap-4">
@@ -17,7 +16,6 @@
                         {{ __('messages.catalog_subtitle') }}
                     </p>
                 </div>
-                {{-- Buscador --}}
                 <div class="position-relative" style="width: 100%; max-width: 320px;">
                     <input type="text" name="q" value="{{ request('q') }}"
                            class="form-control rounded-pill py-3 px-4"
@@ -37,12 +35,10 @@
     <div class="container-fluid px-4 px-lg-5 pb-5">
         <div class="row g-5">
 
-            {{-- ---- Sidebar Filtros ---- --}}
             <div class="col-md-3 col-lg-2">
                 <div class="p-4 rounded-3" style="background: rgba(30,28,25,0.04); position: sticky; top: 96px;">
                     <h5 class="fw-bolder mb-4" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">{{ __('messages.filters') }}</h5>
 
-                    {{-- Categorías --}}
                     <div class="mb-4">
                         <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">{{ __('messages.categories') }}</span>
                         @foreach($categories as $category)
@@ -60,7 +56,6 @@
                         @endforeach
                     </div>
 
-                    {{-- Precio --}}
                     <div class="mb-4">
                         <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">{{ __('messages.max_price') }}</span>
                         <input type="range" class="form-range"
@@ -87,9 +82,7 @@
                 </div>
             </div>
 
-            {{-- ---- Grid de Productos ---- --}}
             <div class="col-md-9 col-lg-10">
-                {{-- Toolbar --}}
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <span class="text-muted" style="font-size: 0.875rem;">
                         <span class="fw-bold text-dark">{{ $products->total() }}</span> {{ __('messages.products_found') }}
@@ -143,7 +136,6 @@
                     @endforelse
                 </div>
 
-                {{-- Paginación real de Laravel --}}
                 @if($products->hasPages())
                     <div class="mt-5 d-flex justify-content-center">
                         {{ $products->links() }}

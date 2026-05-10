@@ -10,20 +10,16 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 
 <body class="bg-body text-dark d-flex flex-column min-vh-100">
 
-    <!-- Header -->
     <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center fw-bolder fs-4 text-dark" href="{{ route('home') }}">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -34,13 +30,11 @@
                 Fandrobe
             </a>
 
-            <!-- Toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
                 aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navigation Links -->
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
                     <li class="nav-item">
@@ -54,7 +48,6 @@
                     </li>
                 </ul>
 
-                <!-- Right Side -->
                 <div class="d-flex align-items-center gap-3">
                     @php
                         $navCart = auth()->check()
@@ -66,7 +59,6 @@
                     @endphp
 
                     @auth
-                        <!-- Cart -->
                         <a href="{{ route('cart.index') }}" class="nav-cart-link text-decoration-none position-relative"
                             title="{{ __('messages.nav_cart') }}">
                             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,7 +72,6 @@
                             </span>
                         </a>
 
-                        <!-- User dropdown -->
                         <div class="dropdown">
                             <button class="btn btn-sm fw-semibold dropdown-toggle btn-user-menu" type="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -88,7 +79,6 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end shadow-sm dropdown-menu-user">
 
-                                {{-- Identidad --}}
                                 <li class="px-3 py-2">
                                     <p class="fw-bold mb-0 small">{{ auth()->user()->first_name }}
                                         {{ auth()->user()->last_name }}</p>
@@ -159,7 +149,6 @@
         </div>
     </nav>
 
-    <!-- Page Heading -->
     @hasSection('header')
         <header class="hero-gradient">
             <div class="container">
@@ -170,7 +159,6 @@
         <div class="navbar-spacer"></div>
     @endif
 
-    <!-- Page Content -->
     @auth
         @if (!auth()->user()->hasVerifiedEmail())
             <div class="alert alert-warning alert-dismissible fade show mb-0 rounded-0 d-flex align-items-center gap-2"
@@ -195,7 +183,6 @@
     @endauth
 
     @yield('content')
-    <!-- Footer -->
     <footer class="site-footer py-5 mt-auto">
         <div class="container-fluid px-4 px-lg-5">
             <div class="row g-5">
@@ -249,7 +236,6 @@
     </footer>
     @stack('scripts')
     <script>
-        // Navbar se vuelve sólida al hacer scroll
         (function() {
             const navbar = document.querySelector('.navbar');
             if (!navbar) return;
@@ -259,7 +245,7 @@
             window.addEventListener('scroll', onScroll, {
                 passive: true
             });
-            onScroll(); // run on load
+            onScroll();
         })();
     </script>
 </body>
