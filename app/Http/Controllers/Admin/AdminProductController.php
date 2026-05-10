@@ -39,6 +39,7 @@ class AdminProductController extends Controller
             'description'  => ['nullable', 'string'],
             'base_price'   => ['required', 'numeric', 'min:0'],
             'sku'          => ['nullable', 'string', 'max:100', 'unique:products,sku'],
+            'image_url'    => ['nullable', 'url', 'max:500'],
             'is_active'    => ['boolean'],
         ]);
 
@@ -56,6 +57,15 @@ class AdminProductController extends Controller
             ]);
 
             $product->categories()->sync($request->categories);
+
+            if ($request->filled('image_url')) {
+                $product->images()->create([
+                    'url'        => $request->image_url,
+                    'alt_text'   => $request->name,
+                    'is_cover'   => true,
+                    'sort_order' => 0,
+                ]);
+            }
 
             DB::commit();
         } catch (\Exception $e) {
