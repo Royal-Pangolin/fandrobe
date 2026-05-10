@@ -33,7 +33,7 @@
                 <svg width="24" height="24" fill="#6E7556" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"></path>
                 </svg>
-                <span class="text-white fw-bold">Artista Verificado</span>
+                <span class="text-white fw-bold">{{ __('messages.verified_artist') }}</span>
             </div>
             <h1 class="artist-hero-title fw-bolder text-white mb-0">{{ $artist->name }}</h1>
         </div>
@@ -50,14 +50,14 @@
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"></path>
                             </svg>
-                            Siguiendo
+                            {{ __('messages.following') }}
                         </button>
                     @else
-                        <button type="submit" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</button>
+                        <button type="submit" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">{{ __('messages.follow') }}</button>
                     @endif
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</a>
+                <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">{{ __('messages.follow') }}</a>
             @endauth
         </div>
     </div>
@@ -67,15 +67,15 @@
 
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-5">
         <span class="text-muted fw-bold" style="font-size: 0.9rem;">
-            {{ $allProducts->count() }} obras disponibles
+            {{ $allProducts->count() }} {{ __('messages.works_available') }}
         </span>
         <div class="d-flex gap-3 flex-wrap">
             <div class="artist-filter-search">
                 <input type="text" id="artistProductSearch" class="form-control rounded-pill py-2 px-4"
-                       placeholder="Buscar obra..." style="font-size: 0.875rem;">
+                       placeholder="{{ __('messages.search_work') }}" style="font-size: 0.875rem;">
             </div>
             <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;">
-                <option value="all">Todas las categorías</option>
+                <option value="all">{{ __('messages.all_categories') }}</option>
                 @foreach($categories as $cat)
                     <option value="{{ Str::slug($cat->name) }}">{{ $cat->name }}</option>
                 @endforeach
@@ -86,9 +86,9 @@
     @if($allProducts->count())
         <div class="artist-category-section mb-5" data-category="all">
             <div class="d-flex justify-content-between align-items-end mb-3">
-                <h3 class="fw-bold mb-0 text-tight">Obras Populares</h3>
+                <h3 class="fw-bold mb-0 text-tight">{{ __('messages.popular_works') }}</h3>
                 <span class="section-link text-muted small fw-bold text-uppercase">
-                    {{ $allProducts->count() }} obras
+                    {{ $allProducts->count() }} {{ __('messages.works') }}
                 </span>
             </div>
             <div class="horizontal-scroll-row d-flex gap-3 pb-3 overflow-hidden">
@@ -119,7 +119,7 @@
                             <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
-                                <span class="badge badge-verified badge-sm">Oficial</span>
+                                <span class="badge badge-verified badge-sm">{{ __('messages.official') }}</span>
                             </div>
                         </div>
                     </a>
@@ -137,7 +137,7 @@
                 <div class="d-flex justify-content-between align-items-end mb-3">
                     <h3 class="fw-bold mb-0 text-tight">{{ $cat->name }}</h3>
                     <span class="section-link text-muted small fw-bold text-uppercase">
-                        {{ $catProducts->count() }} obras
+                        {{ $catProducts->count() }} {{ __('messages.works') }}
                     </span>
                 </div>
                 <div class="horizontal-scroll-row d-flex gap-3 pb-3 overflow-hidden">
@@ -168,7 +168,7 @@
                                 <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
-                                    <span class="badge badge-verified badge-sm">Oficial</span>
+                                    <span class="badge badge-verified badge-sm">{{ __('messages.official') }}</span>
                                 </div>
                             </div>
                         </a>
@@ -179,22 +179,22 @@
     @endforeach
 
     <div class="mt-5">
-        <h4 class="fw-bold mb-3 text-dark">Acerca de</h4>
+        <h4 class="fw-bold mb-3 text-dark">{{ __('messages.about') }}</h4>
         <div class="artist-bio-panel p-4 rounded">
             <p class="text-muted lh-lg fs-5 mb-4">
-                {{ $artist->bio ?? 'No hay biografía disponible de momento.' }}
+                {{ $artist->bio ?? __('messages.no_bio') }}
             </p>
             <div class="d-flex gap-5 flex-wrap">
                 <div>
-                    <span class="d-block small text-muted text-uppercase mb-1">Género Principal</span>
-                    <span class="fw-bold fs-5">{{ $artist->genre->name ?? 'Varios' }}</span>
+                    <span class="d-block small text-muted text-uppercase mb-1">{{ __('messages.main_genre') }}</span>
+                    <span class="fw-bold fs-5">{{ $artist->genre->name ?? __('messages.various') }}</span>
                 </div>
                 <div>
-                    <span class="d-block small text-muted text-uppercase mb-1">Obras Disponibles</span>
-                    <span class="fw-bold fs-5">{{ $allProducts->count() }} Artículos</span>
+                    <span class="d-block small text-muted text-uppercase mb-1">{{ __('messages.available_works') }}</span>
+                    <span class="fw-bold fs-5">{{ $allProducts->count() }} {{ __('messages.articles') }}</span>
                 </div>
                 <div>
-                    <span class="d-block small text-muted text-uppercase mb-1">Miembro desde</span>
+                    <span class="d-block small text-muted text-uppercase mb-1">{{ __('messages.member_since') }}</span>
                     <span class="fw-bold fs-5">{{ $artist->created_at ? $artist->created_at->format('M Y') : '2026' }}</span>
                 </div>
             </div>

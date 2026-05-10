@@ -19,7 +19,7 @@
             <nav aria-label="breadcrumb" class="mb-2">
                 <ol class="breadcrumb breadcrumb-nav mb-0" style="opacity: 0.7;">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('categories.index') }}" class="text-white text-decoration-none">Disciplinas</a>
+                        <a href="{{ route('categories.index') }}" class="text-white text-decoration-none">{{ __('messages.disciplines_breadcrumb') }}</a>
                     </li>
                     <li class="breadcrumb-item active text-white fw-bold" aria-current="page">{{ $category->name }}</li>
                 </ol>
@@ -27,7 +27,7 @@
 
             <div class="d-flex align-items-end justify-content-between">
                 <h1 class="artist-hero-title fw-bolder text-white mb-0">{{ $category->name }}</h1>
-                <span class="text-white fw-bold mb-2 opacity-75">{{ $products->count() }} obras</span>
+                <span class="text-white fw-bold mb-2 opacity-75">{{ $products->count() }} {{ __('messages.works') }}</span>
             </div>
         </div>
     </div>
@@ -36,12 +36,12 @@
 
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5 gap-3">
             <p class="text-muted mb-0 lh-lg" style="max-width: 500px;">
-                {{ $category->description ?? 'Bienvenido a esta colección. Aquí encontrarás piezas únicas y certificadas.' }}
+                {{ $category->description ?? __('messages.welcome_collection') }}
             </p>
             <select class="form-select rounded-pill fw-bold" style="max-width: 220px; font-size: 0.85rem;">
-                <option>Ordenar: Destacados</option>
-                <option>Precio: menor a mayor</option>
-                <option>Precio: mayor a menor</option>
+                <option>{{ __('messages.sort_featured') }}</option>
+                <option>{{ __('messages.sort_price_asc') }}</option>
+                <option>{{ __('messages.sort_price_desc') }}</option>
             </select>
         </div>
 
@@ -53,7 +53,7 @@
 
                             @if($loop->first)
                                 <span class="badge badge-limited badge-sm position-absolute m-2"
-                                      style="top: 0; left: 0; z-index: 2;">Destaque</span>
+                                      style="top: 0; left: 0; z-index: 2;">{{ __('messages.highlight') }}</span>
                             @endif
 
                             <div class="card-img-wrapper">
@@ -74,7 +74,7 @@
                             </div>
 
                             <span class="label-xs text-muted mt-2 d-block">
-                                {{ $product->artist->name ?? 'Artista Oficial' }}
+                                {{ $product->artist->name ?? __('messages.official_artist') }}
                             </span>
                             <h5 class="card-title">{{ $product->name }}</h5>
                             <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
@@ -83,7 +83,7 @@
                 </div>
             @empty
                 <div class="col-12 text-center text-muted py-5">
-                    <h4>No hay obras en esta categoría.</h4>
+                    <h4>{{ __('messages.no_works_category') }}</h4>
                 </div>
             @endforelse
         </div>
@@ -91,7 +91,7 @@
         @if($products->count() >= 12)
             <div class="mt-5 d-flex justify-content-center">
                 <button class="btn btn-outline-secondary rounded-pill fw-bold px-5 py-3">
-                    Cargar más resultados
+                    {{ __('messages.load_more') }}
                 </button>
             </div>
         @endif
