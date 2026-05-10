@@ -59,7 +59,7 @@
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
                                     <p class="fw-bold mb-1" style="font-size: 1rem;">
-                                        {{ $item->product->name }}
+                                        {{ $item->product->translated_name }}
                                     </p>
                                     @if($item->variant)
                                         <p class="text-muted small mb-1">SKU: {{ $item->variant->sku }}</p>

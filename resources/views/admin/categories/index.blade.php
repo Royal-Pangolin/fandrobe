@@ -39,7 +39,7 @@
                     @forelse($categories as $category)
                         <tr class="admin-tr">
                             <td class="px-4 py-3 text-muted fw-bold">{{ $category->id }}</td>
-                            <td class="py-3 fw-bold">{{ $category->name }}</td>
+                            <td class="py-3 fw-bold">{{ $category->translated_name }}</td>
                             <td class="py-3 text-muted">{{ $category->parent->name ?? '—' }}</td>
                             <td class="py-3 text-muted">{{ $category->products_count }}</td>
                             <td class="py-3 d-flex gap-2">

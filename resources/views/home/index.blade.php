@@ -64,7 +64,7 @@
                             @if($product->images && $product->images->count() > 0)
                                 @php $imgUrl = $product->images->first()->url; @endphp
                                 <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                     alt="{{ $product->name }}" class="card-img-top">
+                                     alt="{{ $product->translated_name }}" class="card-img-top">
                             @else
                                 <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                     <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
+                        <h5 class="card-title mt-2 badge-sm">{{ $product->translated_name }}</h5>
                         <p class="card-text" style="font-size: 0.78rem;">{{ $product->artist->name ?? __('messages.official_artist') }}</p>
                         <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
                     </div>
@@ -104,7 +104,7 @@
                             @if($product->images && $product->images->count() > 0)
                                 @php $imgUrl = $product->images->first()->url; @endphp
                                 <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                     alt="{{ $product->name }}" class="card-img-top">
+                                     alt="{{ $product->translated_name }}" class="card-img-top">
                             @else
                                 <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                     <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +118,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <h5 class="card-title mt-2">{{ $product->name }}</h5>
+                        <h5 class="card-title mt-2">{{ $product->translated_name }}</h5>
                         <p class="card-text">{{ $product->artist->name ?? __('messages.official_artist') }}</p>
                         <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
                     </div>

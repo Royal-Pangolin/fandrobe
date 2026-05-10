@@ -131,10 +131,10 @@
                 {{-- Shipping Addresses --}}
                 <div class="card mb-4">
                     <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
-                        Direcciones de envío
+                        {{ __('messages.shipping_addresses') }}
                         <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
                             data-bs-target="#newAddressForm" aria-expanded="false" aria-controls="newAddressForm">
-                            + Añadir
+                            {{ __('messages.add_address') }}
                         </button>
                     </div>
                     <div class="card-body">
@@ -145,18 +145,18 @@
                                 @csrf
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label for="new_alias" class="form-label">Alias</label>
+                                        <label for="new_alias" class="form-label">{{ __('messages.alias') }}</label>
                                         <input type="text" id="new_alias" name="alias"
-                                            class="form-control" placeholder="Ej: Casa, Trabajo"
+                                            class="form-control"
                                             value="{{ old('alias') }}">
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="new_phone" class="form-label">Teléfono</label>
+                                        <label for="new_phone" class="form-label">{{ __('messages.phone') }}</label>
                                         <input type="tel" id="new_phone" name="phone"
                                             class="form-control" value="{{ old('phone') }}">
                                     </div>
                                     <div class="col-12">
-                                        <label for="new_street" class="form-label">Calle y número *</label>
+                                        <label for="new_street" class="form-label">{{ __('messages.street') }} *</label>
                                         <input type="text" id="new_street" name="street"
                                             class="form-control @error('street') is-invalid @enderror"
                                             value="{{ old('street') }}" required>
@@ -165,7 +165,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="new_city" class="form-label">Ciudad *</label>
+                                        <label for="new_city" class="form-label">{{ __('messages.city') }} *</label>
                                         <input type="text" id="new_city" name="city"
                                             class="form-control @error('city') is-invalid @enderror"
                                             value="{{ old('city') }}" required>
@@ -174,12 +174,12 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="new_state" class="form-label">Provincia</label>
+                                        <label for="new_state" class="form-label">{{ __('messages.state') }}</label>
                                         <input type="text" id="new_state" name="state"
                                             class="form-control" value="{{ old('state') }}">
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="new_zip_code" class="form-label">Código postal *</label>
+                                        <label for="new_zip_code" class="form-label">{{ __('messages.zip_code') }} *</label>
                                         <input type="text" id="new_zip_code" name="zip_code"
                                             class="form-control @error('zip_code') is-invalid @enderror"
                                             value="{{ old('zip_code') }}" required>
@@ -188,7 +188,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="new_country" class="form-label">País *</label>
+                                        <label for="new_country" class="form-label">{{ __('messages.country') }} *</label>
                                         <input type="text" id="new_country" name="country"
                                             class="form-control @error('country') is-invalid @enderror"
                                             value="{{ old('country') }}" required>
@@ -201,13 +201,13 @@
                                             <input class="form-check-input" type="checkbox" id="new_is_default"
                                                 name="is_default" value="1">
                                             <label class="form-check-label" for="new_is_default">
-                                                Predeterminada
+                                                {{ __('messages.default_address') }}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('messages.save_address') }}</button>
                                 </div>
                             </form>
                             <hr>
@@ -215,7 +215,7 @@
 
                         {{-- Listado de direcciones --}}
                         @if ($user->addresses->isEmpty())
-                            <p class="text-muted mb-0">No tienes direcciones de envío guardadas.</p>
+                            <p class="text-muted mb-0">{{ __('messages.no_addresses') }}</p>
                         @else
                             <div class="d-flex flex-column gap-3">
                                 @foreach ($user->addresses as $address)
@@ -223,9 +223,9 @@
                                         <div class="d-flex justify-content-between align-items-start">
                                             <div>
                                                 <p class="fw-bold mb-1">
-                                                    {{ $address->alias ?? 'Dirección' }}
+                                                    {{ $address->alias ?? __('messages.address_fallback') }}
                                                     @if ($address->is_default)
-                                                        <span class="badge bg-success ms-1">Predeterminada</span>
+                                                        <span class="badge bg-success ms-1">{{ __('messages.default_address') }}</span>
                                                     @endif
                                                 </p>
                                                 <p class="mb-0 small text-muted">
@@ -233,7 +233,7 @@
                                                     {{ $address->zip_code }} {{ $address->city }}@if($address->state), {{ $address->state }}@endif<br>
                                                     {{ $address->country }}
                                                     @if ($address->phone)
-                                                        <br>Tel: {{ $address->phone }}
+                                                        <br>{{ __('messages.tel_label') }}: {{ $address->phone }}
                                                     @endif
                                                 </p>
                                             </div>
@@ -244,20 +244,20 @@
                                                         @csrf
                                                         <button type="submit"
                                                             class="btn btn-sm btn-outline-secondary"
-                                                            title="Usar como predeterminada">★</button>
+                                                            title="{{ __('messages.set_default_title') }}">★</button>
                                                     </form>
                                                 @endif
-                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                <button type="button" class="btn btn-sm btn-dark"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editAddress{{ $address->id }}"
-                                                    title="Editar">Editar</button>
+                                                    title="{{ __('messages.edit') }}">{{ __('messages.edit') }}</button>
                                                 <form method="POST"
                                                     action="{{ route('addresses.destroy', $address->id) }}"
-                                                    onsubmit="return confirm('¿Eliminar esta dirección?')">
+                                                    onsubmit="return confirm('{{ __('messages.confirm_delete_address') }}')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        title="Eliminar">Eliminar</button>
+                                                        title="{{ __('messages.delete') }}">{{ __('messages.delete') }}</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -275,7 +275,7 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title fw-semibold"
                                                             id="editAddressLabel{{ $address->id }}">
-                                                            Editar dirección
+                                                            {{ __('messages.edit_address') }}
                                                         </h5>
                                                         <button type="button" class="btn-close"
                                                             data-bs-dismiss="modal"></button>
@@ -283,37 +283,37 @@
                                                     <div class="modal-body">
                                                         <div class="row g-3">
                                                             <div class="col-md-6">
-                                                                <label class="form-label">Alias</label>
+                                                                <label class="form-label">{{ __('messages.alias') }}</label>
                                                                 <input type="text" name="alias" class="form-control"
                                                                     value="{{ $address->alias }}">
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label class="form-label">Teléfono</label>
+                                                                <label class="form-label">{{ __('messages.phone') }}</label>
                                                                 <input type="tel" name="phone" class="form-control"
                                                                     value="{{ $address->phone }}">
                                                             </div>
                                                             <div class="col-12">
-                                                                <label class="form-label">Calle y número *</label>
+                                                                <label class="form-label">{{ __('messages.street') }} *</label>
                                                                 <input type="text" name="street" class="form-control"
                                                                     value="{{ $address->street }}" required>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label class="form-label">Ciudad *</label>
+                                                                <label class="form-label">{{ __('messages.city') }} *</label>
                                                                 <input type="text" name="city" class="form-control"
                                                                     value="{{ $address->city }}" required>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label class="form-label">Provincia</label>
+                                                                <label class="form-label">{{ __('messages.state') }}</label>
                                                                 <input type="text" name="state" class="form-control"
                                                                     value="{{ $address->state }}">
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <label class="form-label">Código postal *</label>
+                                                                <label class="form-label">{{ __('messages.zip_code') }} *</label>
                                                                 <input type="text" name="zip_code" class="form-control"
                                                                     value="{{ $address->zip_code }}" required>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <label class="form-label">País *</label>
+                                                                <label class="form-label">{{ __('messages.country') }} *</label>
                                                                 <input type="text" name="country" class="form-control"
                                                                     value="{{ $address->country }}" required>
                                                             </div>
@@ -325,7 +325,7 @@
                                                                         {{ $address->is_default ? 'checked' : '' }}>
                                                                     <label class="form-check-label"
                                                                         for="edit_is_default_{{ $address->id }}">
-                                                                        Predeterminada
+                                                                        {{ __('messages.default_address') }}
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -333,9 +333,8 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-primary">Guardar
-                                                            cambios</button>
+                                                            data-bs-dismiss="modal">{{ __('messages.cancel') }}</button>
+                                                        <button type="submit" class="btn btn-primary">{{ __('messages.save_changes') }}</button>
                                                     </div>
                                                 </form>
                                             </div>

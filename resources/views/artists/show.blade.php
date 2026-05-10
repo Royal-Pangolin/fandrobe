@@ -77,7 +77,7 @@
             <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;">
                 <option value="all">{{ __('messages.all_categories') }}</option>
                 @foreach($categories as $cat)
-                    <option value="{{ Str::slug($cat->name) }}">{{ $cat->name }}</option>
+                    <option value="{{ Str::slug($cat->name) }}">{{ $cat->translated_name }}</option>
                 @endforeach
             </select>
         </div>
@@ -95,14 +95,14 @@
                 @foreach($allProducts as $product)
                     <a href="{{ route('products.show', $product->id) }}"
                        class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
-                       data-name="{{ strtolower($product->name) }}"
+                       data-name="{{ strtolower($product->translated_name) }}"
                        data-category="{{ $product->categories->isNotEmpty() ? Str::slug($product->categories->first()->name) : '' }}">
                         <div class="card h-100">
                             <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
                                 @if($product->images && $product->images->count() > 0)
                                     @php $imgUrl = $product->images->first()->url; @endphp
                                     <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                         alt="{{ $product->name }}" class="card-img-top">
+                                         alt="{{ $product->translated_name }}" class="card-img-top">
                                 @else
                                     <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                         <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
+                            <h5 class="card-title mt-2 badge-sm">{{ $product->translated_name }}</h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
                                 <span class="badge badge-verified badge-sm">{{ __('messages.official') }}</span>
@@ -135,7 +135,7 @@
         @if($catProducts->count())
             <div class="artist-category-section mb-5" data-category="{{ Str::slug($cat->name) }}">
                 <div class="d-flex justify-content-between align-items-end mb-3">
-                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->name }}</h3>
+                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->translated_name }}</h3>
                     <span class="section-link text-muted small fw-bold text-uppercase">
                         {{ $catProducts->count() }} {{ __('messages.works') }}
                     </span>
@@ -144,14 +144,14 @@
                     @foreach($catProducts as $product)
                         <a href="{{ route('products.show', $product->id) }}"
                            class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
-                           data-name="{{ strtolower($product->name) }}"
+                           data-name="{{ strtolower($product->translated_name) }}"
                            data-category="{{ Str::slug($cat->name) }}">
                             <div class="card h-100">
                                 <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
                                     @if($product->images && $product->images->count() > 0)
                                         @php $imgUrl = $product->images->first()->url; @endphp
                                         <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                             alt="{{ $product->name }}" class="card-img-top">
+                                             alt="{{ $product->translated_name }}" class="card-img-top">
                                     @else
                                         <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                             <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
+                                <h5 class="card-title mt-2 badge-sm">{{ $product->translated_name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
                                     <span class="badge badge-verified badge-sm">{{ __('messages.official') }}</span>
@@ -182,7 +182,7 @@
         <h4 class="fw-bold mb-3 text-dark">{{ __('messages.about') }}</h4>
         <div class="artist-bio-panel p-4 rounded">
             <p class="text-muted lh-lg fs-5 mb-4">
-                {{ $artist->bio ?? __('messages.no_bio') }}
+                {{ $artist->translated_bio ?? __('messages.no_bio') }}
             </p>
             <div class="d-flex gap-5 flex-wrap">
                 <div>

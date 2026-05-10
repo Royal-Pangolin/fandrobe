@@ -206,6 +206,33 @@ return [
     'active' => 'Active',
     'inactive' => 'Inactive',
 
+    // ── Profile — Addresses ──
+    'shipping_addresses' => 'Shipping addresses',
+    'add_address' => '+ Add',
+    'alias' => 'Alias',
+    'street' => 'Street and number',
+    'city' => 'City',
+    'state' => 'State / Province',
+    'zip_code' => 'Zip code',
+    'country' => 'Country',
+    'default_address' => 'Default',
+    'save_address' => 'Save address',
+    'no_addresses' => 'You have no saved shipping addresses.',
+    'address_fallback' => 'Address',
+    'set_default_title' => 'Set as default',
+    'edit_address' => 'Edit address',
+    'confirm_delete_address' => 'Delete this address?',
+    'cancel' => 'Cancel',
+    'tel_label' => 'Phone',
+    'address_created' => 'Address successfully added.',
+    'address_updated' => 'Address successfully updated.',
+    'address_deleted' => 'Address successfully deleted.',
+    'address_default_updated' => 'Default address updated.',
+    'address_create_error' => 'Error saving the address.',
+    'address_update_error' => 'Error updating the address.',
+    'address_delete_error' => 'Error deleting the address.',
+    'address_default_error' => 'Error changing the default address.',
+
     // ── Profile — Language ──
     'language' => 'Language',
     'language_desc' => 'Select your preferred language for the interface.',
@@ -263,9 +290,15 @@ return [
     'update_product' => 'Update Product',
     'create_artist' => 'Create Artist',
     'update_artist' => 'Update Artist',
+    'edit_product' => 'Edit Product',
+    'edit_artist' => 'Edit Artist',
+    'active_product' => 'Active product',
+    'active_artist' => 'Active artist',
     'artist_name_label' => 'Artist name',
     'biography' => 'Biography',
     'image' => 'Image',
+    'image_url' => 'Image URL',
+    'bio' => 'Biography',
     'select_genre' => 'Select a genre',
 
     // ── Admin — Orders ──
@@ -273,11 +306,18 @@ return [
     'customer' => 'Customer',
     'update_status' => 'Update status',
     'save_status' => 'Save',
+    'no_orders_registered' => 'No orders registered.',
     'back_to_panel' => '← Panel',
 
     // ── Admin — Users ──
     'user_detail' => 'User detail',
     'back_to_users' => '← Users',
+    'view' => 'View',
+    'user' => 'User',
+    'registered' => 'Registered',
+    'favorites' => 'Favorites',
+    'no_favorites_yet' => 'No favorites yet.',
+    'admin_categories' => 'Categories',
 
     // ── Flash Messages ──
     'cart_added' => 'Product added to cart',
@@ -300,5 +340,39 @@ return [
     'artist_update_error' => 'Error updating the artist.',
     'artist_delete_error' => 'Error deleting the artist.',
     'status_update_error' => 'Error updating the order status.',
+
+    // ── Dynamic content — Categories ──
+    'cat_camisetas' => 'T-Shirts',
+    'cat_sudaderas' => 'Hoodies',
+    'cat_gorras' => 'Caps',
+    'cat_accesorios' => 'Accessories',
+    'cat_vinilo' => 'Vinyl',
+    'cat_posters' => 'Posters',
+
+    // ── Dynamic content — Artist bios ──
+    'bio_bad_bunny' => 'Puerto Rican urban artist, a leading figure in reggaeton and Latin trap.',
+    'bio_rosalia' => 'Spanish singer blending flamenco with pop and urban sounds.',
+    'bio_c_tangana' => 'Madrid-based artist fusing urban music with Spanish traditions.',
+    'bio_bizarrap' => 'Argentine producer and DJ known for his Music Sessions.',
+    'bio_coldplay' => 'British alternative rock and pop band.',
+    'bio_taylor_swift' => 'American pop and country singer-songwriter, one of the best-selling artists of all time.',
+    'bio_kendrick_lamar' => 'American rapper and songwriter, regarded as one of the greatest of his generation.',
+    'bio_arctic_monkeys' => 'British indie rock band, known for their raw style and clever lyrics.',
+    'bio_daft_punk' => 'French electronic music duo, pioneers of house and electronic pop.',
+    'bio_quevedo' => 'Canarian urban music artist from Spain, known for his hit Quédate.',
+    'bio_j_balvin' => 'Colombian reggaeton artist, one of the most influential in the genre.',
+    'bio_dua_lipa' => 'British-Albanian pop and dance-pop singer with worldwide hits.',
+
+    // ── Dynamic content — Products ──
+    'prod_camiseta_bad_bunny_un_verano_sin_ti_name' => 'Bad Bunny Un Verano Sin Ti T-Shirt',
+    'prod_camiseta_bad_bunny_un_verano_sin_ti_desc' => 'Official t-shirt from the Un Verano Sin Ti tour.',
+    'prod_camiseta_rosalia_motomami_name' => 'Rosalía Motomami T-Shirt',
+    'prod_camiseta_rosalia_motomami_desc' => 'Official t-shirt from the Motomami album.',
+    'prod_sudadera_c_tangana_el_madrileno_name' => 'C. Tangana El Madrileño Hoodie',
+    'prod_sudadera_c_tangana_el_madrileno_desc' => 'Official hoodie from the El Madrileño album.',
+    'prod_gorra_bizarrap_sessions_name' => 'Bizarrap Sessions Cap',
+    'prod_gorra_bizarrap_sessions_desc' => 'Official cap from the Bizarrap Music Sessions.',
+    'prod_camiseta_coldplay_music_of_the_spheres_name' => 'Coldplay Music of the Spheres T-Shirt',
+    'prod_camiseta_coldplay_music_of_the_spheres_desc' => 'Official t-shirt from the Music of the Spheres tour.',
 
 ];

@@ -31,7 +31,7 @@
                             <td class="py-3 fw-bold">
                                 <a href="{{ route('admin.productos.edit', $product->id) }}"
                                    class="text-decoration-none text-dark">
-                                    {{ $product->name }}
+                                    {{ $product->translated_name }}
                                 </a>
                             </td>
                             <td class="py-3 text-muted">{{ $product->artist->name ?? '—' }}</td>
