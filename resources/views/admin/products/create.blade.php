@@ -75,6 +75,14 @@
                     @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
 
+                <div>
+                    <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.image_url') }}</label>
+                    <input type="url" name="image_url" value="{{ old('image_url') }}"
+                           class="form-control rounded-pill @error('image_url') is-invalid @enderror"
+                           placeholder="https://...">
+                    @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.base_price') }} *</label>
