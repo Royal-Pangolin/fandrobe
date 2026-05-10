@@ -29,12 +29,10 @@ class AddressController extends Controller
 
             $isDefault = $request->boolean('is_default');
 
-            // Si es la primera dirección del usuario, marcarla como predeterminada
             if ($request->user()->addresses()->count() === 0) {
                 $isDefault = true;
             }
 
-            // Si se marca como predeterminada, desactivar las demás
             if ($isDefault) {
                 $request->user()->addresses()->update(['is_default' => false]);
             }
@@ -66,7 +64,6 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
 
-        // Verificar que la dirección pertenece al usuario autenticado
         if ($address->user_id !== $request->user()->id) {
             abort(403);
         }
@@ -87,7 +84,6 @@ class AddressController extends Controller
 
             $isDefault = $request->boolean('is_default');
 
-            // Si se marca como predeterminada, desactivar las demás
             if ($isDefault) {
                 $request->user()->addresses()->where('id', '!=', $id)->update(['is_default' => false]);
             }
@@ -119,7 +115,6 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
 
-        // Verificar que la dirección pertenece al usuario autenticado
         if ($address->user_id !== $request->user()->id) {
             abort(403);
         }
@@ -130,7 +125,6 @@ class AddressController extends Controller
             $wasDefault = $address->is_default;
             $address->delete();
 
-            // Si era la predeterminada, asignar la primera restante
             if ($wasDefault) {
                 $first = $request->user()->addresses()->first();
                 if ($first) {
@@ -154,7 +148,6 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
 
-        // Verificar que la dirección pertenece al usuario autenticado
         if ($address->user_id !== $request->user()->id) {
             abort(403);
         }
@@ -162,10 +155,8 @@ class AddressController extends Controller
         try {
             DB::beginTransaction();
 
-            // Desactivar todas las del usuario
             $request->user()->addresses()->update(['is_default' => false]);
 
-            // Activar la seleccionada
             $address->update(['is_default' => true]);
 
             DB::commit();

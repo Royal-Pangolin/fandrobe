@@ -8,12 +8,12 @@
         <div class="d-flex align-items-end justify-content-between mb-5">
             <div>
                 <a href="{{ route('admin.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
-                    ← {{ __('messages.panel') }}
+                    {{ __('messages.panel') }}
                 </a>
                 <h1 class="fw-bolder mb-0">{{ __('messages.nav_artists') }}</h1>
             </div>
             <a href="{{ route('admin.artistas.create') }}" class="btn btn-primary fw-bold px-4">
-                + {{ __('messages.new_artist') }}
+                {{ __('messages.new_artist') }}
             </a>
         </div>
 

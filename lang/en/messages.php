@@ -1,8 +1,6 @@
 <?php
 
 return [
-
-    // ── Navigation ──
     'nav_home' => 'Home',
     'nav_catalog' => 'Catalog',
     'nav_artists' => 'Artists',
@@ -15,8 +13,6 @@ return [
     'nav_followed_artists' => 'Followed artists',
     'nav_admin' => 'Admin panel',
     'nav_cart' => 'My cart',
-
-    // ── Email verification ──
     'email_not_verified' => 'Your email address is not verified.',
     'resend_verification' => 'Resend verification email',
     'verify_title' => 'Verify your email',
@@ -24,8 +20,6 @@ return [
     'verify_link_sent' => 'A new verification link has been sent to your email.',
     'verify_not_received' => 'Didn\'t receive the email?',
     'verify_resend_btn' => 'Resend verification link',
-
-    // ── Footer ──
     'footer_description' => 'Connecting exceptional artists with passionate collectors. Guaranteed authenticity in every piece and official merchandise.',
     'footer_official' => 'Official Pieces',
     'footer_authenticity' => 'Authenticity Cert.',
@@ -37,8 +31,6 @@ return [
     'footer_copyright' => '© 2026 Fandrobe. All rights reserved.',
     'footer_made_with' => 'Made with art · Verified with trust',
     'footer_authenticity_link' => 'Authenticity',
-
-    // ── Auth ──
     'login_title' => 'Log In',
     'register_title' => 'Create Account',
     'email_label' => 'Email Address',
@@ -48,10 +40,14 @@ return [
     'last_name' => 'Last Name',
     'phone' => 'Phone',
     'forgot_password' => 'Forgot your password?',
+    'forgot_password_title' => 'Recover password',
+    'forgot_password_text' => 'Enter your email address and we will send you a link to create a new password.',
+    'send_reset_link' => 'Send recovery link',
+    'back_to_login' => 'Back to log in',
+    'reset_password_title' => 'Reset password',
+    'reset_password_button' => 'Reset password',
     'no_account' => 'Don\'t have an account? Sign up',
     'has_account' => 'Already have an account? Log in',
-
-    // ── Home ──
     'hero_label' => 'Discover our artists',
     'hero_title_1' => 'Official Collectibles.',
     'hero_title_2' => 'Signed Art.',
@@ -69,8 +65,6 @@ return [
     'no_products' => 'No works available.',
     'no_artists_available' => 'No artists available.',
     'official_artist' => 'Official Artist',
-
-    // ── Catalog ──
     'catalog_title' => 'Catalog',
     'catalog_subtitle' => 'All official and verified pieces from our artists.',
     'search_placeholder' => 'Search product or artist...',
@@ -86,8 +80,6 @@ return [
     'sort_newest' => 'Newest',
     'no_products_available' => 'No products available',
     'try_change_filters' => 'Try changing the filters or come back soon.',
-
-    // ── Product detail ──
     'breadcrumb_home' => 'Home',
     'authenticated' => 'Authenticated',
     'no_image' => 'No image',
@@ -99,8 +91,6 @@ return [
     'availability' => 'Availability',
     'in_stock' => 'In stock',
     'artist_label' => 'Artist',
-
-    // ── Cart ──
     'my_cart' => 'My Cart',
     'items_count' => 'item(s)',
     'per_unit' => '/ unit',
@@ -117,8 +107,6 @@ return [
     'discount_code' => 'Got a discount code?',
     'code_placeholder' => 'CODE',
     'apply' => 'Apply',
-
-    // ── Orders ──
     'my_orders' => 'My Orders',
     'orders_count' => 'order(s)',
     'order' => 'Order',
@@ -132,8 +120,6 @@ return [
     'back_to_orders' => 'Back to my orders',
     'discount' => 'Discount',
     'shipping_address' => 'Shipping address',
-
-    // ── Favorites ──
     'my_favorites' => 'My Favorites',
     'favorites_desc' => 'Products you saved for later.',
     'products_tab' => 'Products',
@@ -143,8 +129,6 @@ return [
     'no_favorites' => 'You have no favorites yet',
     'no_favorites_desc' => 'Explore our catalog and save the products you like by tapping the heart.',
     'explore_catalog' => 'Explore Catalog',
-
-    // ── Followed artists ──
     'followed_artists_title' => 'Followed Artists',
     'followed_artists_desc' => 'The artists you follow and their latest news.',
     'favorite_products_tab' => 'Favorite Products',
@@ -156,8 +140,6 @@ return [
     'no_following' => 'You don\'t follow any artist',
     'no_following_desc' => 'Discover amazing artists and tap "Follow" to stay up to date with their news.',
     'explore_artists' => 'Explore Artists',
-
-    // ── Artists ──
     'our_artists' => 'Our Artists',
     'artists_subtitle' => 'Discover the talent behind our exclusive pieces. Every artist is officially verified.',
     'search_artist' => 'Search artist...',
@@ -179,8 +161,6 @@ return [
     'available_works' => 'Available Works',
     'articles' => 'Items',
     'member_since' => 'Member since',
-
-    // ── Categories ──
     'disciplines' => 'Artistic Disciplines',
     'disciplines_desc' => 'Dive into the creative currents that shape the Fandrobe network.',
     'discipline' => 'Discipline',
@@ -191,8 +171,6 @@ return [
     'highlight' => 'Highlight',
     'no_works_category' => 'No works in this category.',
     'load_more' => 'Load more results',
-
-    // ── Profile ──
     'profile_title' => 'My Profile',
     'personal_info' => 'Personal information',
     'save_changes' => 'Save changes',
@@ -205,8 +183,6 @@ return [
     'role' => 'Role',
     'active' => 'Active',
     'inactive' => 'Inactive',
-
-    // ── Profile — Addresses ──
     'shipping_addresses' => 'Shipping addresses',
     'add_address' => '+ Add',
     'alias' => 'Alias',
@@ -232,16 +208,12 @@ return [
     'address_update_error' => 'Error updating the address.',
     'address_delete_error' => 'Error deleting the address.',
     'address_default_error' => 'Error changing the default address.',
-
-    // ── Profile — Language ──
     'language' => 'Language',
     'language_desc' => 'Select your preferred language for the interface.',
     'spanish' => 'Español',
     'english' => 'English',
     'save_language' => 'Save language',
     'language_updated' => 'Language updated successfully.',
-
-    // ── Admin ──
     'admin_panel' => 'Admin Panel',
     'admin_welcome' => 'Welcome,',
     'pending_orders' => 'Pending orders',
@@ -277,8 +249,6 @@ return [
     'product_name' => 'Product',
     'favorites_count' => 'Favorites',
     'no_favorites_data' => 'No favorites data.',
-
-    // ── Admin — Forms ──
     'product_name_label' => 'Product name',
     'description' => 'Description',
     'base_price' => 'Base price (€)',
@@ -300,16 +270,12 @@ return [
     'image_url' => 'Image URL',
     'bio' => 'Biography',
     'select_genre' => 'Select a genre',
-
-    // ── Admin — Orders ──
     'order_detail' => 'Order detail',
     'customer' => 'Customer',
     'update_status' => 'Update status',
     'save_status' => 'Save',
     'no_orders_registered' => 'No orders registered.',
     'back_to_panel' => '← Panel',
-
-    // ── Admin — Users ──
     'user_detail' => 'User detail',
     'back_to_users' => '← Users',
     'view' => 'View',
@@ -318,8 +284,6 @@ return [
     'favorites' => 'Favorites',
     'no_favorites_yet' => 'No favorites yet.',
     'admin_categories' => 'Categories',
-
-    // ── Flash Messages ──
     'cart_added' => 'Product added to cart',
     'cart_updated' => 'Quantity updated',
     'cart_removed' => 'Product removed',
@@ -341,16 +305,12 @@ return [
     'artist_update_error' => 'Error updating the artist.',
     'artist_delete_error' => 'Error deleting the artist.',
     'status_update_error' => 'Error updating the order status.',
-
-    // ── Dynamic content — Categories ──
     'cat_camisetas' => 'T-Shirts',
     'cat_sudaderas' => 'Hoodies',
     'cat_gorras' => 'Caps',
     'cat_accesorios' => 'Accessories',
     'cat_vinilo' => 'Vinyl',
     'cat_posters' => 'Posters',
-
-    // ── Dynamic content — Artist bios ──
     'bio_bad_bunny' => 'Puerto Rican urban artist, a leading figure in reggaeton and Latin trap.',
     'bio_rosalia' => 'Spanish singer blending flamenco with pop and urban sounds.',
     'bio_c_tangana' => 'Madrid-based artist fusing urban music with Spanish traditions.',
@@ -363,8 +323,6 @@ return [
     'bio_quevedo' => 'Canarian urban music artist from Spain, known for his hit Quédate.',
     'bio_j_balvin' => 'Colombian reggaeton artist, one of the most influential in the genre.',
     'bio_dua_lipa' => 'British-Albanian pop and dance-pop singer with worldwide hits.',
-
-    // ── Dynamic content — Products ──
     'prod_camiseta_bad_bunny_un_verano_sin_ti_name' => 'Bad Bunny Un Verano Sin Ti T-Shirt',
     'prod_camiseta_bad_bunny_un_verano_sin_ti_desc' => 'Official t-shirt from the Un Verano Sin Ti tour.',
     'prod_camiseta_rosalia_motomami_name' => 'Rosalía Motomami T-Shirt',

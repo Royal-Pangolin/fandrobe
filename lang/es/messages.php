@@ -1,8 +1,6 @@
 <?php
 
 return [
-
-    // ── Navegación ──
     'nav_home' => 'Inicio',
     'nav_catalog' => 'Catálogo',
     'nav_artists' => 'Artistas',
@@ -15,8 +13,6 @@ return [
     'nav_followed_artists' => 'Artistas seguidos',
     'nav_admin' => 'Panel de administración',
     'nav_cart' => 'Mi carrito',
-
-    // ── Verificación email ──
     'email_not_verified' => 'Tu correo electrónico no está verificado.',
     'resend_verification' => 'Reenviar correo de verificación',
     'verify_title' => 'Verifica tu email',
@@ -24,8 +20,6 @@ return [
     'verify_link_sent' => 'Se ha enviado un nuevo enlace de verificación a tu email.',
     'verify_not_received' => '¿No has recibido el correo?',
     'verify_resend_btn' => 'Reenviar enlace de verificación',
-
-    // ── Footer ──
     'footer_description' => 'Conectando artistas excepcionales con coleccionistas apasionados. Autenticidad garantizada en cada obra y mercancía oficial.',
     'footer_official' => 'Piezas Oficiales',
     'footer_authenticity' => 'Cert. Autenticidad',
@@ -37,8 +31,6 @@ return [
     'footer_copyright' => '© 2026 Fandrobe. Todos los derechos reservados.',
     'footer_made_with' => 'Hecho con arte · Verificado con confianza',
     'footer_authenticity_link' => 'Autenticidad',
-
-    // ── Auth ──
     'login_title' => 'Iniciar Sesión',
     'register_title' => 'Crear Cuenta',
     'email_label' => 'Correo Electrónico',
@@ -48,10 +40,14 @@ return [
     'last_name' => 'Apellido',
     'phone' => 'Teléfono',
     'forgot_password' => '¿Olvidaste tu contraseña?',
+    'forgot_password_title' => 'Recuperar contraseña',
+    'forgot_password_text' => 'Introduce tu correo electrónico y te enviaremos un enlace para crear una nueva contraseña.',
+    'send_reset_link' => 'Enviar enlace de recuperación',
+    'back_to_login' => 'Volver a iniciar sesión',
+    'reset_password_title' => 'Restablecer contraseña',
+    'reset_password_button' => 'Restablecer contraseña',
     'no_account' => '¿No tienes cuenta? Regístrate',
     'has_account' => '¿Ya tienes cuenta? Inicia sesión',
-
-    // ── Home ──
     'hero_label' => 'Descubre nuestros artistas',
     'hero_title_1' => 'Coleccionables Oficiales.',
     'hero_title_2' => 'Arte con Firma.',
@@ -69,8 +65,6 @@ return [
     'no_products' => 'No hay obras disponibles.',
     'no_artists_available' => 'No hay artistas disponibles.',
     'official_artist' => 'Artista Oficial',
-
-    // ── Catálogo ──
     'catalog_title' => 'Catálogo',
     'catalog_subtitle' => 'Todas las piezas oficiales y verificadas de nuestros artistas.',
     'search_placeholder' => 'Buscar producto o artista...',
@@ -86,8 +80,6 @@ return [
     'sort_newest' => 'Más recientes',
     'no_products_available' => 'No hay productos disponibles',
     'try_change_filters' => 'Prueba a cambiar los filtros o vuelve pronto.',
-
-    // ── Producto detalle ──
     'breadcrumb_home' => 'Inicio',
     'authenticated' => 'Autenticado',
     'no_image' => 'Sin imagen',
@@ -99,8 +91,6 @@ return [
     'availability' => 'Disponibilidad',
     'in_stock' => 'En stock',
     'artist_label' => 'Artista',
-
-    // ── Carrito ──
     'my_cart' => 'Mi Carrito',
     'items_count' => 'artículo(s)',
     'per_unit' => '/ unidad',
@@ -117,8 +107,6 @@ return [
     'discount_code' => '¿Tienes un código de descuento?',
     'code_placeholder' => 'CÓDIGO',
     'apply' => 'Aplicar',
-
-    // ── Pedidos ──
     'my_orders' => 'Mis Pedidos',
     'orders_count' => 'pedido(s)',
     'order' => 'Pedido',
@@ -132,8 +120,6 @@ return [
     'back_to_orders' => 'Volver a mis pedidos',
     'discount' => 'Descuento',
     'shipping_address' => 'Dirección de envío',
-
-    // ── Favoritos ──
     'my_favorites' => 'Mis Favoritos',
     'favorites_desc' => 'Productos que has guardado para más tarde.',
     'products_tab' => 'Productos',
@@ -143,8 +129,6 @@ return [
     'no_favorites' => 'Aún no tienes favoritos',
     'no_favorites_desc' => 'Explora nuestro catálogo y guarda los productos que más te gusten pulsando el corazón.',
     'explore_catalog' => 'Explorar Catálogo',
-
-    // ── Artistas seguidos ──
     'followed_artists_title' => 'Artistas Seguidos',
     'followed_artists_desc' => 'Los artistas que sigues y sus últimas novedades.',
     'favorite_products_tab' => 'Productos Favoritos',
@@ -156,8 +140,6 @@ return [
     'no_following' => 'No sigues a ningún artista',
     'no_following_desc' => 'Descubre artistas increíbles y pulsa "Seguir" para mantenerte al día con sus novedades.',
     'explore_artists' => 'Explorar Artistas',
-
-    // ── Artistas ──
     'our_artists' => 'Nuestros Artistas',
     'artists_subtitle' => 'Descubre el talento que da vida a nuestras piezas exclusivas. Cada artista es verificado oficialmente.',
     'search_artist' => 'Buscar artista...',
@@ -179,8 +161,6 @@ return [
     'available_works' => 'Obras Disponibles',
     'articles' => 'Artículos',
     'member_since' => 'Miembro desde',
-
-    // ── Categorías ──
     'disciplines' => 'Disciplinas Artísticas',
     'disciplines_desc' => 'Sumérgete en las corrientes creativas que conforman la red de Fandrobe.',
     'discipline' => 'Disciplina',
@@ -191,8 +171,6 @@ return [
     'highlight' => 'Destaque',
     'no_works_category' => 'No hay obras en esta categoría.',
     'load_more' => 'Cargar más resultados',
-
-    // ── Perfil ──
     'profile_title' => 'Mi Perfil',
     'personal_info' => 'Información personal',
     'save_changes' => 'Guardar cambios',
@@ -205,8 +183,6 @@ return [
     'role' => 'Rol',
     'active' => 'Activo',
     'inactive' => 'Inactivo',
-
-    // ── Perfil — Direcciones ──
     'shipping_addresses' => 'Direcciones de envío',
     'add_address' => '+ Añadir',
     'alias' => 'Alias',
@@ -232,16 +208,12 @@ return [
     'address_update_error' => 'Error al actualizar la dirección.',
     'address_delete_error' => 'Error al eliminar la dirección.',
     'address_default_error' => 'Error al cambiar la dirección predeterminada.',
-
-    // ── Perfil — Idioma ──
     'language' => 'Idioma',
     'language_desc' => 'Selecciona tu idioma preferido para la interfaz.',
     'spanish' => 'Español',
     'english' => 'English',
     'save_language' => 'Guardar idioma',
     'language_updated' => 'Idioma actualizado correctamente.',
-
-    // ── Admin ──
     'admin_panel' => 'Panel de Administración',
     'admin_welcome' => 'Bienvenido,',
     'pending_orders' => 'Pedidos pendientes',
@@ -277,8 +249,6 @@ return [
     'product_name' => 'Producto',
     'favorites_count' => 'Favoritos',
     'no_favorites_data' => 'No hay datos de favoritos.',
-
-    // ── Admin — Formularios ──
     'product_name_label' => 'Nombre del producto',
     'description' => 'Descripción',
     'base_price' => 'Precio base (€)',
@@ -300,16 +270,12 @@ return [
     'image_url' => 'URL de imagen',
     'bio' => 'Biografía',
     'select_genre' => 'Selecciona un género',
-
-    // ── Admin — Pedidos ──
     'order_detail' => 'Detalle del pedido',
     'customer' => 'Cliente',
     'update_status' => 'Actualizar estado',
     'save_status' => 'Guardar',
     'no_orders_registered' => 'No hay pedidos registrados.',
     'back_to_panel' => '← Panel',
-
-    // ── Admin — Usuarios ──
     'user_detail' => 'Detalle del usuario',
     'back_to_users' => '← Usuarios',
     'view' => 'Ver',
@@ -318,8 +284,6 @@ return [
     'favorites' => 'Favoritos',
     'no_favorites_yet' => 'No hay favoritos todavía.',
     'admin_categories' => 'Categorías',
-
-    // ── Mensajes Flash ──
     'cart_added' => 'Producto añadido al carrito',
     'cart_updated' => 'Cantidad actualizada',
     'cart_removed' => 'Producto eliminado',
@@ -341,16 +305,12 @@ return [
     'artist_update_error' => 'Error al actualizar el artista.',
     'artist_delete_error' => 'Error al eliminar el artista.',
     'status_update_error' => 'Error al actualizar el estado del pedido.',
-
-    // ── Contenido dinámico — Categorías ──
     'cat_camisetas' => 'Camisetas',
     'cat_sudaderas' => 'Sudaderas',
     'cat_gorras' => 'Gorras',
     'cat_accesorios' => 'Accesorios',
     'cat_vinilo' => 'Vinilo',
     'cat_posters' => 'Pósters',
-
-    // ── Contenido dinámico — Descripciones de artistas ──
     'bio_bad_bunny' => 'Artista urbano puertorriqueño, referente del reggaeton y trap latino.',
     'bio_rosalia' => 'Cantante española de flamenco fusionado con pop y urbano.',
     'bio_c_tangana' => 'Artista madrileño de música urbana y fusión española.',
@@ -363,8 +323,6 @@ return [
     'bio_quevedo' => 'Artista canario de música urbana española, conocido por su hit Quédate.',
     'bio_j_balvin' => 'Artista colombiano de reggaeton, uno de los más influyentes del género.',
     'bio_dua_lipa' => 'Cantante británico-albanesa de pop y dance-pop, con éxitos mundiales.',
-
-    // ── Contenido dinámico — Productos ──
     'prod_camiseta_bad_bunny_un_verano_sin_ti_name' => 'Camiseta Bad Bunny Un Verano Sin Ti',
     'prod_camiseta_bad_bunny_un_verano_sin_ti_desc' => 'Camiseta oficial de la gira Un Verano Sin Ti.',
     'prod_camiseta_rosalia_motomami_name' => 'Camiseta Rosalía Motomami',
