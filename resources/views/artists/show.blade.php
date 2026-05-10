@@ -77,7 +77,7 @@
             <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;">
                 <option value="all">{{ __('messages.all_categories') }}</option>
                 @foreach($categories as $cat)
-                    <option value="{{ Str::slug($cat->name) }}">{{ $cat->name }}</option>
+                    <option value="{{ Str::slug($cat->name) }}">{{ $cat->translated_name }}</option>
                 @endforeach
             </select>
         </div>
@@ -135,7 +135,7 @@
         @if($catProducts->count())
             <div class="artist-category-section mb-5" data-category="{{ Str::slug($cat->name) }}">
                 <div class="d-flex justify-content-between align-items-end mb-3">
-                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->name }}</h3>
+                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->translated_name }}</h3>
                     <span class="section-link text-muted small fw-bold text-uppercase">
                         {{ $catProducts->count() }} {{ __('messages.works') }}
                     </span>
