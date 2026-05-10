@@ -326,6 +326,7 @@ return [
     'order_success' => 'Order successfully placed!',
     'order_error' => 'Error processing the order. Please try again.',
     'cart_empty_error' => 'Your cart is empty.',
+    'email_verify_to_order' => 'You must verify your email address before placing an order.',
     'product_created' => 'Product successfully created.',
     'product_updated' => 'Product successfully updated.',
     'product_deleted' => 'Product successfully deleted.',
