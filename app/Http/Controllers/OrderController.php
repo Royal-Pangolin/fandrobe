@@ -40,6 +40,11 @@ class OrderController extends Controller
     // Confirmar el pedido — convierte el carrito en pedido
     public function store(Request $request)
     {
+        if (!auth()->user()->hasVerifiedEmail()) {
+            return redirect()->route('cart.index')
+                             ->with('error', __('messages.email_verify_to_order'));
+        }
+
         try {
             DB::beginTransaction();
 
