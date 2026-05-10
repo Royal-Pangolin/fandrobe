@@ -3,7 +3,6 @@
 
 @section('content')
 
-    {{-- Color dinámico por ID: debe quedar inline --}}
     <div class="position-relative overflow-hidden"
          style="height: 40vh; min-height: 300px; margin-top: -76px;
                 background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B'][$category->id % 5] }};">

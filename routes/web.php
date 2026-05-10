@@ -31,7 +31,6 @@ Route::get('/artistas/{id}', [ArtistController::class, 'show'])->name('artists.s
 Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categorias/{id}', [CategoryController::class, 'show'])->name('categories.show');
 
-// Auth
 Route::get('/signin', fn() => view('auth.signin'))->name('signin');
 Route::get('/login', fn() => view('auth.login'))->name('login');
 Route::post('/logout', [\Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -43,35 +42,26 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('status', 'verification-link-sent');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-//Route::get('/forgot-password', fn() => view('auth.forgot-password'))->name('password.request');
-//Route::get('/reset-password/{token}', fn() => view('auth.reset-password'))->name('password.reset');
-//Route::get('/confirm-password', fn() => view('auth.confirm-password'))->name('password.confirm');
 
-// Profile
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile')->middleware(['auth', 'verified']);
 Route::post('/perfil/idioma', [ProfileController::class, 'updateLocale'])->name('profile.updateLocale')->middleware('auth');
 
-// Carrito y funciones autenticadas
 Route::middleware('auth')->group(function () {
 
-    // Carrito
     Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
     Route::post('/carrito/añadir', [CartController::class, 'add'])->name('cart.add');
     Route::put('/carrito/actualizar/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/carrito/eliminar/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
-    // Pedidos
     Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/pedidos/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/pedidos', [OrderController::class, 'store'])->name('orders.store');
 
-    // Favoritos
     Route::post('/favoritos/producto', [FavoriteController::class, 'toggleProduct'])->name('favorites.toggleProduct');
     Route::post('/favoritos/artista', [FavoriteController::class, 'toggleArtist'])->name('favorites.toggleArtist');
     Route::get('/favoritos/productos', [FavoriteController::class, 'favoriteProducts'])->name('favorites.index');
     Route::get('/favoritos/artistas', [FavoriteController::class, 'followedArtists'])->name('followings.index');
 
-    // Direcciones de envío
     Route::post('/perfil/direcciones', [AddressController::class, 'store'])->name('addresses.store');
     Route::put('/perfil/direcciones/{id}', [AddressController::class, 'update'])->name('addresses.update');
     Route::delete('/perfil/direcciones/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
@@ -79,7 +69,6 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// Admin
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/favoritos', [AdminController::class, 'favorites'])->name('favoritos');

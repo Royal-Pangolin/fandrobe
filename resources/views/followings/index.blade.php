@@ -48,7 +48,6 @@
                                 {{ $artist->name }}
                             </div>
                         </a>
-                        {{-- Botón dejar de seguir --}}
                         <form method="POST" action="{{ route('favorites.toggleArtist') }}" class="text-center mt-2">
                             @csrf
                             <input type="hidden" name="artist_id" value="{{ $artist->id }}">

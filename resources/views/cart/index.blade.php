@@ -13,7 +13,6 @@
 
     <div class="row g-5 content-container-lg">
 
-        {{-- Columna izquierda: productos del carrito --}}
         <div class="col-lg-7">
 
             <div class="d-flex align-items-end justify-content-between mb-4">
@@ -139,7 +138,6 @@
             @endif
         </div>
 
-        {{-- Columna derecha: resumen del pedido --}}
         @if($items->count())
             <div class="col-lg-5">
                 <div class="panel p-4 rounded-4 cart-summary-panel">
