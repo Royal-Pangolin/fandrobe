@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Artist extends Model
 {
@@ -14,6 +15,16 @@ class Artist extends Model
         'image_url',
         'is_active',
     ];
+
+    /**
+     * Biografía traducida del artista.
+     */
+    public function getTranslatedBioAttribute(): ?string
+    {
+        $key = 'messages.bio_' . str_replace('-', '_', Str::slug($this->name));
+        $translated = __($key);
+        return $translated !== $key ? $translated : $this->bio;
+    }
 
     public function genre()
     {

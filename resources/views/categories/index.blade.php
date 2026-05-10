@@ -24,7 +24,7 @@
                              style="background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B','#3B2A4B'][$loop->index % 6] }};">
 
                             <div class="category-letter position-absolute top-50 start-50 translate-middle text-white">
-                                {{ substr($category->name, 0, 1) }}
+                                {{ substr($category->translated_name, 0, 1) }}
                             </div>
 
                             <div class="position-absolute top-0 start-0 w-100 h-100"
@@ -32,7 +32,7 @@
 
                             <div class="position-absolute bottom-0 start-0 p-4 w-100">
                                 <span class="badge badge-limited badge-sm mb-2">{{ __('messages.discipline') }}</span>
-                                <h3 class="category-title fw-bolder text-white mb-1">{{ $category->name }}</h3>
+                                <h3 class="category-title fw-bolder text-white mb-1">{{ $category->translated_name }}</h3>
                                 <p class="category-desc text-white mb-0">
                                     {{ Str::limit($category->description ?? __('messages.explore_discipline'), 60) }}
                                 </p>
