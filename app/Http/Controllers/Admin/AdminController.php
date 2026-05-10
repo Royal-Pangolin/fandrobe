@@ -12,17 +12,41 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $pendingOrders  = Order::whereHas('status', fn($q) => $q->where('name', 'pending'))->count();
-        $totalOrders    = Order::count();
-        $totalProducts  = Product::count();
+        $pendingOrders = Order::whereHas('status', fn($q) => $q->where('name', 'pending'))->count();
+        $totalOrders = Order::count();
+        $totalProducts = Product::count();
         $activeProducts = Product::where('is_active', true)->count();
-        $totalArtists   = Artist::count();
-        $totalUsers     = User::count();
+        $totalArtists = Artist::count();
+        $totalUsers = User::count();
 
         return view('admin.index', compact(
-            'pendingOrders', 'totalOrders',
-            'totalProducts', 'activeProducts',
-            'totalArtists', 'totalUsers'
+            'pendingOrders',
+            'totalOrders',
+            'totalProducts',
+            'activeProducts',
+            'totalArtists',
+            'totalUsers'
         ));
+    }
+
+    public function favorites()
+    {
+        $products = Product::withCount('favorites')
+            ->with('artist')
+            ->orderByDesc('favorites_count')
+            ->get();
+
+        return view('admin.favorites.index', compact('products'));
+    }
+
+    public function bestSellers()
+    {
+        $products = Product::withSum('orderItems as units_sold', 'quantity')
+            ->with('artist')
+            ->orderByDesc('units_sold')
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.best-sellers.index', compact('products'));
     }
 }

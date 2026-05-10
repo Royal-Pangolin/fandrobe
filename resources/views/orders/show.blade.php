@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Pedido #' . str_pad($order->id, 5, '0', STR_PAD_LEFT))
+@section('title', __('messages.order') . ' #' . str_pad($order->id, 5, '0', STR_PAD_LEFT))
 
 @section('content')
 
@@ -13,13 +13,13 @@
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb breadcrumb-nav">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}" class="text-decoration-none text-dark">Inicio</a>
+                        <a href="{{ route('home') }}" class="text-decoration-none text-dark">{{ __('messages.breadcrumb_home') }}</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('orders.index') }}" class="text-decoration-none text-dark">Mis Pedidos</a>
+                        <a href="{{ route('orders.index') }}" class="text-decoration-none text-dark">{{ __('messages.my_orders') }}</a>
                     </li>
                     <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">
-                        Pedido #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
+                        {{ __('messages.order') }} #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                     </li>
                 </ol>
             </nav>
@@ -37,10 +37,10 @@
             <div class="d-flex align-items-start justify-content-between mb-5">
                 <div>
                     <h1 class="fw-bolder mb-1 text-tighter">
-                        Pedido #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
+                        {{ __('messages.order') }} #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
                     </h1>
                     <span class="text-muted small">
-                        Realizado el {{ \Carbon\Carbon::parse($order->placed_at)->format('d \d\e F \d\e Y') }}
+                        {{ __('messages.placed_on') }} {{ \Carbon\Carbon::parse($order->placed_at)->format('d/m/Y') }}
                     </span>
                 </div>
                 <span class="badge {{ $statusClass }} ms-3 badge-sm py-2 px-3">
@@ -49,7 +49,7 @@
             </div>
 
             <h5 class="fw-bolder mb-3 text-tight">
-                Artículos ({{ $order->items->count() }})
+                {{ __('messages.items_label') }} ({{ $order->items->count() }})
             </h5>
 
             <div class="d-flex flex-column gap-3">
@@ -59,7 +59,7 @@
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
                                     <p class="fw-bold mb-1" style="font-size: 1rem;">
-                                        {{ $item->product->name }}
+                                        {{ $item->product->translated_name }}
                                     </p>
                                     @if($item->variant)
                                         <p class="text-muted small mb-1">SKU: {{ $item->variant->sku }}</p>
@@ -83,7 +83,7 @@
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Volver a mis pedidos
+                    {{ __('messages.back_to_orders') }}
                 </a>
             </div>
 
@@ -93,33 +93,33 @@
             <div class="sticky-side">
 
                 <div class="panel p-4 rounded-4 mb-4">
-                    <h5 class="fw-bolder mb-4 text-tight">Resumen del pedido</h5>
+                    <h5 class="fw-bolder mb-4 text-tight">{{ __('messages.order_summary') }}</h5>
 
                     <div class="d-flex flex-column gap-2 mb-4 divider-subtle pb-4">
                         <div class="d-flex justify-content-between">
-                            <span class="text-muted">Subtotal</span>
+                            <span class="text-muted">{{ __('messages.subtotal') }}</span>
                             <span class="fw-bold">€{{ number_format($order->subtotal, 2) }}</span>
                         </div>
                         @if($order->discount_amount > 0)
                             <div class="d-flex justify-content-between">
-                                <span class="text-muted">Descuento</span>
+                                <span class="text-muted">{{ __('messages.discount') }}</span>
                                 <span class="fw-bold text-verified-color">
                                     −€{{ number_format($order->discount_amount, 2) }}
                                 </span>
                             </div>
                         @endif
                         <div class="d-flex justify-content-between">
-                            <span class="text-muted">Envío</span>
+                            <span class="text-muted">{{ __('messages.shipping') }}</span>
                             @if($order->shipping_amount > 0)
                                 <span class="fw-bold">€{{ number_format($order->shipping_amount, 2) }}</span>
                             @else
-                                <span class="fw-bold text-verified-color">Gratis</span>
+                                <span class="fw-bold text-verified-color">{{ __('messages.free') }}</span>
                             @endif
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-baseline">
-                        <span class="fw-bolder fs-5">Total</span>
+                        <span class="fw-bolder fs-5">{{ __('messages.total') }}</span>
                         <span class="cart-total-price fw-bolder">
                             €{{ number_format($order->total_amount, 2) }}
                         </span>
@@ -128,7 +128,7 @@
 
                 @if($order->address)
                     <div class="panel p-4 rounded-4">
-                        <h5 class="fw-bolder mb-3 text-tight">Dirección de envío</h5>
+                        <h5 class="fw-bolder mb-3 text-tight">{{ __('messages.shipping_address') }}</h5>
                         <div class="order-address-text text-muted">
                             @if($order->address->street)
                                 <p class="mb-1">{{ $order->address->street }}</p>

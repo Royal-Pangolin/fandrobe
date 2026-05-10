@@ -16,7 +16,6 @@ use App\Models\Payment;
 
 class OrderController extends Controller
 {
-    // Ver todos los pedidos del usuario
     public function index()
     {
         $orders = Order::where('user_id', auth()->id())
@@ -27,7 +26,6 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
-    // Ver detalle de un pedido
     public function show($id)
     {
         $order = Order::where('user_id', auth()->id())
@@ -37,13 +35,16 @@ class OrderController extends Controller
         return view('orders.show', compact('order'));
     }
 
-    // Confirmar el pedido — convierte el carrito en pedido
     public function store(Request $request)
     {
+        if (!auth()->user()->hasVerifiedEmail()) {
+            return redirect()->route('cart.index')
+                             ->with('error', __('messages.email_verify_to_order'));
+        }
+
         try {
             DB::beginTransaction();
 
-            // 1. Coger el carrito activo
             $cart = ShoppingCart::where('user_id', auth()->id())
                                 ->where('status', 'active')
                                 ->with('items.product')
@@ -51,15 +52,13 @@ class OrderController extends Controller
 
             if (!$cart || $cart->items->isEmpty()) {
                 return redirect()->route('cart.index')
-                                 ->with('error', 'Tu carrito está vacío.');
+                                 ->with('error', __('messages.cart_empty_error'));
             }
 
-            // 2. Calcular subtotal
             $subtotal = $cart->items->sum(
                 fn($item) => $item->product->base_price * $item->quantity
             );
 
-            // 3. Aplicar descuento si existe en sesión
             $discountAmount = 0;
             $discountId = null;
 
@@ -72,15 +71,12 @@ class OrderController extends Controller
                     } else {
                         $discountAmount = min($discount->discount_value, $subtotal);
                     }
-                    // Incrementar el contador de usos
                     $discount->increment('used_count');
                 }
             }
 
-            // 4. Coger el estado inicial (pending)
             $status = OrderStatus::where('name', 'pending')->first();
 
-            // 5. Crear el pedido
             $shippingAmount = 4.99;
             $total = max(0, $subtotal - $discountAmount) + $shippingAmount;
 
@@ -96,7 +92,6 @@ class OrderController extends Controller
                 'placed_at'       => now(),
             ]);
 
-            // 6. Copiar los items del carrito al pedido
             foreach ($cart->items as $item) {
                 $unitPrice  = $item->product->base_price;
                 $totalPrice = $unitPrice * $item->quantity;
@@ -111,11 +106,9 @@ class OrderController extends Controller
                 ]);
             }
 
-            // 7. Vaciar el carrito
             $cart->items()->delete();
             $cart->update(['status' => 'completed']);
 
-            // 8. Limpiar el cupón de la sesión
             session()->forget('discount');
 
             DB::commit();
@@ -126,12 +119,12 @@ class OrderController extends Controller
                 ));
 
             return redirect()->route('orders.show', $order->id)
-                             ->with('mensaje', '¡Pedido realizado correctamente!');
+                             ->with('mensaje', __('messages.order_success'));
 
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('cart.index')
-                             ->with('error', 'Error al procesar el pedido. Inténtalo de nuevo.');
+                             ->with('error', __('messages.order_error'));
         }
     }
 }

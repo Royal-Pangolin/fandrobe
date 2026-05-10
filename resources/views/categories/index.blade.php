@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('title', 'Disciplinas')
+@section('title', __('messages.disciplines'))
 
 @section('content')
 
     <div class="hero-gradient px-3 mb-5">
         <div class="container-fluid px-4 px-lg-5 text-center pb-5">
             <h1 class="display-3 text-shadow mb-3 fw-bolder text-tighter">
-                Disciplinas Artísticas
+                {{ __('messages.disciplines') }}
             </h1>
             <p class="lead text-shadow mx-auto" style="max-width: 560px; opacity: 0.9;">
-                Sumérgete en las corrientes creativas que conforman la red de Fandrobe.
+                {{ __('messages.disciplines_desc') }}
             </p>
         </div>
     </div>
@@ -19,22 +19,21 @@
             @forelse ($categories as $category)
                 <div class="col">
                     <a href="{{ route('categories.show', $category->id) }}" class="text-decoration-none">
-                        {{-- Color dinámico por índice: debe quedar inline --}}
                         <div class="category-card position-relative overflow-hidden rounded-4"
                              style="background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B','#3B2A4B'][$loop->index % 6] }};">
 
                             <div class="category-letter position-absolute top-50 start-50 translate-middle text-white">
-                                {{ substr($category->name, 0, 1) }}
+                                {{ substr($category->translated_name, 0, 1) }}
                             </div>
 
                             <div class="position-absolute top-0 start-0 w-100 h-100"
                                  style="background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);"></div>
 
                             <div class="position-absolute bottom-0 start-0 p-4 w-100">
-                                <span class="badge badge-limited badge-sm mb-2">Disciplina</span>
-                                <h3 class="category-title fw-bolder text-white mb-1">{{ $category->name }}</h3>
+                                <span class="badge badge-limited badge-sm mb-2">{{ __('messages.discipline') }}</span>
+                                <h3 class="category-title fw-bolder text-white mb-1">{{ $category->translated_name }}</h3>
                                 <p class="category-desc text-white mb-0">
-                                    {{ Str::limit($category->description ?? 'Explora esta disciplina artística.', 60) }}
+                                    {{ Str::limit($category->description ?? __('messages.explore_discipline'), 60) }}
                                 </p>
                             </div>
 
@@ -48,7 +47,7 @@
                 </div>
             @empty
                 <div class="col-12 text-center text-muted py-5">
-                    <h4>No hay categorías disponibles.</h4>
+                    <h4>{{ __('messages.no_categories') }}</h4>
                 </div>
             @endforelse
         </div>

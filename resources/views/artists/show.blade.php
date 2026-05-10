@@ -16,11 +16,10 @@
     $set = $orbSets[$artist->id % 6];
     $bg  = $bgColors[$artist->id % 6];
     $allProducts = $artist->products ?? collect();
-    $categories  = $allProducts->pluck('category')->filter()->unique('id')->values();
+    $categories  = $allProducts->flatMap->categories->unique('id')->values();
 @endphp
 
 <div class="artist-hero position-relative overflow-hidden" style="background-color: {{ $bg }};">
-    {{-- Orbes dinámicos: color depende del artista, deben quedar inline --}}
     <div class="hero-orb" style="width: 65%; aspect-ratio:1; background:{{ $set[0] }}; top:-15%; left:-10%; animation-duration:9s;"></div>
     <div class="hero-orb" style="width: 50%; aspect-ratio:1; background:{{ $set[1] }}; bottom:-15%; right:-8%; animation-duration:12s; animation-delay:-4s; animation-direction:reverse;"></div>
     <div class="hero-orb" style="width: 38%; aspect-ratio:1; background:{{ $set[2] }}; top:25%; left:40%; animation-duration:15s; animation-delay:-8s;"></div>
@@ -33,7 +32,7 @@
                 <svg width="24" height="24" fill="#6E7556" viewBox="0 0 24 24">
                     <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"></path>
                 </svg>
-                <span class="text-white fw-bold">Artista Verificado</span>
+                <span class="text-white fw-bold">{{ __('messages.verified_artist') }}</span>
             </div>
             <h1 class="artist-hero-title fw-bolder text-white mb-0">{{ $artist->name }}</h1>
         </div>
@@ -50,14 +49,14 @@
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" clip-rule="evenodd"></path>
                             </svg>
-                            Siguiendo
+                            {{ __('messages.following') }}
                         </button>
                     @else
-                        <button type="submit" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</button>
+                        <button type="submit" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">{{ __('messages.follow') }}</button>
                     @endif
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">Seguir</a>
+                <a href="{{ route('login') }}" class="btn btn-outline-light rounded-pill fw-bold text-uppercase px-4 border-2">{{ __('messages.follow') }}</a>
             @endauth
         </div>
     </div>
@@ -67,17 +66,17 @@
 
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-5">
         <span class="text-muted fw-bold" style="font-size: 0.9rem;">
-            {{ $allProducts->count() }} obras disponibles
+            {{ $allProducts->count() }} {{ __('messages.works_available') }}
         </span>
         <div class="d-flex gap-3 flex-wrap">
             <div class="artist-filter-search">
                 <input type="text" id="artistProductSearch" class="form-control rounded-pill py-2 px-4"
-                       placeholder="Buscar obra..." style="font-size: 0.875rem;">
+                       placeholder="{{ __('messages.search_work') }}" style="font-size: 0.875rem;">
             </div>
             <select id="artistCategoryFilter" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;">
-                <option value="all">Todas las categorías</option>
+                <option value="all">{{ __('messages.all_categories') }}</option>
                 @foreach($categories as $cat)
-                    <option value="{{ Str::slug($cat->name) }}">{{ $cat->name }}</option>
+                    <option value="{{ Str::slug($cat->name) }}">{{ $cat->translated_name }}</option>
                 @endforeach
             </select>
         </div>
@@ -86,23 +85,23 @@
     @if($allProducts->count())
         <div class="artist-category-section mb-5" data-category="all">
             <div class="d-flex justify-content-between align-items-end mb-3">
-                <h3 class="fw-bold mb-0 text-tight">Obras Populares</h3>
+                <h3 class="fw-bold mb-0 text-tight">{{ __('messages.popular_works') }}</h3>
                 <span class="section-link text-muted small fw-bold text-uppercase">
-                    {{ $allProducts->count() }} obras
+                    {{ $allProducts->count() }} {{ __('messages.works') }}
                 </span>
             </div>
             <div class="horizontal-scroll-row d-flex gap-3 pb-3 overflow-hidden">
                 @foreach($allProducts as $product)
                     <a href="{{ route('products.show', $product->id) }}"
                        class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
-                       data-name="{{ strtolower($product->name) }}"
-                       data-category="{{ $product->category ? Str::slug($product->category->name) : '' }}">
+                       data-name="{{ strtolower($product->translated_name) }}"
+                       data-category="{{ $product->categories->isNotEmpty() ? Str::slug($product->categories->first()->name) : '' }}">
                         <div class="card h-100">
                             <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
                                 @if($product->images && $product->images->count() > 0)
                                     @php $imgUrl = $product->images->first()->url; @endphp
                                     <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                         alt="{{ $product->name }}" class="card-img-top">
+                                         alt="{{ $product->translated_name }}" class="card-img-top">
                                 @else
                                     <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                         <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,10 +115,10 @@
                                     </svg>
                                 </button>
                             </div>
-                            <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
+                            <h5 class="card-title mt-2 badge-sm">{{ $product->translated_name }}</h5>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
-                                <span class="badge badge-verified badge-sm">Oficial</span>
+                                <span class="badge badge-verified badge-sm">{{ __('messages.official') }}</span>
                             </div>
                         </div>
                     </a>
@@ -130,28 +129,28 @@
 
     @foreach($categories as $cat)
         @php
-            $catProducts = $allProducts->filter(fn($p) => $p->category && $p->category->id === $cat->id);
+            $catProducts = $allProducts->filter(fn($p) => $p->categories->contains('id', $cat->id));
         @endphp
         @if($catProducts->count())
             <div class="artist-category-section mb-5" data-category="{{ Str::slug($cat->name) }}">
                 <div class="d-flex justify-content-between align-items-end mb-3">
-                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->name }}</h3>
+                    <h3 class="fw-bold mb-0 text-tight">{{ $cat->translated_name }}</h3>
                     <span class="section-link text-muted small fw-bold text-uppercase">
-                        {{ $catProducts->count() }} obras
+                        {{ $catProducts->count() }} {{ __('messages.works') }}
                     </span>
                 </div>
                 <div class="horizontal-scroll-row d-flex gap-3 pb-3 overflow-hidden">
                     @foreach($catProducts as $product)
                         <a href="{{ route('products.show', $product->id) }}"
                            class="scroll-card text-decoration-none flex-shrink-0 artist-product-card"
-                           data-name="{{ strtolower($product->name) }}"
+                           data-name="{{ strtolower($product->translated_name) }}"
                            data-category="{{ Str::slug($cat->name) }}">
                             <div class="card h-100">
                                 <div class="card-img-wrapper" style="aspect-ratio: 1/1;">
                                     @if($product->images && $product->images->count() > 0)
                                         @php $imgUrl = $product->images->first()->url; @endphp
                                         <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                             alt="{{ $product->name }}" class="card-img-top">
+                                             alt="{{ $product->translated_name }}" class="card-img-top">
                                     @else
                                         <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
                                             <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,10 +164,10 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <h5 class="card-title mt-2 badge-sm">{{ $product->name }}</h5>
+                                <h5 class="card-title mt-2 badge-sm">{{ $product->translated_name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="fw-bold" style="font-size: 0.85rem;">€{{ number_format($product->base_price, 2) }}</span>
-                                    <span class="badge badge-verified badge-sm">Oficial</span>
+                                    <span class="badge badge-verified badge-sm">{{ __('messages.official') }}</span>
                                 </div>
                             </div>
                         </a>
@@ -179,22 +178,22 @@
     @endforeach
 
     <div class="mt-5">
-        <h4 class="fw-bold mb-3 text-dark">Acerca de</h4>
+        <h4 class="fw-bold mb-3 text-dark">{{ __('messages.about') }}</h4>
         <div class="artist-bio-panel p-4 rounded">
             <p class="text-muted lh-lg fs-5 mb-4">
-                {{ $artist->bio ?? 'No hay biografía disponible de momento.' }}
+                {{ $artist->translated_bio ?? __('messages.no_bio') }}
             </p>
             <div class="d-flex gap-5 flex-wrap">
                 <div>
-                    <span class="d-block small text-muted text-uppercase mb-1">Género Principal</span>
-                    <span class="fw-bold fs-5">{{ $artist->genre->name ?? 'Varios' }}</span>
+                    <span class="d-block small text-muted text-uppercase mb-1">{{ __('messages.main_genre') }}</span>
+                    <span class="fw-bold fs-5">{{ $artist->genre->name ?? __('messages.various') }}</span>
                 </div>
                 <div>
-                    <span class="d-block small text-muted text-uppercase mb-1">Obras Disponibles</span>
-                    <span class="fw-bold fs-5">{{ $allProducts->count() }} Artículos</span>
+                    <span class="d-block small text-muted text-uppercase mb-1">{{ __('messages.available_works') }}</span>
+                    <span class="fw-bold fs-5">{{ $allProducts->count() }} {{ __('messages.articles') }}</span>
                 </div>
                 <div>
-                    <span class="d-block small text-muted text-uppercase mb-1">Miembro desde</span>
+                    <span class="d-block small text-muted text-uppercase mb-1">{{ __('messages.member_since') }}</span>
                     <span class="fw-bold fs-5">{{ $artist->created_at ? $artist->created_at->format('M Y') : '2026' }}</span>
                 </div>
             </div>

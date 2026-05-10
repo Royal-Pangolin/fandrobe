@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'email_verified',
         'is_active',
+        'locale',
     ];
 
     protected $hidden = [
@@ -70,6 +71,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Artist::class, 'artist_user')
             ->using(ArtistUser::class)
             ->withPivot('followed_at');
+    }
+
+    /**
+     * Direcciones de envío del usuario.
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 
     public function hasVerifiedEmail(): bool

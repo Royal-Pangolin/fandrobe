@@ -12,7 +12,6 @@
         <td align="center">
             <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);">
 
-                {{-- HEADER --}}
                 <tr>
                     <td style="background-color: #1a1a1a; padding: 32px 40px; text-align: center;">
                         <h1 style="color: #f7f1e7; font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.03em;">
@@ -21,7 +20,6 @@
                     </td>
                 </tr>
 
-                {{-- CONFIRMATION ICON --}}
                 <tr>
                     <td style="padding: 40px 40px 24px; text-align: center;">
                         <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(110,117,86,0.12); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
@@ -36,7 +34,6 @@
                     </td>
                 </tr>
 
-                {{-- ORDER INFO --}}
                 <tr>
                     <td style="padding: 0 40px 24px;">
                         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #faf7f2; border-radius: 12px; padding: 20px;">
@@ -84,7 +81,6 @@
                     </td>
                 </tr>
 
-                {{-- ITEMS --}}
                 <tr>
                     <td style="padding: 0 40px 24px;">
                         <h3 style="color: #1a1a1a; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 16px;">
@@ -119,7 +115,6 @@
                     </td>
                 </tr>
 
-                {{-- TOTALS --}}
                 <tr>
                     <td style="padding: 0 40px 32px;">
                         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #faf7f2; border-radius: 12px;">
@@ -168,7 +163,6 @@
                     </td>
                 </tr>
 
-                {{-- CTA --}}
                 <tr>
                     <td style="padding: 0 40px 40px; text-align: center;">
                         <a href="{{ route('orders.show', $order->id) }}"
@@ -178,7 +172,6 @@
                     </td>
                 </tr>
 
-                {{-- FOOTER --}}
                 <tr>
                     <td style="background-color: #faf7f2; padding: 24px 40px; text-align: center; border-top: 1px solid #ece7dd;">
                         <p style="color: #aaa; font-size: 12px; margin: 0 0 4px;">
