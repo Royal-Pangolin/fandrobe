@@ -326,6 +326,7 @@ return [
     'order_success' => '¡Pedido realizado correctamente!',
     'order_error' => 'Error al procesar el pedido. Inténtalo de nuevo.',
     'cart_empty_error' => 'Tu carrito está vacío.',
+    'email_verify_to_order' => 'Debes verificar tu correo electrónico antes de realizar un pedido.',
     'product_created' => 'Producto creado correctamente.',
     'product_updated' => 'Producto actualizado correctamente.',
     'product_deleted' => 'Producto eliminado correctamente.',
