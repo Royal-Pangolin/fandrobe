@@ -35,7 +35,6 @@ class FavoriteController extends Controller
             $isFavorite = true;
         }
 
-        // Si es petición AJAX, devolver JSON
         if ($request->expectsJson()) {
             return response()->json(['is_favorite' => $isFavorite]);
         }
@@ -68,7 +67,6 @@ class FavoriteController extends Controller
             $isFollowing = true;
         }
 
-        // Si es petición AJAX, devolver JSON
         if ($request->expectsJson()) {
             return response()->json(['is_following' => $isFollowing]);
         }

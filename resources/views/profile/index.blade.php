@@ -7,7 +7,6 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                {{-- Flash messages --}}
                 @if (session('status'))
                     <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                         {{ session('status') }}
@@ -27,7 +26,6 @@
                     </div>
                 @endif
 
-                {{-- Profile Info --}}
                 <div class="card mb-4">
                     <div class="card-header fw-semibold">{{ __('messages.personal_info') }}</div>
                     <div class="card-body">
@@ -86,7 +84,6 @@
                     </div>
                 </div>
 
-                {{-- Change Password --}}
                 <div class="card mb-4">
                     <div class="card-header fw-semibold">{{ __('messages.change_password') }}</div>
                     <div class="card-body">
@@ -128,7 +125,6 @@
                         </form>
                     </div>
                 </div>
-                {{-- Shipping Addresses --}}
                 <div class="card mb-4">
                     <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
                         {{ __('messages.shipping_addresses') }}
@@ -139,7 +135,6 @@
                     </div>
                     <div class="card-body">
 
-                        {{-- Formulario nueva dirección (colapsable) --}}
                         <div class="collapse mb-4" id="newAddressForm">
                             <form method="POST" action="{{ route('addresses.store') }}">
                                 @csrf
@@ -213,7 +208,6 @@
                             <hr>
                         </div>
 
-                        {{-- Listado de direcciones --}}
                         @if ($user->addresses->isEmpty())
                             <p class="text-muted mb-0">{{ __('messages.no_addresses') }}</p>
                         @else
@@ -263,7 +257,6 @@
                                         </div>
                                     </div>
 
-                                    {{-- Modal editar dirección --}}
                                     <div class="modal fade" id="editAddress{{ $address->id }}" tabindex="-1"
                                         aria-labelledby="editAddressLabel{{ $address->id }}" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -347,7 +340,6 @@
                     </div>
                 </div>
 
-                {{-- Language selector --}}
                 <div class="card mb-4">
                     <div class="card-header fw-semibold">{{ __('messages.language') }}</div>
                     <div class="card-body">
@@ -371,7 +363,6 @@
                     </div>
                 </div>
 
-                {{-- Account Info --}}
                 <div class="card">
                     <div class="card-header fw-semibold">{{ __('messages.account') }}</div>
                     <div class="card-body">

@@ -12,7 +12,6 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
 
-                            <!-- First Name -->
                             <div class="mb-3">
                                 <label for="first_name" class="form-label">{{ __('messages.first_name') }}</label>
                                 <input id="first_name" type="text"
@@ -23,7 +22,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Last Name -->
                             <div class="mb-3">
                                 <label for="last_name" class="form-label">{{ __('messages.last_name') }}</label>
                                 <input id="last_name" type="text"
@@ -34,7 +32,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Phone -->
                             <div class="mb-3">
                                 <label for="phone" class="form-label">{{ __('messages.phone') }}</label>
                                 <input id="phone" type="tel"
@@ -45,7 +42,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Email Address -->
                             <div class="mb-3">
                                 <label for="email" class="form-label">{{ __('messages.email_label') }}</label>
                                 <input id="email" type="email"
@@ -56,7 +52,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Password -->
                             <div class="mb-3">
                                 <label for="password" class="form-label">{{ __('messages.password_label') }}</label>
                                 <input id="password" type="password"
@@ -67,7 +62,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Confirm Password -->
                             <div class="mb-3">
                                 <label for="password_confirmation"
                                     class="form-label">{{ __('messages.confirm_password') }}</label>

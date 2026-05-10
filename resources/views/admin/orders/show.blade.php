@@ -20,7 +20,6 @@
         @endif
 
         <div class="row g-4">
-            {{-- Items --}}
             <div class="col-lg-7">
                 <h2 class="fw-bold mb-3 admin-label">{{ __('messages.items_label') }}</h2>
                 <div class="d-flex flex-column gap-2">
@@ -42,7 +41,6 @@
                     @endforeach
                 </div>
 
-                {{-- Totals --}}
                 <div class="mt-4 p-4 rounded-3 admin-item-row">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">{{ __('messages.subtotal') }}</span>
@@ -65,7 +63,6 @@
                 </div>
             </div>
 
-            {{-- Sidebar --}}
             <div class="col-lg-5">
                 <div class="p-4 rounded-4 admin-sidebar">
 

@@ -5,7 +5,6 @@
 @section('content')
     <div class="container-fluid mt-4">
         <div class="row">
-            <!-- Sidebar -->
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
@@ -41,9 +40,7 @@
                 </div>
             </div>
 
-            <!-- Main Content -->
             <div class="col-md-9">
-                <!-- Welcome Card -->
                 <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="card-title">
@@ -55,7 +52,6 @@
                     </div>
                 </div>
 
-                <!-- Quick Stats -->
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <div class="card text-center">
@@ -99,7 +95,6 @@
                     </div>
                 </div>
 
-                <!-- Recent Activity -->
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">
