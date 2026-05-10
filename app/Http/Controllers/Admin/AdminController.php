@@ -38,4 +38,15 @@ class AdminController extends Controller
 
         return view('admin.favorites.index', compact('products'));
     }
+
+    public function bestSellers()
+    {
+        $products = Product::withSum('orderItems as units_sold', 'quantity')
+            ->with('artist')
+            ->orderByDesc('units_sold')
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.best-sellers.index', compact('products'));
+    }
 }
