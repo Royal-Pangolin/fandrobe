@@ -81,7 +81,7 @@ Copy the example environment file and open it for editing:
 cp .env.example .env   # On Windows: copy .env.example .env
 ```
 
-Then update `.env` with your local settings. A typical configuration for XAMPP looks like this:
+A typical configuration for XAMPP looks like this:
 
 ```env
 APP_NAME=Fandrobe
@@ -152,6 +152,15 @@ VITE_APP_NAME="${APP_NAME}"
 ```
 
 > **Note:** XAMPP's default MySQL user is `root` with an empty password. If you have set a password, update `DB_PASSWORD` accordingly.
+
+
+**Then update `.env` with your local settings**. After copying `.env.example`, configure the Mailtrap credentials:
+
+```env
+MAIL_USERNAME=your-mailtrap-username
+MAIL_PASSWORD=your-mailtrap-password
+```
+
 
 Next, generate the application key:
 
