@@ -159,6 +159,12 @@ Next, generate the application key:
 php artisan key:generate
 ```
 
+Create the public storage symlink so uploaded files can be served correctly:
+
+```bash
+php artisan storage:link
+```
+
 ---
 
 ### :four: Set Up the Database
