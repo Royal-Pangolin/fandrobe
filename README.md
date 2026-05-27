@@ -84,10 +84,11 @@ cp .env.example .env   # On Windows: copy .env.example .env
 Then update `.env` with your local settings. A typical configuration for XAMPP looks like this:
 
 ```env
+APP_NAME=Fandrobe
 APP_ENV=local
-APP_KEY=base64:UaOXHUaOwowvzvzIzkvQLXj0LE3+pXE151Dvdx+pArg=
+APP_KEY=
 APP_DEBUG=true
-APP_URL=http://localhost/
+APP_URL=http://localhost
 
 APP_LOCALE=en
 APP_FALLBACK_LOCALE=en
@@ -95,7 +96,9 @@ APP_FAKER_LOCALE=en_US
 
 APP_MAINTENANCE_DRIVER=file
 APP_MAINTENANCE_STORE=database
+
 PHP_CLI_SERVER_WORKERS=4
+
 BCRYPT_ROUNDS=12
 
 LOG_CHANNEL=stack
@@ -122,6 +125,7 @@ QUEUE_CONNECTION=sync
 
 CACHE_STORE=database
 CACHE_PREFIX=
+
 MEMCACHED_HOST=127.0.0.1
 
 REDIS_CLIENT=phpredis
@@ -129,13 +133,13 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 
-MAIL_MAILER=log
+MAIL_MAILER=smtp
 MAIL_SCHEME=null
-MAIL_HOST=127.0.0.1
+MAIL_HOST=sandbox.smtp.mailtrap.io
 MAIL_PORT=2525
 MAIL_USERNAME=null
 MAIL_PASSWORD=null
-MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_ADDRESS="noreply@fandrobe.com"
 MAIL_FROM_NAME="${APP_NAME}"
 
 AWS_ACCESS_KEY_ID=
