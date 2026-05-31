@@ -5,24 +5,23 @@
 
     <form method="GET" action="{{ route('products.index') }}">
 
-    <div class="hero-gradient px-3 mb-5" style="padding-top: calc(76px + 32px);">
-        <div class="container-fluid px-4 px-lg-5 pb-5">
-            <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end justify-content-between gap-4">
+    <div class="relative px-4 lg:px-12 mb-12" style="padding-top: calc(76px + 32px);">
+        <div class="w-full pb-12">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
                 <div>
-                    <h1 class="text-shadow fw-bolder mb-2" style="font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: -0.03em; line-height: 1.05;">
+                    <h1 class="text-shadow font-extrabold mb-4 text-5xl lg:text-6xl tracking-tight leading-tight">
                         {{ __('messages.catalog_title') }}
                     </h1>
-                    <p class="text-shadow mb-0" style="opacity: 0.85;">
+                    <p class="text-shadow/80 mb-0 text-xl font-medium">
                         {{ __('messages.catalog_subtitle') }}
                     </p>
                 </div>
-                <div class="position-relative" style="width: 100%; max-width: 320px;">
+                <div class="relative w-full max-w-xs">
                     <input type="text" name="q" value="{{ request('q') }}"
-                           class="form-control rounded-pill py-3 px-4"
+                           class="w-full rounded-full py-3 px-6 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent bg-primary/90 backdrop-blur-sm text-shadow"
                            placeholder="{{ __('messages.search_placeholder') }}"
-                           style="background-color: rgba(247,241,231,0.9); border: none; backdrop-filter: blur(4px); padding-right: 3.5rem !important;">
-                    <button type="submit" class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-1"
-                            style="background: none; border: none; color: var(--color-secondary);">
+                           style="padding-right: 3.5rem;">
+                    <button type="submit" class="absolute top-1/2 right-2 -translate-y-1/2 p-2 text-secondary hover:text-accent transition-colors">
                         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
                         </svg>
@@ -32,62 +31,64 @@
         </div>
     </div>
 
-    <div class="container-fluid px-4 px-lg-5 pb-5">
-        <div class="row g-5">
+    <div class="w-full px-4 lg:px-12 pb-16">
+        <div class="flex flex-col md:flex-row gap-10">
 
-            <div class="col-md-3 col-lg-2">
-                <div class="p-4 rounded-3" style="background: rgba(30,28,25,0.04); position: sticky; top: 96px;">
-                    <h5 class="fw-bolder mb-4" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);">{{ __('messages.filters') }}</h5>
+            <!-- Sidebar Filters -->
+            <div class="w-full md:w-1/4 lg:w-1/5 shrink-0">
+                <div class="bg-shadow/5 p-6 rounded-2xl sticky top-24 border border-shadow/5">
+                    <h5 class="font-extrabold mb-6 text-xs uppercase tracking-widest text-muted">{{ __('messages.filters') }}</h5>
 
-                    <div class="mb-4">
-                        <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">{{ __('messages.categories') }}</span>
+                    <div class="mb-8">
+                        <span class="block font-bold mb-4 text-sm">{{ __('messages.categories') }}</span>
                         @foreach($categories as $category)
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox"
+                            <label class="flex items-center gap-3 mb-3 cursor-pointer group">
+                                <input type="checkbox"
                                        name="categories[]"
-                                       value="{{ $category->id }}" id="cat-{{ $category->id }}"
+                                       value="{{ $category->id }}"
                                        {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}
-                                       style="border-color: rgba(30,28,25,0.3);">
-                                <label class="form-check-label text-muted" for="cat-{{ $category->id }}"
-                                       style="font-size: 0.875rem;">
+                                       class="w-5 h-5 rounded border-shadow/30 text-accent focus:ring-accent bg-transparent cursor-pointer">
+                                <span class="text-muted text-sm group-hover:text-shadow transition-colors">
                                     {{ $category->translated_name }}
-                                </label>
-                            </div>
+                                </span>
+                            </label>
                         @endforeach
                     </div>
 
-                    <div class="mb-4">
-                        <span class="d-block fw-bold mb-3" style="font-size: 0.85rem;">{{ __('messages.max_price') }}</span>
-                        <input type="range" class="form-range"
+                    <div class="mb-8">
+                        <span class="block font-bold mb-4 text-sm">{{ __('messages.max_price') }}</span>
+                        <input type="range" 
                                name="price_max"
                                min="0" max="{{ $absoluteMax }}"
                                value="{{ request('price_max', $absoluteMax) }}"
                                id="priceRange"
+                               class="w-full h-2 bg-shadow/20 rounded-lg appearance-none cursor-pointer accent-accent"
                                oninput="document.getElementById('priceVal').textContent = this.value + '€'">
-                        <div class="d-flex justify-content-between text-muted mt-1" style="font-size: 0.8rem;">
+                        <div class="flex justify-between text-muted mt-2 text-xs">
                             <span>0€</span>
-                            <span id="priceVal" class="fw-bold" style="color: var(--color-shadow);">{{ request('price_max', $absoluteMax) }}€</span>
+                            <span id="priceVal" class="font-bold text-shadow">{{ request('price_max', $absoluteMax) }}€</span>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary fw-bold w-100" style="font-size: 0.85rem;">
+                    <button type="submit" class="w-full btn-primary py-3 text-sm">
                         {{ __('messages.apply_filters') }}
                     </button>
 
                     @if(request()->hasAny(['q', 'categories', 'price_max', 'sort']))
-                        <a href="{{ route('products.index') }}" class="btn btn-secondary fw-bold w-100 mt-2" style="font-size: 0.85rem;">
+                        <a href="{{ route('products.index') }}" class="block text-center w-full btn-secondary mt-3 py-3 text-sm">
                             {{ __('messages.clear_filters') }}
                         </a>
                     @endif
                 </div>
             </div>
 
-            <div class="col-md-9 col-lg-10">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <span class="text-muted" style="font-size: 0.875rem;">
-                        <span class="fw-bold text-dark">{{ $products->total() }}</span> {{ __('messages.products_found') }}
+            <!-- Products Grid -->
+            <div class="w-full md:w-3/4 lg:w-4/5">
+                <div class="flex justify-between items-center mb-8">
+                    <span class="text-muted text-sm font-medium">
+                        <span class="font-bold text-shadow">{{ $products->total() }}</span> {{ __('messages.products_found') }}
                     </span>
-                    <select name="sort" class="form-select rounded-pill fw-bold" style="max-width: 200px; font-size: 0.85rem;"
+                    <select name="sort" class="bg-primary border border-shadow/10 text-shadow text-sm rounded-full focus:ring-accent focus:border-accent block py-2.5 px-4 font-bold"
                             onchange="this.form.submit()">
                         <option value="featured" {{ request('sort', 'featured') === 'featured' ? 'selected' : '' }}>{{ __('messages.sort_featured') }}</option>
                         <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>{{ __('messages.sort_price_asc') }}</option>
@@ -96,48 +97,44 @@
                     </select>
                 </div>
 
-                <div class="row g-3 row-cols-2 row-cols-md-3 row-cols-xl-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
                     @forelse ($products as $product)
-                        <div class="col">
-                            <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
-                                <div class="card h-100">
-                                    <div class="card-img-wrapper">
-                                        @if($product->images && $product->images->count() > 0)
-                                            @php $imgUrl = $product->images->first()->url; @endphp
-                                            <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                                 alt="{{ $product->translated_name }}" class="card-img-top">
-                                        @else
-                                            <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
-                                                <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                            </div>
-                                        @endif
-                                        <button class="card-action-btn">
-                                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-
-                                    <span class="mt-2 d-block text-muted"
-                                          style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">
-                                        {{ $product->artist->name ?? __('messages.official_artist') }}
-                                    </span>
-                                    <h5 class="card-title">{{ $product->translated_name }}</h5>
-                                    <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
+                        <a href="{{ route('products.show', $product->id) }}" class="group block">
+                            <div class="bg-shadow/5 rounded-2xl p-4 h-full card-hover border border-shadow/5">
+                                <div class="relative rounded-xl overflow-hidden aspect-square mb-4 shadow-sm group-hover:shadow-md transition-all">
+                                    @if($product->images && $product->images->count() > 0)
+                                        @php $imgUrl = $product->images->first()->url; @endphp
+                                        <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
+                                             alt="{{ $product->translated_name }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                    @else
+                                        <div class="w-full h-full bg-shadow/10 flex items-center justify-center text-shadow/40">
+                                            <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        </div>
+                                    @endif
+                                    <button class="absolute bottom-3 right-3 w-10 h-10 bg-accent text-shadow rounded-full flex items-center justify-center shadow-md opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:scale-110">
+                                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                            </a>
-                        </div>
+                                <span class="block text-muted text-xs font-bold uppercase tracking-widest mb-1">
+                                    {{ $product->artist->name ?? __('messages.official_artist') }}
+                                </span>
+                                <h5 class="font-bold text-shadow text-base mb-1 line-clamp-1">{{ $product->translated_name }}</h5>
+                                <span class="font-extrabold text-shadow">€{{ number_format($product->base_price, 2) }}</span>
+                            </div>
+                        </a>
                     @empty
-                        <div class="col-12 text-center text-muted py-5">
-                            <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="mb-3 opacity-25"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <h5 class="fw-bold">{{ __('messages.no_products_available') }}</h5>
-                            <p class="small">{{ __('messages.try_change_filters') }}</p>
+                        <div class="col-span-full text-center text-muted py-16 bg-shadow/5 rounded-2xl border border-shadow/10 border-dashed">
+                            <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="mx-auto mb-4 opacity-25"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h5 class="font-bold text-xl mb-2">{{ __('messages.no_products_available') }}</h5>
+                            <p class="text-sm">{{ __('messages.try_change_filters') }}</p>
                         </div>
                     @endforelse
                 </div>
 
                 @if($products->hasPages())
-                    <div class="mt-5 d-flex justify-content-center">
+                    <div class="mt-12 flex justify-center">
                         {{ $products->links() }}
                     </div>
                 @endif
