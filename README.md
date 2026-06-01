@@ -2,12 +2,12 @@
 
 - [:clipboard: Project Summary](#clipboard-project-summary)
 - [:wrench: Installation](#wrench-installation)
-  - [:zero: Prerequisites](#zero-prerequisites)
-  - [:one: Clone the Repository](#one-clone-the-repository)
-  - [:two: Setup the Project](#two-setup-the-project)
-  - [:three: Run the Application](#three-run-the-application)
-  - [:four: Access the App](#four-access-the-app)
-  - [:five: Stop the Application](#five-stop-the-application)
+    - [:zero: Prerequisites](#zero-prerequisites)
+    - [:one: Clone the Repository](#one-clone-the-repository)
+    - [:two: Setup the Project](#two-setup-the-project)
+    - [:three: Run the Application](#three-run-the-application)
+    - [:four: Access the App](#four-access-the-app)
+    - [:five: Stop the Application](#five-stop-the-application)
 
 ### :busts_in_silhouette: Authors
 
@@ -28,7 +28,6 @@ Users can buy items with designs by their favorite artists, complete with a sign
 **Example**: As a painter, your painting might cost €10,000. A fan who follows you on social media loves your work but can't afford the original. You offer official merchandise like a phone case with your painting's design and your signature. The fan buys it, supporting you while getting an affordable piece of your art.
 
 This project was developed as an assignment for the **Advanced Development Technologies (TAD)** course in our Bachelor's Degree program.
-
 
 ---
 
@@ -120,21 +119,25 @@ docker compose up -d
 Then in separate terminals, run:
 
 **Terminal 1 - Vite development server (asset compilation with HMR)**:
+
 ```bash
 docker compose exec app npm run dev
 ```
 
 **Terminal 2 - Laravel development server**:
+
 ```bash
 docker compose exec app php artisan serve
 ```
 
 **Terminal 3 - Queue worker (for async jobs like emails)**:
+
 ```bash
 docker compose exec app php artisan queue:listen --tries=1 --timeout=0
 ```
 
 **Alternative - Run everything at once** (if you have `npm i -g concurrently` installed):
+
 ```bash
 docker compose exec app composer run dev
 ```
@@ -142,6 +145,7 @@ docker compose exec app composer run dev
 ### :four: Access the App
 
 Open your browser and navigate to:
+
 - **App**: [http://localhost:8000](http://localhost:8000)
 - **phpMyAdmin** (database UI): [http://localhost:8080](http://localhost:8080)
 
@@ -158,6 +162,7 @@ docker compose down
 ```
 
 To also remove volumes (database data):
+
 ```bash
 docker compose down -v
 ```
