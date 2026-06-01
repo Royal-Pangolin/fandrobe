@@ -3,31 +3,31 @@
 @section('title', 'Panel de Control - Fandrobe')
 
 @section('content')
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0">
-                            <i class="fas fa-tachometer-alt me-2"></i>Panel de Control
+    <div class="w-full mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="md:col-span-1">
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <div class="bg-blue-600 text-white p-4">
+                        <h5 class="font-bold mb-0">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Panel de Control
                         </h5>
                     </div>
-                    <div class="card-body">
-                        <nav class="nav flex-column">
-                            <a class="nav-link active" href="{{ route('dashboard') }}">
-                                <i class="fas fa-home me-2"></i>Inicio
+                    <div class="p-4">
+                        <nav class="flex flex-col space-y-2">
+                            <a class="block font-medium active" href="{{ route('dashboard') }}">
+                                <i class="fas fa-home mr-2"></i>Inicio
                             </a>
-                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                <i class="fas fa-user me-2"></i>Mi Perfil
+                            <a class="block font-medium" href="{{ route('profile.edit') }}">
+                                <i class="fas fa-user mr-2"></i>Mi Perfil
                             </a>
-                            <a class="nav-link" href="{{ route('cart.index') }}">
-                                <i class="fas fa-shopping-cart me-2"></i>Mi Carrito
+                            <a class="block font-medium" href="{{ route('cart.index') }}">
+                                <i class="fas fa-shopping-cart mr-2"></i>Mi Carrito
                             </a>
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-heart me-2"></i>Favoritos
+                            <a class="block font-medium" href="#">
+                                <i class="fas fa-heart mr-2"></i>Favoritos
                             </a>
-                            <a class="nav-link" href="#">
-                                <i class="fas fa-shopping-bag me-2"></i>Mis Pedidos
+                            <a class="block font-medium" href="#">
+                                <i class="fas fa-shopping-bag mr-2"></i>Mis Pedidos
                             </a>
                             @if (Auth::user()->role_id == 1)
                                 <hr>

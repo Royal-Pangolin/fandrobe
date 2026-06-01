@@ -3,52 +3,56 @@
 
 @section('content')
 
-<div class="container-fluid px-4 px-lg-5 py-5">
-    <div class="navbar-spacer"></div>
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
+    <div class=\"w-full px-4 md:px-6 py-5\">
+        <div class=\"navbar-spacer\"></div>
+        <div class=\"flex justify-center\">
+            <div class=\"w-full md:w-6/12 lg:w-5/12\">
 
-            <div class="text-center mb-5">
-                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(110,117,86,0.12); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-                    <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #6e7556;">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                    </svg>
+                <div class="text-center mb-5">
+                    <div
+                        style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(110,117,86,0.12); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            style="color: #6e7556;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h1 class=\"font-bold mb-2 text-tighter\">{{ __('messages.verify_title') }}</h1>
+                    <p class=\"text-gray-500\">
+                        {{ __('messages.verify_text') }}
+                    </p>
                 </div>
-                <h1 class="fw-bolder mb-2 text-tighter">{{ __('messages.verify_title') }}</h1>
-                <p class="text-muted">
-                    {{ __('messages.verify_text') }}
-                </p>
-            </div>
 
-            @if (session('status') == 'verification-link-sent')
-                <div class="alert alert-success text-center" role="alert">
-                    {{ __('messages.verify_link_sent') }}
+                @if (session('status') == 'verification-link-sent')
+                    <div class="alert alert-success text-center" role="alert">
+                        {{ __('messages.verify_link_sent') }}
+                    </div>
+                @endif
+
+                <div class="panel p-4 rounded-4 text-center">
+                    <p class="text-muted small mb-3">
+                        {{ __('messages.verify_not_received') }}
+                    </p>
+                    <form method="POST" action="{{ route('verification.send') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary fw-bold w-100">
+                            {{ __('messages.verify_resend_btn') }}
+                        </button>
+                    </form>
                 </div>
-            @endif
 
-            <div class="panel p-4 rounded-4 text-center">
-                <p class="text-muted small mb-3">
-                    {{ __('messages.verify_not_received') }}
-                </p>
-                <form method="POST" action="{{ route('verification.send') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-primary fw-bold w-100">
-                        {{ __('messages.verify_resend_btn') }}
-                    </button>
-                </form>
+                <div class="text-center mt-4">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-muted text-decoration-none fw-bold">
+                            {{ __('messages.nav_logout') }}
+                        </button>
+                    </form>
+                </div>
+
             </div>
-
-            <div class="text-center mt-4">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-link text-muted text-decoration-none fw-bold">
-                        {{ __('messages.nav_logout') }}
-                    </button>
-                </form>
-            </div>
-
         </div>
     </div>
-</div>
 
 @endsection

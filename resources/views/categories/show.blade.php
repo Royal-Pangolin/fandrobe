@@ -3,93 +3,104 @@
 
 @section('content')
 
-    <div class="position-relative overflow-hidden"
-         style="height: 40vh; min-height: 300px; margin-top: -76px;
-                background-color: {{ ['#4B352A','#2A3B4B','#3B4B2A','#4B2A3B','#2A4B3B'][$category->id % 5] }};">
+    <div class="relative overflow-hidden"
+        style="height: 40vh; min-height: 300px; margin-top: -76px;
+                background-color: {{ ['#4B352A', '#2A3B4B', '#3B4B2A', '#4B2A3B', '#2A4B3B'][$category->id % 5] }};">
 
-        <div class="category-letter position-absolute top-50 start-50 translate-middle text-white"
-             style="font-size: 40vw;">
+        <div class="category-letter absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white"
+            style="font-size: 40vw;">
             {{ substr($category->translated_name, 0, 1) }}
         </div>
 
-        <div class="hero-fade position-absolute top-0 start-0 w-100 h-100"></div>
+        <div class="hero-fade absolute top-0 left-0 w-full h-full"></div>
 
-        <div class="container-fluid px-4 px-lg-5 position-relative h-100 d-flex flex-column justify-content-end pb-4">
+        <div class="w-full px-4 md:px-6 relative h-full flex flex-col justify-end pb-4">
             <nav aria-label="breadcrumb" class="mb-2">
-                <ol class="breadcrumb breadcrumb-nav mb-0" style="opacity: 0.7;">
+                <ol class="flex gap-2 mb-0" style="opacity: 0.7;">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('categories.index') }}" class="text-white text-decoration-none">{{ __('messages.disciplines_breadcrumb') }}</a>
+                        <a href="{{ route('categories.index') }}"
+                            class="text-white text-decoration-none">{{ __('messages.disciplines_breadcrumb') }}</a>
                     </li>
-                    <li class="breadcrumb-item active text-white fw-bold" aria-current="page">{{ $category->translated_name }}</li>
+                    <li class="breadcrumb-item active text-white font-bold" aria-current="page">
+                        {{ $category->translated_name }}</li>
                 </ol>
             </nav>
 
-            <div class="d-flex align-items-end justify-content-between">
-                <h1 class="artist-hero-title fw-bolder text-white mb-0">{{ $category->translated_name }}</h1>
-                <span class="text-white fw-bold mb-2 opacity-75">{{ $products->count() }} {{ __('messages.works') }}</span>
+            <div class="flex items-end justify-between">
+                <h1 class="artist-hero-title font-bold text-white mb-0">{{ $category->translated_name }}</h1>
+                <span class="text-white font-bold mb-2 opacity-75">{{ $products->count() }}
+                    {{ __('messages.works') }}</span>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid px-4 px-lg-5 py-4 pb-5">
+    <div class="w-full px-4 md:px-6 py-4 pb-5">
 
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-5 gap-3">
-            <p class="text-muted mb-0 lh-lg" style="max-width: 500px;">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-5 gap-3">
+            <p class="text-gray-500 mb-0 leading-relaxed" style="max-width: 500px;">
                 {{ $category->description ?? __('messages.welcome_collection') }}
             </p>
-            <select class="form-select rounded-pill fw-bold" style="max-width: 220px; font-size: 0.85rem;">
+            <select class="rounded-full font-bold border border-gray-300 px-4 py-2"
+                style="max-width: 220px; font-size: 0.85rem;">
                 <option>{{ __('messages.sort_featured') }}</option>
                 <option>{{ __('messages.sort_price_asc') }}</option>
                 <option>{{ __('messages.sort_price_desc') }}</option>
             </select>
         </div>
 
-        <div class="row g-4 row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             @forelse ($products as $product)
-                <div class="col">
+                <div class="">
                     <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
-                        <div class="card h-100 position-relative">
+                        <div class="h-full relative">
 
-                            @if($loop->first)
-                                <span class="badge badge-limited badge-sm position-absolute m-2"
-                                      style="top: 0; left: 0; z-index: 2;">{{ __('messages.highlight') }}</span>
+                            @if ($loop->first)
+                                <span class="badge badge-limited badge-sm absolute m-2"
+                                    style="top: 0; left: 0; z-index: 2;">{{ __('messages.highlight') }}</span>
                             @endif
 
                             <div class="card-img-wrapper">
-                                @if($product->images && $product->images->count() > 0)
+                                @if ($product->images && $product->images->count() > 0)
                                     @php $imgUrl = $product->images->first()->url; @endphp
                                     <img src="{{ filter_var($imgUrl, FILTER_VALIDATE_URL) ? $imgUrl : asset('storage/' . $imgUrl) }}"
-                                         alt="{{ $product->translated_name }}" class="card-img-top">
+                                        alt="{{ $product->translated_name }}" class="card-img-top">
                                 @else
-                                    <div class="card-img-top bg-dark d-flex align-items-center justify-content-center text-secondary">
-                                        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <div class="card-img-top bg-gray-900 flex items-center justify-center text-gray-500">
+                                        <svg width="40" height="40" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                     </div>
                                 @endif
                                 <button class="card-action-btn">
-                                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                    <svg width="22" height="22" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </button>
                             </div>
 
-                            <span class="label-xs text-muted mt-2 d-block">
+                            <span class="label-xs text-gray-500 mt-2 block">
                                 {{ $product->artist->name ?? __('messages.official_artist') }}
                             </span>
                             <h5 class="card-title">{{ $product->translated_name }}</h5>
-                            <span class="fw-bold" style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
+                            <span class="font-bold"
+                                style="font-size: 0.9rem;">€{{ number_format($product->base_price, 2) }}</span>
                         </div>
                     </a>
                 </div>
             @empty
-                <div class="col-12 text-center text-muted py-5">
+                <div class="col-span-full text-center text-gray-500 py-5">
                     <h4>{{ __('messages.no_works_category') }}</h4>
                 </div>
             @endforelse
         </div>
 
-        @if($products->count() >= 12)
-            <div class="mt-5 d-flex justify-content-center">
-                <button class="btn btn-outline-secondary rounded-pill fw-bold px-5 py-3">
+        @if ($products->count() >= 12)
+            <div class="mt-5 flex justify-center">
+                <button class="btn-secondary rounded-full font-bold px-5 py-3">
                     {{ __('messages.load_more') }}
                 </button>
             </div>

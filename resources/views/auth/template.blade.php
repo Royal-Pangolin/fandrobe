@@ -8,8 +8,6 @@
 
     <title>@yield('title', 'Fandrobe - Panel de Usuario')</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -61,7 +59,8 @@
             box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
 
-        .form-control:focus {
+        input:focus,
+        textarea:focus {
             border-color: #4CAF50;
             box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
         }
@@ -106,8 +105,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
