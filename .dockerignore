@@ -1,0 +1,43 @@
+# Dependencias de Node (voluminosas, no hacen falta en la imagen)
+node_modules
+
+# Build de assets compilados por Vite (se generan dentro del contenedor)
+public/hot
+public/build
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Cache y logs locales
+storage/logs/*.log
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*.php
+
+# Archivos de desarrollo y documentación
+*.md
+.editorconfig
+.styleci.yml
+phpunit.xml
+.phpunit.result.cache
+
+# Docker (no copiar los propios ficheros de docker dentro del contexto de build)
+docker-compose*.yml
+docker/web
+
+# Tests
+tests/
+
+# IDE y OS
+.idea
+.vscode
+*.DS_Store
+Thumbs.db
+
+# Variables de entorno locales (se inyectan en docker-compose)
+.env
+.env.*
+!.env.example
