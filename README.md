@@ -173,6 +173,8 @@ docker compose down -v
 - **Logs file permissions**: If you see permission errors writing to `storage/logs/laravel.log`, run the permissions fix from step 8
 - **Vite assets**: The Vite dev server must be running for CSS/JS changes to reflect in real-time
 - **Queue worker**: Long-running tasks (like sending emails) won't process unless the queue worker is running
+- **Cache invalidation**: After changing `.env`, adding routes, or modifying config files, always run `docker compose exec app php artisan optimize:clear` followed by `php artisan optimize`
+- **Docker on Windows performance**: The `php artisan optimize` step (step 10) is critical for acceptable page load speeds on Windows due to bind-mount I/O overhead
 
 ---
 
