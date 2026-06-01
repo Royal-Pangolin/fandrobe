@@ -2,112 +2,117 @@
 @section('title', __('messages.edit_product') . ' — Admin')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-12">
-        <a href="{{ route('admin.productos.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-muted hover:text-shadow transition-colors uppercase tracking-widest mb-4">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            {{ __('messages.products') }}
-        </a>
-        <h1 class="text-4xl font-extrabold text-shadow tracking-tight">{{ __('messages.edit_product') ?? 'Editar producto' }}</h1>
-    </div>
+<div class="container-fluid px-4 px-lg-5 py-5">
+    <div class="admin-container-sm">
 
-    @if($errors->any())
-        <div class="bg-error/20 border border-error text-error px-6 py-4 rounded-2xl mb-8 shadow-sm">
-            <ul class="list-disc list-inside font-bold">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="mb-5">
+            <a href="{{ route('admin.productos.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
+                ← {{ __('messages.products') }}
+            </a>
+            <h1 class="fw-bolder mb-0">{{ __('messages.edit_product') }}</h1>
         </div>
-    @endif
 
-    <div class="bg-shadow/5 border border-shadow/5 p-8 rounded-3xl">
-        <form action="{{ route('admin.productos.update', $product->id) }}" method="POST" class="space-y-6">
+        @if($errors->any())
+            <div class="alert alert-admin-error rounded-3 mb-4">
+                <ul class="mb-0 ps-3">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('admin.productos.update', $product->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div>
-                <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">{{ __('messages.name') }} *</label>
-                <input type="text" name="name" value="{{ old('name', $product->name) }}"
-                       class="w-full bg-primary border @error('name') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold"
-                       required>
-                @error('name')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-            </div>
+            <div class="d-flex flex-column gap-4">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">{{ __('messages.artist_label') }} *</label>
-                    <select name="artist_id" class="w-full bg-primary border @error('artist_id') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold" required>
-                        @foreach($artists as $artist)
-                            <option value="{{ $artist->id }}"
-                                {{ old('artist_id', $product->artist_id) == $artist->id ? 'selected' : '' }}>
-                                {{ $artist->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('artist_id')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">{{ __('messages.categories') }} *</label>
-                    <div class="p-4 rounded-xl border @error('categories') border-error @else border-shadow/20 @enderror bg-primary/50 max-h-48 overflow-y-auto space-y-2">
-                        @foreach($categories as $category)
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                                       class="w-5 h-5 rounded border-shadow/30 text-accent focus:ring-accent focus:ring-offset-primary bg-primary transition-colors cursor-pointer"
-                                       {{ in_array($category->id, old('categories', $selectedCategories)) ? 'checked' : '' }}>
-                                <span class="text-sm font-bold text-shadow group-hover:text-accent transition-colors">
-                                    {{ $category->translated_name }}
-                                </span>
-                            </label>
-                        @endforeach
-                    </div>
-                    @error('categories')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">{{ __('messages.description') }}</label>
-                <textarea name="description" rows="4"
-                          class="w-full bg-primary border @error('description') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold">{{ old('description', $product->description) }}</textarea>
-                @error('description')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">{{ __('messages.base_price') }} *</label>
-                    <input type="number" name="base_price" value="{{ old('base_price', $product->base_price) }}"
-                           step="0.01" min="0"
-                           class="w-full bg-primary border @error('base_price') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold"
+                    <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.name') }} *</label>
+                    <input type="text" name="name" value="{{ old('name', $product->name) }}"
+                           class="form-control rounded-pill @error('name') is-invalid @enderror"
                            required>
-                    @error('base_price')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
+                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.artist_label') }} *</label>
+                        <select name="artist_id" class="form-select rounded-pill @error('artist_id') is-invalid @enderror" required>
+                            @foreach($artists as $artist)
+                                <option value="{{ $artist->id }}"
+                                    {{ old('artist_id', $product->artist_id) == $artist->id ? 'selected' : '' }}>
+                                    {{ $artist->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('artist_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.categories') }} *</label>
+                        <div class="p-3 rounded-3 border @error('categories') border-danger @enderror">
+                            @foreach($categories as $category)
+                                <div class="form-check">
+                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                           id="cat-{{ $category->id }}"
+                                           class="form-check-input admin-checkbox"
+                                           {{ in_array($category->id, old('categories', $selectedCategories)) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="cat-{{ $category->id }}">
+                                        {{ $category->translated_name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        @error('categories')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                    </div>
+                </div>
+
                 <div>
-                    <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">SKU</label>
-                    <input type="text" name="sku" value="{{ old('sku', $product->sku) }}"
-                           class="w-full bg-primary border @error('sku') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold">
-                    @error('sku')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
+                    <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.description') }}</label>
+                    <textarea name="description" rows="4"
+                              class="form-control rounded-3 @error('description') is-invalid @enderror">{{ old('description', $product->description) }}</textarea>
+                    @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-            </div>
 
-            <div class="bg-shadow/5 p-4 rounded-xl flex items-center gap-3 cursor-pointer group" onclick="document.getElementById('is_active').click();">
-                <input type="hidden" name="is_active" value="0">
-                <input type="checkbox" name="is_active" value="1" id="is_active"
-                       class="w-5 h-5 rounded border-shadow/30 text-accent focus:ring-accent focus:ring-offset-primary bg-primary transition-colors cursor-pointer"
-                       {{ old('is_active', $product->is_active) ? 'checked' : '' }} onclick="event.stopPropagation();">
-                <label for="is_active" class="text-sm font-bold text-shadow group-hover:text-accent transition-colors cursor-pointer" onclick="event.stopPropagation();">{{ __('messages.active_product') ?? 'Producto activo' }}</label>
-            </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-uppercase admin-form-label">{{ __('messages.base_price') }} *</label>
+                        <input type="number" name="base_price" value="{{ old('base_price', $product->base_price) }}"
+                               step="0.01" min="0"
+                               class="form-control rounded-pill @error('base_price') is-invalid @enderror"
+                               required>
+                        @error('base_price')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-uppercase admin-form-label">SKU</label>
+                        <input type="text" name="sku" value="{{ old('sku', $product->sku) }}"
+                               class="form-control rounded-pill @error('sku') is-invalid @enderror">
+                        @error('sku')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-shadow/10">
-                <button type="submit" class="btn-primary py-3 px-8 text-center">
-                    {{ __('messages.save_changes') ?? 'Guardar cambios' }}
-                </button>
-                <a href="{{ route('admin.productos.index') }}" class="inline-flex items-center justify-center px-8 py-3 border-2 border-shadow/20 rounded-full text-sm font-bold text-shadow hover:bg-shadow/5 hover:border-shadow/40 transition-all text-center">
-                    {{ __('messages.cancel') ?? 'Cancelar' }}
-                </a>
-            </div>
+                <div class="d-flex align-items-center gap-3 p-3 rounded-3 admin-checkbox-row">
+                    <input type="hidden" name="is_active" value="0">
+                    <input type="checkbox" name="is_active" value="1" id="is_active"
+                           class="form-check-input admin-checkbox"
+                           {{ old('is_active', $product->is_active) ? 'checked' : '' }}>
+                    <label for="is_active" class="form-check-label fw-bold">{{ __('messages.active_product') }}</label>
+                </div>
 
+                <div class="d-flex gap-3 pt-2">
+                    <button type="submit" class="btn btn-primary fw-bold px-5 admin-btn-submit">
+                        {{ __('messages.save_changes') }}
+                    </button>
+                    <a href="{{ route('admin.productos.index') }}"
+                       class="btn fw-bold px-4 btn-admin-ghost admin-btn-submit">
+                        {{ __('messages.cancel') }}
+                    </a>
+                </div>
+
+            </div>
         </form>
+
     </div>
 </div>
 @endsection

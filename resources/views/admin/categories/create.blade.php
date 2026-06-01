@@ -2,68 +2,73 @@
 @section('title', 'Nueva Categoría — Admin')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-12">
-        <a href="{{ route('admin.categorias.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-muted hover:text-shadow transition-colors uppercase tracking-widest mb-4">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            Categorías
-        </a>
-        <h1 class="text-4xl font-extrabold text-shadow tracking-tight">Nueva Categoría</h1>
-    </div>
+<div class="container-fluid px-4 px-lg-5 py-5">
+    <div class="admin-container-sm">
 
-    @if($errors->any())
-        <div class="bg-error/20 border border-error text-error px-6 py-4 rounded-2xl mb-8 shadow-sm">
-            <ul class="list-disc list-inside font-bold">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="mb-5">
+            <a href="{{ route('admin.categorias.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
+                ← Categorías
+            </a>
+            <h1 class="fw-bolder mb-0">Nueva Categoría</h1>
         </div>
-    @endif
 
-    <div class="bg-shadow/5 border border-shadow/5 p-8 rounded-3xl">
-        <form action="{{ route('admin.categorias.store') }}" method="POST" class="space-y-6">
+        @if($errors->any())
+            <div class="alert alert-admin-error rounded-3 mb-4">
+                <ul class="mb-0 ps-3">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('admin.categorias.store') }}" method="POST">
             @csrf
 
-            <div>
-                <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">Nombre *</label>
-                <input type="text" name="name" value="{{ old('name') }}"
-                       class="w-full bg-primary border @error('name') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold"
-                       placeholder="Nombre de la categoría" required>
-                @error('name')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-            </div>
+            <div class="d-flex flex-column gap-4">
 
-            <div>
-                <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">Categoría padre</label>
-                <select name="parent_id" class="w-full bg-primary border @error('parent_id') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold">
-                    <option value="">Sin categoría padre</option>
-                    @foreach($parents as $parent)
-                        <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
-                            {{ $parent->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('parent_id')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-            </div>
+                <div>
+                    <label class="form-label fw-bold small text-uppercase admin-form-label">Nombre *</label>
+                    <input type="text" name="name" value="{{ old('name') }}"
+                           class="form-control rounded-pill @error('name') is-invalid @enderror"
+                           placeholder="Nombre de la categoría" required>
+                    @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
 
-            <div>
-                <label class="block text-xs font-bold text-muted uppercase tracking-widest mb-2">URL de imagen</label>
-                <input type="url" name="image_url" value="{{ old('image_url') }}"
-                       class="w-full bg-primary border @error('image_url') border-error @else border-shadow/20 @enderror text-shadow text-sm rounded-xl focus:ring-2 focus:ring-accent focus:border-accent block p-3 font-bold"
-                       placeholder="https://...">
-                @error('image_url')<p class="mt-2 text-sm text-error font-medium">{{ $message }}</p>@enderror
-            </div>
+                <div>
+                    <label class="form-label fw-bold small text-uppercase admin-form-label">Categoría padre</label>
+                    <select name="parent_id" class="form-select rounded-pill @error('parent_id') is-invalid @enderror">
+                        <option value="">Sin categoría padre</option>
+                        @foreach($parents as $parent)
+                            <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
+                                {{ $parent->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('parent_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-shadow/10">
-                <button type="submit" class="btn-primary py-3 px-8 text-center">
-                    Crear categoría
-                </button>
-                <a href="{{ route('admin.categorias.index') }}" class="inline-flex items-center justify-center px-8 py-3 border-2 border-shadow/20 rounded-full text-sm font-bold text-shadow hover:bg-shadow/5 hover:border-shadow/40 transition-all text-center">
-                    Cancelar
-                </a>
-            </div>
+                <div>
+                    <label class="form-label fw-bold small text-uppercase admin-form-label">URL de imagen</label>
+                    <input type="url" name="image_url" value="{{ old('image_url') }}"
+                           class="form-control rounded-pill @error('image_url') is-invalid @enderror"
+                           placeholder="https://...">
+                    @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
 
+                <div class="d-flex gap-3 pt-2">
+                    <button type="submit" class="btn btn-primary fw-bold px-5 admin-btn-submit">
+                        Crear categoría
+                    </button>
+                    <a href="{{ route('admin.categorias.index') }}"
+                       class="btn fw-bold px-4 btn-admin-ghost admin-btn-submit">
+                        Cancelar
+                    </a>
+                </div>
+
+            </div>
         </form>
+
     </div>
 </div>
 @endsection

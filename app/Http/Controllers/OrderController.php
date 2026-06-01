@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Jobs\ProcessOrderConfirmation;
 use App\Models\OrderStatus;
 use App\Models\ShoppingCart;
 use App\Models\Discount;
@@ -81,12 +80,8 @@ class OrderController extends Controller
             $shippingAmount = 4.99;
             $total = max(0, $subtotal - $discountAmount) + $shippingAmount;
 
-            $address = auth()->user()->addresses()->where('is_default', true)->first()
-                       ?? auth()->user()->addresses()->first();
-
             $order = Order::create([
                 'user_id'         => auth()->id(),
-                'address_id'      => $address ? $address->id : null,
                 'status_id'       => $status->id,
                 'discount_id'     => $discountId,
                 'currency'        => 'EUR',
@@ -118,7 +113,10 @@ class OrderController extends Controller
 
             DB::commit();
 
-            ProcessOrderConfirmation::dispatch($order->id);
+            Mail::to($order->user->email)
+                ->send(new \App\Mail\OrderConfirmationMail(
+                    $order->load('items.product', 'items.variant', 'status', 'address', 'user')
+                ));
 
             return redirect()->route('orders.show', $order->id)
                              ->with('mensaje', __('messages.order_success'));

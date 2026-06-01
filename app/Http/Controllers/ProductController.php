@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\ProductViewLog;
 
 class ProductController extends Controller
 {
@@ -45,18 +44,6 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::with(['variants', 'images', 'artist', 'reviews', 'categories'])->findOrFail($id);
-
-        try {
-            ProductViewLog::create([
-                'product_id' => $product->id,
-                'user_id'    => auth()->id(),
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->userAgent(),
-                'viewed_at'  => now()
-            ]);
-        } catch (\Exception $e) {
-            // Ignorar error si mongo no está disponible para no romper la navegación
-        }
 
         return view('products.show', compact('product'));
     }

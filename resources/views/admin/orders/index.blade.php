@@ -2,82 +2,70 @@
 @section('title', __('messages.orders') . ' — Admin')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-12">
-        <a href="{{ route('admin.index') }}" class="inline-flex items-center gap-2 text-sm font-bold text-muted hover:text-shadow transition-colors uppercase tracking-widest mb-4">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            {{ __('messages.panel') }}
-        </a>
-        <h1 class="text-4xl font-extrabold text-shadow tracking-tight">{{ __('messages.orders') }}</h1>
-    </div>
+<div class="container-fluid px-4 px-lg-5 py-5">
+    <div class="admin-container">
 
-    @if(session('mensaje'))
-        <div class="bg-verified/20 border border-verified text-verified px-6 py-4 rounded-2xl mb-8 font-bold shadow-sm">
-            {{ session('mensaje') }}
+        <div class="d-flex align-items-end justify-content-between mb-5">
+            <div>
+                <a href="{{ route('admin.index') }}" class="text-decoration-none text-muted small fw-bold d-inline-flex align-items-center gap-1 mb-2">
+                    ← {{ __('messages.panel') }}
+                </a>
+                <h1 class="fw-bolder mb-0">{{ __('messages.orders') }}</h1>
+            </div>
         </div>
-    @endif
-    @if(session('error'))
-        <div class="bg-error/20 border border-error text-error px-6 py-4 rounded-2xl mb-8 font-bold shadow-sm">
-            {{ session('error') }}
-        </div>
-    @endif
 
-    <div class="bg-shadow/5 border border-shadow/5 rounded-3xl overflow-hidden shadow-sm">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left whitespace-nowrap">
-                <thead class="bg-shadow/5 border-b border-shadow/10">
+        @if(session('mensaje'))
+            <div class="alert alert-admin-success rounded-3 mb-4">{{ session('mensaje') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-admin-error rounded-3 mb-4">{{ session('error') }}</div>
+        @endif
+
+        <div class="admin-table-wrapper rounded-4 overflow-hidden">
+            <table class="table mb-0 admin-table">
+                <thead class="admin-thead">
                     <tr>
-                        <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-widest w-16">#</th>
-                        <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-widest">{{ __('messages.customer') }}</th>
-                        <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-widest">{{ __('messages.total') }}</th>
-                        <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-widest">{{ __('messages.status') }}</th>
-                        <th class="px-6 py-4 text-xs font-bold text-muted uppercase tracking-widest">{{ __('messages.date') }}</th>
-                        <th class="px-6 py-4"></th>
+                        <th class="fw-bold px-4 py-3">#</th>
+                        <th class="fw-bold py-3">{{ __('messages.customer') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.total') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.status') }}</th>
+                        <th class="fw-bold py-3">{{ __('messages.date') }}</th>
+                        <th class="fw-bold py-3"></th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-shadow/10">
+                <tbody>
                     @forelse($orders as $order)
-                        <tr class="hover:bg-shadow/5 transition-colors">
-                            <td class="px-6 py-4 text-sm font-extrabold text-muted">
-                                {{ $order->id }}
+                        <tr class="admin-tr">
+                            <td class="px-4 py-3 fw-bold text-muted">{{ $order->id }}</td>
+                            <td class="py-3">
+                                {{ $order->user->first_name }} {{ $order->user->last_name }}
+                                <span class="d-block text-muted admin-email-small">{{ $order->user->email }}</span>
                             </td>
-                            <td class="px-6 py-4">
-                                <p class="text-sm font-extrabold text-shadow">{{ $order->user->first_name }} {{ $order->user->last_name }}</p>
-                                <p class="text-xs text-muted">{{ $order->user->email }}</p>
-                            </td>
-                            <td class="px-6 py-4 text-sm font-extrabold text-shadow">
-                                €{{ number_format($order->total_amount, 2) }}
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-shadow/10 text-shadow">
+                            <td class="py-3 fw-bold">€{{ number_format($order->total_amount, 2) }}</td>
+                            <td class="py-3">
+                                <span class="badge rounded-pill fw-semibold px-3 py-2 badge-admin-status">
                                     {{ $order->status->name ?? '—' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm font-bold text-muted">
-                                {{ \Carbon\Carbon::parse($order->placed_at)->format('d/m/Y') }}
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <a href="{{ route('admin.pedidos.show', $order->id) }}" class="inline-flex items-center justify-center px-4 py-2 border-2 border-shadow/20 rounded-full text-sm font-bold text-shadow hover:bg-shadow/5 hover:border-shadow/40 transition-all">
+                            <td class="py-3 text-muted">{{ \Carbon\Carbon::parse($order->placed_at)->format('d/m/Y') }}</td>
+                            <td class="py-3">
+                                <a href="{{ route('admin.pedidos.show', $order->id) }}"
+                                   class="btn btn-sm fw-bold px-3 btn-admin-ghost">
                                     {{ __('messages.view') }}
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-muted font-medium">
-                                {{ __('messages.no_orders_registered') }}
-                            </td>
+                            <td colspan="6" class="text-center py-5 text-muted">{{ __('messages.no_orders_registered') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-    </div>
 
-    @if($orders->hasPages())
-        <div class="mt-8">
-            {{ $orders->links() }}
-        </div>
-    @endif
+        <div class="mt-4">{{ $orders->links() }}</div>
+
+    </div>
 </div>
 @endsection

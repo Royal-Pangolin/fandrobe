@@ -3,340 +3,384 @@
 @section('title', __('messages.profile_title'))
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
 
-    @if (session('status'))
-        <div class="bg-accent/20 border border-accent text-accent px-4 py-3 rounded-xl mb-6 font-bold text-sm" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
-    @if (session('mensaje'))
-        <div class="bg-accent/20 border border-accent text-accent px-4 py-3 rounded-xl mb-6 font-bold text-sm" role="alert">
-            {{ session('mensaje') }}
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="bg-error/20 border border-error text-error px-4 py-3 rounded-xl mb-6 font-bold text-sm" role="alert">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    <div class="space-y-8">
-
-        <!-- Personal Info -->
-        <div class="bg-neutral/30 rounded-3xl shadow-sm border border-shadow/5 overflow-hidden">
-            <div class="px-6 py-4 border-b border-shadow/10 bg-neutral/30">
-                <h3 class="text-xl font-extrabold text-shadow">{{ __('messages.personal_info') }}</h3>
-            </div>
-            <div class="p-6">
-                <form method="POST" action="{{ route('user-profile-information.update') }}" class="space-y-6">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="first_name" class="block text-sm font-bold text-muted mb-2">{{ __('messages.first_name') }}</label>
-                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name', $user->first_name) }}" required
-                                class="w-full px-4 py-3 border @error('first_name') border-error @else border-shadow/20 @enderror rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            @error('first_name')
-                                <p class="mt-2 text-sm text-error font-bold">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="last_name" class="block text-sm font-bold text-muted mb-2">{{ __('messages.last_name') }}</label>
-                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name', $user->last_name) }}" required
-                                class="w-full px-4 py-3 border @error('last_name') border-error @else border-shadow/20 @enderror rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            @error('last_name')
-                                <p class="mt-2 text-sm text-error font-bold">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="email" class="block text-sm font-bold text-muted mb-2">{{ __('messages.email_label') }}</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required
-                                class="w-full px-4 py-3 border @error('email') border-error @else border-shadow/20 @enderror rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            @error('email')
-                                <p class="mt-2 text-sm text-error font-bold">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="phone" class="block text-sm font-bold text-muted mb-2">{{ __('messages.phone') }}</label>
-                            <input type="tel" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
-                                class="w-full px-4 py-3 border @error('phone') border-error @else border-shadow/20 @enderror rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            @error('phone')
-                                <p class="mt-2 text-sm text-error font-bold">{{ $message }}</p>
-                            @enderror
-                        </div>
+                @if (session('status'))
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-
-                    <div>
-                        <button type="submit" class="btn-primary py-3 px-8 text-sm">
-                            {{ __('messages.save_changes') }}
-                        </button>
+                @endif
+                @if (session('mensaje'))
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        {{ session('mensaje') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Change Password -->
-        <div class="bg-neutral/30 rounded-3xl shadow-sm border border-shadow/5 overflow-hidden">
-            <div class="px-6 py-4 border-b border-shadow/10 bg-neutral/30">
-                <h3 class="text-xl font-extrabold text-shadow">{{ __('messages.change_password') }}</h3>
-            </div>
-            <div class="p-6">
-                <form method="POST" action="{{ route('user-password.update') }}" class="space-y-6">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="space-y-6">
-                        <div>
-                            <label for="current_password" class="block text-sm font-bold text-muted mb-2">{{ __('messages.current_password') }}</label>
-                            <input type="password" id="current_password" name="current_password"
-                                class="w-full px-4 py-3 border @error('current_password') border-error @else border-shadow/20 @enderror rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            @error('current_password')
-                                <p class="mt-2 text-sm text-error font-bold">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="password" class="block text-sm font-bold text-muted mb-2">{{ __('messages.new_password') }}</label>
-                                <input type="password" id="password" name="password"
-                                    class="w-full px-4 py-3 border @error('password') border-error @else border-shadow/20 @enderror rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                                @error('password')
-                                    <p class="mt-2 text-sm text-error font-bold">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label for="password_confirmation" class="block text-sm font-bold text-muted mb-2">{{ __('messages.confirm_new_password') }}</label>
-                                <input type="password" id="password_confirmation" name="password_confirmation"
-                                    class="w-full px-4 py-3 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                        </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
+                @endif
 
-                    <div>
-                        <button type="submit" class="btn-primary py-3 px-8 text-sm">
-                            {{ __('messages.update_password') }}
-                        </button>
+                <div class="card mb-4">
+                    <div class="card-header fw-semibold">{{ __('messages.personal_info') }}</div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('user-profile-information.update') }}">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label">{{ __('messages.first_name') }}</label>
+                                    <input type="text" id="first_name" name="first_name"
+                                        class="form-control @error('first_name') is-invalid @enderror"
+                                        value="{{ old('first_name', $user->first_name) }}" required>
+                                    @error('first_name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label">{{ __('messages.last_name') }}</label>
+                                    <input type="text" id="last_name" name="last_name"
+                                        class="form-control @error('last_name') is-invalid @enderror"
+                                        value="{{ old('last_name', $user->last_name) }}" required>
+                                    @error('last_name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">{{ __('messages.email_label') }}</label>
+                                    <input type="email" id="email" name="email"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        value="{{ old('email', $user->email) }}" required>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">{{ __('messages.phone') }}</label>
+                                    <input type="tel" id="phone" name="phone"
+                                        class="form-control @error('phone') is-invalid @enderror"
+                                        value="{{ old('phone', $user->phone) }}">
+                                    @error('phone')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('messages.save_changes') }}
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Addresses -->
-        <div class="bg-neutral/30 rounded-3xl shadow-sm border border-shadow/5 overflow-hidden">
-            <div class="px-6 py-4 border-b border-shadow/10 bg-neutral/30 flex justify-between items-center">
-                <h3 class="text-xl font-extrabold text-shadow">{{ __('messages.shipping_addresses') }}</h3>
-                <button type="button" class="bg-shadow text-primary px-4 py-2 rounded-full text-xs font-bold hover:bg-shadow/90 transition-colors" onclick="document.getElementById('newAddressForm').classList.toggle('hidden')">
-                    {{ __('messages.add_address') }}
-                </button>
-            </div>
-            <div class="p-6">
-                <div id="newAddressForm" class="hidden mb-8 border-b border-shadow/10 pb-8">
-                    <form method="POST" action="{{ route('addresses.store') }}" class="space-y-6">
-                        @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-                            <div class="md:col-span-6">
-                                <label for="new_alias" class="block text-sm font-bold text-muted mb-2">{{ __('messages.alias') }}</label>
-                                <input type="text" id="new_alias" name="alias" value="{{ old('alias') }}"
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-6">
-                                <label for="new_phone" class="block text-sm font-bold text-muted mb-2">{{ __('messages.phone') }}</label>
-                                <input type="tel" id="new_phone" name="phone" value="{{ old('phone') }}"
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-12">
-                                <label for="new_street" class="block text-sm font-bold text-muted mb-2">{{ __('messages.street') }} *</label>
-                                <input type="text" id="new_street" name="street" value="{{ old('street') }}" required
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-6">
-                                <label for="new_city" class="block text-sm font-bold text-muted mb-2">{{ __('messages.city') }} *</label>
-                                <input type="text" id="new_city" name="city" value="{{ old('city') }}" required
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-6">
-                                <label for="new_state" class="block text-sm font-bold text-muted mb-2">{{ __('messages.state') }}</label>
-                                <input type="text" id="new_state" name="state" value="{{ old('state') }}"
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-4">
-                                <label for="new_zip_code" class="block text-sm font-bold text-muted mb-2">{{ __('messages.zip_code') }} *</label>
-                                <input type="text" id="new_zip_code" name="zip_code" value="{{ old('zip_code') }}" required
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-4">
-                                <label for="new_country" class="block text-sm font-bold text-muted mb-2">{{ __('messages.country') }} *</label>
-                                <input type="text" id="new_country" name="country" value="{{ old('country') }}" required
-                                    class="w-full px-4 py-2 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-medium">
-                            </div>
-                            <div class="md:col-span-4 flex items-end pb-2">
-                                <label class="flex items-center gap-3 cursor-pointer">
-                                    <input type="checkbox" id="new_is_default" name="is_default" value="1"
-                                        class="w-5 h-5 rounded border-shadow/30 text-accent focus:ring-accent bg-transparent cursor-pointer">
-                                    <span class="text-muted text-sm font-bold">{{ __('messages.default_address') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit" class="bg-shadow text-primary px-6 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all">{{ __('messages.save_address') }}</button>
-                        </div>
-                    </form>
                 </div>
 
-                @if ($user->addresses->isEmpty())
-                    <p class="text-muted text-sm font-medium">{{ __('messages.no_addresses') }}</p>
-                @else
-                    <div class="space-y-4">
-                        @foreach ($user->addresses as $address)
-                            <div class="bg-primary border border-shadow/10 rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-start gap-4">
-                                <div>
-                                    <p class="font-extrabold text-shadow mb-1 flex items-center gap-2">
-                                        {{ $address->alias ?? __('messages.address_fallback') }}
-                                        @if ($address->is_default)
-                                            <span class="bg-verified text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-widest">{{ __('messages.default_address') }}</span>
-                                        @endif
-                                    </p>
-                                    <p class="text-sm text-muted font-medium leading-relaxed">
-                                        {{ $address->street }}<br>
-                                        {{ $address->zip_code }} {{ $address->city }}@if($address->state), {{ $address->state }}@endif<br>
-                                        {{ $address->country }}
-                                        @if ($address->phone)
-                                            <br><span class="font-bold">{{ __('messages.tel_label') }}:</span> {{ $address->phone }}
-                                        @endif
-                                    </p>
+                <div class="card mb-4">
+                    <div class="card-header fw-semibold">{{ __('messages.change_password') }}</div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('user-password.update') }}">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="current_password" class="form-label">{{ __('messages.current_password') }}</label>
+                                    <input type="password" id="current_password" name="current_password"
+                                        class="form-control @error('current_password') is-invalid @enderror">
+                                    @error('current_password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    @if (!$address->is_default)
-                                        <form method="POST" action="{{ route('addresses.setDefault', $address->id) }}">
-                                            @csrf
-                                            <button type="submit" class="p-2 text-muted hover:text-accent transition-colors" title="{{ __('messages.set_default_title') }}">
-                                                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                                            </button>
-                                        </form>
-                                    @endif
-                                    <button type="button" class="text-xs font-bold uppercase tracking-widest text-shadow hover:text-accent transition-colors px-3 py-2" onclick="document.getElementById('editAddress{{ $address->id }}').classList.toggle('hidden')">
-                                        {{ __('messages.edit') }}
-                                    </button>
-                                    <form method="POST" action="{{ route('addresses.destroy', $address->id) }}" onsubmit="return confirm('{{ __('messages.confirm_delete_address') }}')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-xs font-bold uppercase tracking-widest text-error hover:text-error/80 transition-colors px-3 py-2">
-                                            {{ __('messages.delete') }}
-                                        </button>
-                                    </form>
+
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label">{{ __('messages.new_password') }}</label>
+                                    <input type="password" id="password" name="password"
+                                        class="form-control @error('password') is-invalid @enderror">
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="password_confirmation" class="form-label">{{ __('messages.confirm_new_password') }}</label>
+                                    <input type="password" id="password_confirmation" name="password_confirmation"
+                                        class="form-control">
                                 </div>
                             </div>
-                            
-                            <!-- Inline Edit Form (Replaces Modal) -->
-                            <div id="editAddress{{ $address->id }}" class="hidden bg-neutral/30 p-6 rounded-2xl border border-shadow/10 mt-2 mb-6">
-                                <h4 class="font-extrabold mb-4 text-shadow">{{ __('messages.edit_address') }}</h4>
-                                <form method="POST" action="{{ route('addresses.update', $address->id) }}" class="space-y-4">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-                                        <div class="md:col-span-6">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.alias') }}</label>
-                                            <input type="text" name="alias" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->alias }}">
-                                        </div>
-                                        <div class="md:col-span-6">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.phone') }}</label>
-                                            <input type="tel" name="phone" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->phone }}">
-                                        </div>
-                                        <div class="md:col-span-12">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.street') }} *</label>
-                                            <input type="text" name="street" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->street }}" required>
-                                        </div>
-                                        <div class="md:col-span-6">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.city') }} *</label>
-                                            <input type="text" name="city" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->city }}" required>
-                                        </div>
-                                        <div class="md:col-span-6">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.state') }}</label>
-                                            <input type="text" name="state" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->state }}">
-                                        </div>
-                                        <div class="md:col-span-4">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.zip_code') }} *</label>
-                                            <input type="text" name="zip_code" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->zip_code }}" required>
-                                        </div>
-                                        <div class="md:col-span-4">
-                                            <label class="block text-xs font-bold text-muted mb-1">{{ __('messages.country') }} *</label>
-                                            <input type="text" name="country" class="w-full px-3 py-2 border border-shadow/20 rounded-lg bg-primary text-shadow text-sm" value="{{ $address->country }}" required>
-                                        </div>
-                                        <div class="md:col-span-4 flex items-end pb-2">
-                                            <label class="flex items-center gap-2 cursor-pointer">
-                                                <input type="checkbox" name="is_default" value="1" {{ $address->is_default ? 'checked' : '' }}
-                                                    class="w-4 h-4 rounded border-shadow/30 text-accent focus:ring-accent bg-transparent">
-                                                <span class="text-muted text-xs font-bold">{{ __('messages.default_address') }}</span>
+
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('messages.update_password') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+                        {{ __('messages.shipping_addresses') }}
+                        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#newAddressForm" aria-expanded="false" aria-controls="newAddressForm">
+                            {{ __('messages.add_address') }}
+                        </button>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="collapse mb-4" id="newAddressForm">
+                            <form method="POST" action="{{ route('addresses.store') }}">
+                                @csrf
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="new_alias" class="form-label">{{ __('messages.alias') }}</label>
+                                        <input type="text" id="new_alias" name="alias"
+                                            class="form-control"
+                                            value="{{ old('alias') }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="new_phone" class="form-label">{{ __('messages.phone') }}</label>
+                                        <input type="tel" id="new_phone" name="phone"
+                                            class="form-control" value="{{ old('phone') }}">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="new_street" class="form-label">{{ __('messages.street') }} *</label>
+                                        <input type="text" id="new_street" name="street"
+                                            class="form-control @error('street') is-invalid @enderror"
+                                            value="{{ old('street') }}" required>
+                                        @error('street')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="new_city" class="form-label">{{ __('messages.city') }} *</label>
+                                        <input type="text" id="new_city" name="city"
+                                            class="form-control @error('city') is-invalid @enderror"
+                                            value="{{ old('city') }}" required>
+                                        @error('city')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="new_state" class="form-label">{{ __('messages.state') }}</label>
+                                        <input type="text" id="new_state" name="state"
+                                            class="form-control" value="{{ old('state') }}">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="new_zip_code" class="form-label">{{ __('messages.zip_code') }} *</label>
+                                        <input type="text" id="new_zip_code" name="zip_code"
+                                            class="form-control @error('zip_code') is-invalid @enderror"
+                                            value="{{ old('zip_code') }}" required>
+                                        @error('zip_code')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="new_country" class="form-label">{{ __('messages.country') }} *</label>
+                                        <input type="text" id="new_country" name="country"
+                                            class="form-control @error('country') is-invalid @enderror"
+                                            value="{{ old('country') }}" required>
+                                        @error('country')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="new_is_default"
+                                                name="is_default" value="1">
+                                            <label class="form-check-label" for="new_is_default">
+                                                {{ __('messages.default_address') }}
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="flex justify-end gap-3 mt-4">
-                                        <button type="button" class="px-4 py-2 text-xs font-bold text-muted hover:text-shadow" onclick="document.getElementById('editAddress{{ $address->id }}').classList.add('hidden')">{{ __('messages.cancel') }}</button>
-                                        <button type="submit" class="bg-shadow text-primary px-4 py-2 rounded-full text-xs font-bold hover:scale-105 transition-transform">{{ __('messages.save_changes') }}</button>
-                                    </div>
-                                </form>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-        </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-primary">{{ __('messages.save_address') }}</button>
+                                </div>
+                            </form>
+                            <hr>
+                        </div>
 
-        <!-- Preferences / Language -->
-        <div class="bg-neutral/30 rounded-3xl shadow-sm border border-shadow/5 overflow-hidden">
-            <div class="px-6 py-4 border-b border-shadow/10 bg-neutral/30">
-                <h3 class="text-xl font-extrabold text-shadow">{{ __('messages.language') }}</h3>
-            </div>
-            <div class="p-6">
-                <p class="text-muted text-sm font-medium mb-4">{{ __('messages.language_desc') }}</p>
-                <form method="POST" action="{{ route('profile.updateLocale') }}" class="flex flex-col sm:flex-row items-start sm:items-end gap-4">
-                    @csrf
-                    <div class="w-full sm:w-64">
-                        <select name="locale" id="locale" class="w-full px-4 py-3 border border-shadow/20 rounded-xl bg-primary text-shadow focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent font-bold text-sm">
-                            <option value="es" {{ $user->locale === 'es' ? 'selected' : '' }}>{{ __('messages.spanish') }}</option>
-                            <option value="en" {{ $user->locale === 'en' ? 'selected' : '' }}>{{ __('messages.english') }}</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="bg-shadow text-primary px-6 py-3 rounded-xl font-bold text-sm hover:scale-105 transition-all w-full sm:w-auto">
-                        {{ __('messages.save_language') }}
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Account Details -->
-        <div class="bg-neutral/30 rounded-3xl shadow-sm border border-shadow/5 overflow-hidden">
-            <div class="px-6 py-4 border-b border-shadow/10 bg-neutral/30">
-                <h3 class="text-xl font-extrabold text-shadow">{{ __('messages.account') }}</h3>
-            </div>
-            <div class="p-6">
-                <ul class="space-y-4 text-sm">
-                    <li class="flex items-center gap-3">
-                        <span class="text-muted font-bold uppercase tracking-widest w-32">{{ __('messages.role') }}:</span>
-                        <span class="font-extrabold text-shadow">{{ $user->role->name ?? '—' }}</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-muted font-bold uppercase tracking-widest w-32">{{ __('messages.member_since') }}:</span>
-                        <span class="font-extrabold text-shadow">{{ $user->created_at->format('d/m/Y') }}</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="text-muted font-bold uppercase tracking-widest w-32">{{ __('messages.status') }}:</span>
-                        @if ($user->is_active)
-                            <span class="bg-verified/20 text-verified px-3 py-1 rounded-full font-bold text-xs uppercase tracking-widest">{{ __('messages.active') }}</span>
+                        @if ($user->addresses->isEmpty())
+                            <p class="text-muted mb-0">{{ __('messages.no_addresses') }}</p>
                         @else
-                            <span class="bg-error/20 text-error px-3 py-1 rounded-full font-bold text-xs uppercase tracking-widest">{{ __('messages.inactive') }}</span>
+                            <div class="d-flex flex-column gap-3">
+                                @foreach ($user->addresses as $address)
+                                    <div class="border rounded-3 p-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <p class="fw-bold mb-1">
+                                                    {{ $address->alias ?? __('messages.address_fallback') }}
+                                                    @if ($address->is_default)
+                                                        <span class="badge bg-success ms-1">{{ __('messages.default_address') }}</span>
+                                                    @endif
+                                                </p>
+                                                <p class="mb-0 small text-muted">
+                                                    {{ $address->street }}<br>
+                                                    {{ $address->zip_code }} {{ $address->city }}@if($address->state), {{ $address->state }}@endif<br>
+                                                    {{ $address->country }}
+                                                    @if ($address->phone)
+                                                        <br>{{ __('messages.tel_label') }}: {{ $address->phone }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <div class="d-flex gap-1 flex-shrink-0">
+                                                @if (!$address->is_default)
+                                                    <form method="POST"
+                                                        action="{{ route('addresses.setDefault', $address->id) }}">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-outline-secondary"
+                                                            title="{{ __('messages.set_default_title') }}">★</button>
+                                                    </form>
+                                                @endif
+                                                <button type="button" class="btn btn-sm btn-dark"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editAddress{{ $address->id }}"
+                                                    title="{{ __('messages.edit') }}">{{ __('messages.edit') }}</button>
+                                                <form method="POST"
+                                                    action="{{ route('addresses.destroy', $address->id) }}"
+                                                    onsubmit="return confirm('{{ __('messages.confirm_delete_address') }}')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        title="{{ __('messages.delete') }}">{{ __('messages.delete') }}</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="editAddress{{ $address->id }}" tabindex="-1"
+                                        aria-labelledby="editAddressLabel{{ $address->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form method="POST"
+                                                    action="{{ route('addresses.update', $address->id) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title fw-semibold"
+                                                            id="editAddressLabel{{ $address->id }}">
+                                                            {{ __('messages.edit_address') }}
+                                                        </h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">{{ __('messages.alias') }}</label>
+                                                                <input type="text" name="alias" class="form-control"
+                                                                    value="{{ $address->alias }}">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">{{ __('messages.phone') }}</label>
+                                                                <input type="tel" name="phone" class="form-control"
+                                                                    value="{{ $address->phone }}">
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <label class="form-label">{{ __('messages.street') }} *</label>
+                                                                <input type="text" name="street" class="form-control"
+                                                                    value="{{ $address->street }}" required>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">{{ __('messages.city') }} *</label>
+                                                                <input type="text" name="city" class="form-control"
+                                                                    value="{{ $address->city }}" required>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">{{ __('messages.state') }}</label>
+                                                                <input type="text" name="state" class="form-control"
+                                                                    value="{{ $address->state }}">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">{{ __('messages.zip_code') }} *</label>
+                                                                <input type="text" name="zip_code" class="form-control"
+                                                                    value="{{ $address->zip_code }}" required>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">{{ __('messages.country') }} *</label>
+                                                                <input type="text" name="country" class="form-control"
+                                                                    value="{{ $address->country }}" required>
+                                                            </div>
+                                                            <div class="col-md-4 d-flex align-items-end">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        id="edit_is_default_{{ $address->id }}"
+                                                                        name="is_default" value="1"
+                                                                        {{ $address->is_default ? 'checked' : '' }}>
+                                                                    <label class="form-check-label"
+                                                                        for="edit_is_default_{{ $address->id }}">
+                                                                        {{ __('messages.default_address') }}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">{{ __('messages.cancel') }}</button>
+                                                        <button type="submit" class="btn btn-primary">{{ __('messages.save_changes') }}</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         @endif
-                    </li>
-                </ul>
+
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header fw-semibold">{{ __('messages.language') }}</div>
+                    <div class="card-body">
+                        <p class="text-muted small mb-3">{{ __('messages.language_desc') }}</p>
+                        <form method="POST" action="{{ route('profile.updateLocale') }}">
+                            @csrf
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-6">
+                                    <select name="locale" id="locale" class="form-select">
+                                        <option value="es" {{ $user->locale === 'es' ? 'selected' : '' }}>{{ __('messages.spanish') }}</option>
+                                        <option value="en" {{ $user->locale === 'en' ? 'selected' : '' }}>{{ __('messages.english') }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('messages.save_language') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header fw-semibold">{{ __('messages.account') }}</div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0 small text-muted">
+                            <li><strong>{{ __('messages.role') }}:</strong> {{ $user->role->name ?? '—' }}</li>
+                            <li><strong>{{ __('messages.member_since') }}:</strong> {{ $user->created_at->format('d/m/Y') }}</li>
+                            <li><strong>{{ __('messages.status') }}:</strong>
+                                @if ($user->is_active)
+                                    <span class="badge bg-success">{{ __('messages.active') }}</span>
+                                @else
+                                    <span class="badge bg-danger">{{ __('messages.inactive') }}</span>
+                                @endif
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
-
     </div>
-</div>
 @endsection

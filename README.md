@@ -30,6 +30,7 @@ Users can buy items with designs by their favorite artists, complete with a sign
 
 This project was developed as an assignment for the **Advanced Development Technologies (TAD)** course in our Bachelor's Degree program.
 
+For technical details and development instructions, see [AGENTS.md](AGENTS.md).
 
 ---
 
