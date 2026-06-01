@@ -11,7 +11,7 @@
 
 ### :busts_in_silhouette: Authors
 
-- Enrique Rojas, Pablo
+- Heras Rojas, Pablo Enrique
 - Medina Pérez, Alberto
 - Sánchez Troncoso, Pablo
 
