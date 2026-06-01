@@ -34,15 +34,12 @@ This project was developed as an assignment for the **Advanced Development Techn
 
 ## :wrench: Installation
 
-Follow these steps to set up and run the application locally.
-
 ### :zero: Prerequisites
 
 - [Git](https://git-scm.com/)
-- [PHP 8.2+](https://www.php.net/downloads)
-- [Composer](https://getcomposer.org/)
-- [Node.js 18+](https://nodejs.org/) (for frontend assets)
-- [MySQL](https://www.mysql.com/) (database)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (includes Docker Compose)
+
+No need to install PHP, MySQL, Node.js, or Composer locally — everything runs inside Docker containers.
 
 ### :one: Clone the Repository
 
@@ -51,76 +48,126 @@ git clone https://github.com/Royal-Pangolin/fandrobe.git
 cd fandrobe
 ```
 
-### :two: Setup the Project
+### :two: Setup with Docker
 
-Run the setup script to install dependencies, configure the environment, and set up the database:
+#### 1. Start the Docker containers
 
 ```bash
-composer run setup
+docker compose up -d
 ```
 
-This command will:
-- Install PHP dependencies via Composer
-- Create `.env` file from `.env.example` if it doesn't exist
-- Generate the application key
-- Run database migrations
-- Install Node.js dependencies
-- Build frontend assets
+This starts all services: Laravel app, Nginx web server, MySQL database, MongoDB, Redis, and phpMyAdmin.
 
-**Note**: If you prefer manual setup, you can run these commands individually:
+#### 2. Install PHP dependencies
+
 ```bash
-composer install
-cp .env.example .env  # On Windows: copy .env.example .env
-php artisan key:generate
-php artisan migrate
-npm install
-npm run build
+docker compose exec app composer install
 ```
 
-### :three: Seed the Database (Optional)
-
-To populate the database with test data (artists, products, users):
+#### 3. Create .env file (if it doesn't exist)
 
 ```bash
-php artisan seed
+docker compose exec app cp .env.example .env
 ```
 
-This will create sample data including test users for development.
-
-### :four: Run the Application
-
-Start the development server:
+#### 4. Generate Laravel key
 
 ```bash
-composer run dev
+docker compose exec app php artisan key:generate
 ```
 
-This will start:
-- Laravel development server on port 8000
-- Queue worker for background jobs
-- Log monitoring
-- Vite development server for assets
+#### 5. Create storage symlink for public file access
 
-**Alternative**: Run services individually:
 ```bash
-php artisan serve
-php artisan queue:listen --tries=1 --timeout=0
-php artisan pail --timeout=0
-npm run dev
+docker compose exec app php artisan storage:link
+```
+
+#### 6. Run database migrations
+
+```bash
+docker compose exec app php artisan migrate
+```
+
+#### 7. Seed the database with test data
+
+```bash
+docker compose exec app php artisan migrate --seed
+```
+
+This creates sample artists, products, categories, and test user accounts.
+
+#### 8. Fix file permissions (critical for Docker)
+
+```bash
+docker compose exec app chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+docker compose exec app chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+```
+
+#### 9. Install frontend dependencies
+
+```bash
+docker compose exec app npm install
+```
+
+### :three: Run the Application
+
+Start all services in the background:
+
+```bash
+docker compose up -d
+```
+
+Then in separate terminals, run:
+
+**Terminal 1 - Vite development server (asset compilation with HMR)**:
+```bash
+docker compose exec app npm run dev
+```
+
+**Terminal 2 - Laravel development server**:
+```bash
+docker compose exec app php artisan serve
+```
+
+**Terminal 3 - Queue worker (for async jobs like emails)**:
+```bash
+docker compose exec app php artisan queue:listen --tries=1 --timeout=0
+```
+
+**Alternative - Run everything at once** (if you have `npm i -g concurrently` installed):
+```bash
+docker compose exec app composer run dev
 ```
 
 ### :four: Access the App
 
-Open your browser and navigate to [http://localhost:8000](http://localhost:8000)
+Open your browser and navigate to:
+- **App**: [http://localhost:8000](http://localhost:8000)
+- **phpMyAdmin** (database UI): [http://localhost:8080](http://localhost:8080)
 
-**Test Accounts**:
+#### Test Accounts (after seeding)
+
 - **Admin**: `admin@fandrobe.com` / `password`
-- **Customer**: `pablo@fandrobe.com` / `password`
-- **Customer**: `maria@fandrobe.com` / `password`
+- **Customer 1**: `pablo@fandrobe.com` / `password`
+- **Customer 2**: `maria@fandrobe.com` / `password`
 
 ### :five: Stop the Application
 
-Press `Ctrl + C` in the terminal to stop all running services.
+```bash
+docker compose down
+```
+
+To also remove volumes (database data):
+```bash
+docker compose down -v
+```
+
+### :warning: Important Notes
+
+- **Database port inside container**: Always use `3306` in `.env` (even though the host port is `3307`)
+- **Logs file permissions**: If you see permission errors writing to `storage/logs/laravel.log`, run the permissions fix from step 8
+- **Vite assets**: The Vite dev server must be running for CSS/JS changes to reflect in real-time
+- **Queue worker**: Long-running tasks (like sending emails) won't process unless the queue worker is running
 
 ---
 
