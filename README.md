@@ -61,13 +61,13 @@ composer run setup
 
 This command will:
 - Install PHP dependencies via Composer
-- Create the `.env` file from `.env.example` if it doesn't exist
+- Create `.env` file from `.env.example` if it doesn't exist
 - Generate the application key
 - Run database migrations
 - Install Node.js dependencies
 - Build frontend assets
 
-**Manual setup alternative**:
+**Note**: If you prefer manual setup, you can run these commands individually:
 ```bash
 composer install
 cp .env.example .env  # On Windows: copy .env.example .env
@@ -85,41 +85,42 @@ To populate the database with test data (artists, products, users):
 php artisan seed
 ```
 
-This creates sample development data and test users.
+This will create sample data including test users for development.
 
 ### :four: Run the Application
 
-Start the local development stack:
+Start the development server:
 
 ```bash
 composer run dev
 ```
 
-This command starts:
-- Laravel development server on port `8000`
+This will start:
+- Laravel development server on port 8000
 - Queue worker for background jobs
 - Log monitoring
-- Vite development server for frontend assets
+- Vite development server for assets
 
-**Run services individually**:
+**Alternative**: Run services individually:
 ```bash
 php artisan serve
 php artisan queue:listen --tries=1 --timeout=0
+php artisan pail --timeout=0
 npm run dev
 ```
 
-### :five: Access the App
+### :four: Access the App
 
-Open your browser at [http://localhost:8000](http://localhost:8000)
+Open your browser and navigate to [http://localhost:8000](http://localhost:8000)
 
-**Test accounts**:
+**Test Accounts**:
 - **Admin**: `admin@fandrobe.com` / `password`
 - **Customer**: `pablo@fandrobe.com` / `password`
 - **Customer**: `maria@fandrobe.com` / `password`
 
-### :six: Stop the Application
+### :five: Stop the Application
 
-Press `Ctrl + C` in the terminal to stop the running services.
+Press `Ctrl + C` in the terminal to stop all running services.
 
 ---
 
